@@ -1,0 +1,33 @@
+.Navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 60px;
+    width: 100%;
+    position: fixed;
+
+    background-color: white;
+}
+
+.Logo {
+    color: black;
+    display: inline;
+    margin: 0;
+}
+
+ul {
+    color: black;
+    list-style: none;
+    display: inline;
+    padding-inline-start: 0;
+}
+
+li {
+    display: inline-block;
+    margin: 0 20px;
+}
+
+.NavItem {
+    text-decoration: none;
+    color: black;
+}
