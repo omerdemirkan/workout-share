@@ -1,0 +1,25 @@
+/* Because css in js doesn't work with React Router Links */
+
+.All:hover {
+    color: #04a8af;
+}
+
+.Powerlifting:hover {
+    color: #af0404;
+}
+
+.Bodybuilding:hover {
+    color: #0460af;
+}
+
+.Weightlifting:hover {
+    color: #af8004;
+}
+
+.Endurance:hover {
+    color: #51af04;
+}
+
+.Crossfit:hover {
+    color: #04af78;
+}
