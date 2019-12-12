@@ -22,6 +22,7 @@
 
 .Create {
     background-color: transparent;
+    text-decoration: none;
     border-style: none;
     font-size: 16px;
     font-weight: bold;
@@ -30,6 +31,10 @@
     right: 10%;
     top: 20px;
     outline: 0;
+}
+
+.Create:hover {
+    color: rgb(132, 132, 255);
 }
 
 .Options {
@@ -97,10 +102,9 @@
         position: fixed;
         margin-top: 60px;
         right: -60%;
-        height: 92vh;
+        height: 100vh;
         width: 60%;
         background-color: white;
-        /* transform: translate(100%); */
         transition: transform 0.2s ease-in-out;
     }
     .Options ul {

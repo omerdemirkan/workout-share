@@ -1,4 +1,16 @@
 .Feed {
     background-color: #eee;
-    height: 1000px;
+    min-height: 1000px;
+    padding: 20px 10px;
+}
+
+.Cards {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: space-around;
+    max-width: 1500px;
+    margin: auto;
 }

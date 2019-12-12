@@ -4,6 +4,7 @@ import './App.css'
 
 import Navbar from './components/UI/navbar/navbar';
 import Feed from './containers/feed/Feed';
+import Create from './containers/create/Create'
 
 class App extends React.Component {
 
@@ -12,7 +13,7 @@ class App extends React.Component {
       <div className='App'>
         <Navbar/>
         <Switch>
-          <Route path="/about"/>
+          <Route path="/create" component={Create}/>
           <Route path="/" component={Feed}/>
         </Switch>
       </div>

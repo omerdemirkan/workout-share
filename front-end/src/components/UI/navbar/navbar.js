@@ -1,18 +1,20 @@
 import React from 'react';
 import classes from './navbar.module.css'
 import {NavLink, Link} from 'react-router-dom';
-import Backdrop from '../Backdrop/Backdrop'
+import Backdrop from '../Backdrop/Backdrop';
+
+import colorsByPath from '../../../helper/colors-by-path';
 
 class Navbar extends React.Component {
     state = {
         sideDrawerOpen: false,
         links: [
-            {display: 'All', path: '/', activeColor: '#00e5ff', idleColor: '#04a8af'},
-            {display: 'Powerlifting', path: '/powerlifting', activeColor: '#ff0000', idleColor: '#af0404'},
-            {display: 'Bodybuilding', path: '/bodybuilding', activeColor: '#007fff', idleColor: '#0460af'},
-            {display: 'Weightlifting', path: '/weightlifting', activeColor: '#ffb900', idleColor: '#af8004'},
-            {display: 'Endurance', path: '/endurance', activeColor: '#68ff00', idleColor: '#51af04'},
-            {display: 'Crossfit', path: '/crossfit', activeColor: '#00ff9d', idleColor: '#04af78'},
+            {display: 'All', path: '/'},
+            {display: 'Powerlifting', path: '/powerlifting'},
+            {display: 'Bodybuilding', path: '/bodybuilding'},
+            {display: 'Weightlifting', path: '/weightlifting'},
+            {display: 'Endurance', path: '/endurance'},
+            {display: 'Crossfit', path: '/crossfit'}
         ]
     }
 
@@ -29,14 +31,12 @@ class Navbar extends React.Component {
                 <NavLink onClick={this.state.sideDrawerOpen ? this.toggleSideDrawerHandler : null} 
                 exact={link.display === "All" ? true : false} 
                 to={link.path} className={classes.NavLink} 
-                activeStyle={{color: link.idleColor}}
+                activeStyle={{color: colorsByPath(link.path).idleColor}}
                 className={classes.NavButton}>
                     {link.display}
                 </NavLink>
             </li>
         });
-        // seperating assignment because the buttons should toggle the sidedrawer only if its in the sidedrawer.
-        
 
         return <React.Fragment>
             <nav className={classes.Navbar}>
@@ -47,7 +47,7 @@ class Navbar extends React.Component {
                         {navList}
                     </ul>
                 </div>
-                <button className={classes.Create}>Create</button>
+                <NavLink to="/create" className={classes.Create} activeStyle={{color: 'rgb(132, 132, 255)'}}>Create</NavLink>
                 <div className={classes.Burger} onClick={this.toggleSideDrawerHandler}>
                     <div className={classes.Line1}></div>
                     <div className={classes.Line2}></div>
