@@ -24,13 +24,20 @@ class Navbar extends React.Component {
     }
 
     render() { 
-        const navList = this.state.links.map(link => {
+        let navList = this.state.links.map(link => {
             return <li>
-                <NavLink to={link.path} className={classes.NavLink}>
-                    <button className={classes.NavButton}>{link.display}</button>
+                <NavLink onClick={this.state.sideDrawerOpen ? this.toggleSideDrawerHandler : null} 
+                exact={link.display === "All" ? true : false} 
+                to={link.path} className={classes.NavLink} 
+                activeStyle={{color: link.idleColor}}
+                className={classes.NavButton}>
+                    {link.display}
                 </NavLink>
             </li>
         });
+        // seperating assignment because the buttons should toggle the sidedrawer only if its in the sidedrawer.
+        
+
         return <React.Fragment>
             <nav className={classes.Navbar}>
                 <Link to="/"><h2 className={classes.Logo}>Workout Hub</h2></Link>

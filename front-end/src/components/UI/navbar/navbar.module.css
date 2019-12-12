@@ -5,7 +5,9 @@
     text-align: center;
     overflow: auto;
     position: fixed;
+    top: 0;
     z-index: 5;
+    user-select: none;
 }
 
 .Logo {
@@ -63,20 +65,21 @@
 
 .NavButton {
     border-style: none;
-    background-color: transparent;
     color: rgb(71, 71, 71);
-    min-width: 80px;
-    min-height: 25px;
-    /* border: 1px solid; */
-    border-radius: 1rem;
     outline: 0;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
+    text-decoration: none;
 }
 
-@media (max-width: 1350px) {
+.ActiveLink {
+    color: red;
+}
+
+@media (max-width: 1200px) {
     .Options {
-        margin: 80px 0 30px;
+        margin: 80px 0 20px;
+        position: sticky;
     }
     .Logo {
         left: 50%;
