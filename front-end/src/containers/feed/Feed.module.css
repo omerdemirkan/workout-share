@@ -1,9 +1,3 @@
-.Feed {
-    background-color: #eee;
-    min-height: 1000px;
-    padding: 20px 10px;
-}
-
 .Cards {
     display: flex;
     flex-wrap: wrap;

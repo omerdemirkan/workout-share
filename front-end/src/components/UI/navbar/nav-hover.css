@@ -23,3 +23,13 @@
 .Crossfit:hover {
     color: #04af78;
 }
+
+@media (min-width: 769px) {
+    .createNavButton {
+        display: none;
+    }
+}
+
+.createNavButton {
+    font-size: 1.5rem;
+}

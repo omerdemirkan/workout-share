@@ -110,7 +110,7 @@
         width: 75%;
         position: absolute;
         right: 0;
-        top: 30px;
+        top: 20px;
     }
     .NavButton {
         border-style: none;
@@ -121,7 +121,7 @@
         font-size: 18px;
     }
     .Options li {
-        margin: 20px 0;
+        margin: 12px 0;
     }
     .ActiveNav {
         transform: translate(0%);

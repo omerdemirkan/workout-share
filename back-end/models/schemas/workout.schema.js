@@ -8,8 +8,8 @@ const workoutSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    dayOfWeek: String,
-    exercises: [exerciseSchema]
+    exercises: [exerciseSchema],
+    likes: Number
 }, {timestamps: true});
 
 module.exports = workoutSchema;
