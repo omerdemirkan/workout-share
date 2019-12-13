@@ -1,3 +1,4 @@
+
 /* Because css in js doesn't work with React Router Links */
 
 .All:hover {
@@ -28,8 +29,35 @@
     .createNavButton {
         display: none;
     }
+    .myWorkoutsNavButton {
+        display: none;
+    }
+    .myFavoritesNavButton {
+        display: none;
+    }
+
+    /* In case the user opens the mobile sidedrawer AND increases the 
+    view port to see the desktop navbar in the same visit, I'm sending 
+    the buttons added specifically for the sidedrawer into outer space */
+
+    .MoreNavButtonsBox {
+        position: absolute;
+        left: -500px;
+    }
 }
 
 .createNavButton {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+}
+
+.myWorkoutsNavButton {
+    font-size: 1.4rem;
+}
+
+.myFavoritesNavButton {
+    font-size: 1.4rem;
+}
+
+.MoreNavButtonsBox {
+
 }

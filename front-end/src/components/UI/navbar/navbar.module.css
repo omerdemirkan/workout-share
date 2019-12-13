@@ -3,11 +3,13 @@
     width: 100%;
     background-color: white;
     text-align: center;
-    overflow: auto;
+    overflow: visible;
     position: fixed;
     top: 0;
     z-index: 5;
     user-select: none;
+    box-shadow: 0 0 8px 2px #ececec;
+    border-bottom: rgb(226, 226, 226) 1px solid;
 }
 
 .Logo {
@@ -20,25 +22,73 @@
     outline: 0;
 }
 
-.Create {
-    background-color: transparent;
-    text-decoration: none;
-    border-style: none;
-    font-size: 16px;
-    font-weight: bold;
-    color: rgb(71, 71, 71);
-    position: absolute;
-    right: 10%;
-    top: 20px;
-    outline: 0;
-}
-
-.Create:hover {
-    color: rgb(132, 132, 255);
-}
-
 .Options {
     margin: 18px 0;
+}
+
+.DropdownBox {
+    position: absolute;
+    top: 18px;
+    right: 5%;
+    width: 140px;
+    border-radius: .3rem;
+    z-index: 6;
+    background-color: white;
+    text-align: start;
+    /* Transition height to 115px on dropdown */
+    height: 23px;
+    box-shadow: none;
+    transition: 0.2s ease-in-out;
+}
+
+.DropdownBox:hover {
+    height: 130px;
+    box-shadow: 1px 2px 5px 2px #d9d9d9;
+    transition: 0.2s ease-in-out;
+    /* color: rgba(71, 71, 71, 1); */
+}
+
+.MoreButton {
+    background-color: white;
+    border: none;
+    font-size: 1rem;
+    font-family: inherit;
+    font-weight: 600;
+    outline: none;
+    display: block;
+    width: 100%;
+    z-index: 7;
+}
+
+.MoreDropdown {
+    list-style: none;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    margin: 0 0 5px 3px;
+    padding-top: 50px;
+    /* Transition opacity to 1 on dropdown */
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.MoreDropdown:hover {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.DropdownBox li {
+    line-height: 1.5;
+}
+
+.DesktopLink {
+    border-style: none;
+    color: rgb(71, 71, 71);
+    outline: 0;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 2;
 }
 
 .Burger {
@@ -80,7 +130,6 @@
 @media (max-width: 1200px) {
     .Options {
         margin: 80px 0 20px;
-        position: sticky;
     }
     .Logo {
         left: 50%;
@@ -89,7 +138,7 @@
 }
 
 @media (max-width: 768px) {
-    .Create {display: none;}
+    .CreateLink {display: none;}
     .Burger {
         display: inline-block;
     }
@@ -97,9 +146,9 @@
     .Options {
         position: fixed;
         margin-top: 60px;
-        right: -60%;
+        right: -70%;
         height: 100vh;
-        width: 60%;
+        width: 70%;
         background-color: white;
         transition: transform 0.2s ease-in-out;
     }
@@ -110,7 +159,7 @@
         width: 75%;
         position: absolute;
         right: 0;
-        top: 20px;
+        top: 0px;
     }
     .NavButton {
         border-style: none;
@@ -126,4 +175,15 @@
     .ActiveNav {
         transform: translate(0%);
     }
+    .DropdownBox {
+        display: none;
+    }
+    .Navbar {
+        box-shadow: none;
+        border-bottom: rgb(226, 226, 226) 2px solid;
+    }
+}
+
+.DesktopLink:hover {
+    color: black;
 }
