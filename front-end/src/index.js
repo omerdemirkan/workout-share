@@ -7,10 +7,16 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from 'react-router-dom';
 
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import reducer from './store/reducers/reducer'
+import {createStore, combineReducers} from 'redux';
+import createReducer from './store/reducers/create'
+import authReducer from './store/reducers/auth'
 
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+    create: createReducer,
+    auth: authReducer
+});
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(<Provider store={store}><BrowserRouter><App /></BrowserRouter></Provider>, document.getElementById('root'));
 

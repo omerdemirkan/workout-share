@@ -1,7 +1,63 @@
 .Create {
     background-color: #eee;
     min-height: 1000px;
-    padding: 20px 10px;
-    width: 80%;
+    padding: 30px 15px;
     margin: auto;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 600px;
+}
+
+.InputBox {
+    margin: 15px 0;
+}
+
+.InputLabel {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1.6rem;
+  width: 100%;
+}
+
+.TitleInput {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.SelectPreview {
+  margin-bottom: 30px;
+  text-align: center;
+  color: rgb(71, 71, 71);
+}
+
+.SelectPreviewInput {
+  border-bottom: 3px solid;
+  border-radius: .2rem;
+  color: rgb(46, 46, 46);
+}
+
+.SelectBox {
+  margin: 70px 0;
+}
+
+.SelectInput option {
+  border-bottom: 1px solid black;
+}
+
+@media (min-width: 769px) {
+  .Create {
+    
+  }
+}
+
+@media (max-width: 330px) {
+  .SelectPreview {
+    font-size: 1.5rem;
+  }
+}
+
+.NewExerciseBox {
+  background: white;
+  padding: 15px 1rem 35px;
+  border-radius: .5rem;
 }

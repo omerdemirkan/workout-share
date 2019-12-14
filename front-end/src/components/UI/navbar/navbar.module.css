@@ -34,7 +34,7 @@
     border-radius: .3rem;
     z-index: 6;
     background-color: white;
-    text-align: start;
+    text-align: start; 
     /* Transition height to 115px on dropdown */
     height: 23px;
     box-shadow: none;
@@ -43,7 +43,7 @@
 
 .DropdownBox:hover {
     height: 130px;
-    box-shadow: 1px 2px 5px 2px #d9d9d9;
+    box-shadow: 2px 5px 8px 1px #d9d9d9;
     transition: 0.2s ease-in-out;
     /* color: rgba(71, 71, 71, 1); */
 }
@@ -65,8 +65,8 @@
     width: 100%;
     position: absolute;
     bottom: 0;
-    margin: 0 0 5px 3px;
-    padding-top: 50px;
+    padding-top: 60px;
+    margin: 0;
     /* Transition opacity to 1 on dropdown */
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
