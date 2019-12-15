@@ -1,6 +1,5 @@
 .Create {
     background-color: #eee;
-    min-height: 1000px;
     padding: 30px 15px;
     margin: auto;
     width: 100%;
@@ -20,12 +19,12 @@
 }
 
 .TitleInput {
-    width: 100%;
-    box-sizing: border-box;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .SelectPreview {
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   text-align: center;
   color: rgb(71, 71, 71);
 }
@@ -44,9 +43,66 @@
   border-bottom: 1px solid black;
 }
 
+.NewExerciseBox {
+  background: white;
+  padding: 30px 2rem 15px;
+  border-radius: .5rem;
+}
+
+.AddExerciseButton {
+  width: 180px;
+  height: 40px;
+  margin-left: 50%;
+  transform: translate(-50%);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: .5rem;
+  font-size: 1.3rem;
+  outline: none;
+  color: rgb(71, 71, 71);
+  user-select: none;
+}
+
+.AddExerciseButton:active {
+  background-color: rgb(71, 71, 71);
+  color: white
+}
+
+.ErrorModalTitle {
+  text-align: center;
+}
+
+.ErrorModalList {
+  list-style: none;
+  padding-inline-start: 0;
+  margin: 0, 60px;
+}
+
+.ErrorModalMessage {
+  font-size: 1.1rem;
+  user-select: none;
+}
+
+.ErrorModalButton {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background-color: transparent;
+  border: none;
+  border-radius: .5rem;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+  user-select: none;
+}
+
 @media (min-width: 769px) {
   .Create {
-    
+    padding-top: 50px;
   }
 }
 
@@ -54,10 +110,4 @@
   .SelectPreview {
     font-size: 1.5rem;
   }
-}
-
-.NewExerciseBox {
-  background: white;
-  padding: 15px 1rem 35px;
-  border-radius: .5rem;
 }

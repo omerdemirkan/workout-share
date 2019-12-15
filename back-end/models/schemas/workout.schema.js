@@ -4,9 +4,11 @@ const exerciseSchema = require('./exercise.schema');
 
 const workoutSchema = new mongoose.Schema({
     type: String,
-    name: {
+    title: {
         type: String,
-        required: true
+        required: true,
+        minlength: 4,
+        maxlength: 30
     },
     exercises: [exerciseSchema],
     likes: Number

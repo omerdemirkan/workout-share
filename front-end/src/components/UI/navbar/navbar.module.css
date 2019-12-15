@@ -35,15 +35,15 @@
     z-index: 6;
     background-color: white;
     text-align: start; 
-    /* Transition height to 115px on dropdown */
+    /* Transition height on dropdown */
     height: 23px;
     box-shadow: none;
     transition: 0.2s ease-in-out;
 }
 
 .DropdownBox:hover {
-    height: 130px;
-    box-shadow: 2px 5px 8px 1px #d9d9d9;
+    height: 160px;
+    box-shadow: 2px 5px 8px 0px #d9d9d9;
     transition: 0.2s ease-in-out;
     /* color: rgba(71, 71, 71, 1); */
 }

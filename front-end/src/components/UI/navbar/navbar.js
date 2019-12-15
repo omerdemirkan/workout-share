@@ -3,6 +3,7 @@ import classes from './navbar.module.css'
 import './nav-hover.css';
 import {NavLink, Link} from 'react-router-dom';
 import Backdrop from '../Backdrop/Backdrop';
+import {connect} from 'react-redux';
 
 import colorsByPath from '../../../helper/colors-by-path';
 
@@ -28,7 +29,7 @@ class Navbar extends React.Component {
         });
     }
 
-    render() { 
+    render() {
         let navList = <React.Fragment>
             {/* To position the 'More' links below the navbar links in the mobile sidebar */}
             {this.state.sideDrawerMoved ? <ul style={{top: '295px'}} className="MoreNavButtonsBox">
@@ -42,7 +43,16 @@ class Navbar extends React.Component {
                 className={classes.NavButton + ' myWorkoutsNavButton'} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Workouts</NavLink></li> 
                 <li key='/my-favorites'><NavLink to="/my-favorites"
                 onClick={this.toggleSideDrawerHandler} 
-                className={classes.NavButton + ' myFavoritesNavButton'} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Favorites</NavLink></li> 
+                className={classes.NavButton + ' myFavoritesNavButton'} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Favorites</NavLink></li>
+                {this.props.authorized ? 
+                    <li key='/logout'><NavLink to="/logout" 
+                    onClick={this.toggleSideDrawerHandler}  
+                    className={classes.NavButton + ' signinButton'} activeStyle={{color: 'rgb(132, 132, 255)'}}>Logout</NavLink></li>
+                : 
+                    <li key='/signin'><NavLink to="/signin" onClick={this.toggleSideDrawerHandler}  
+                    className={classes.NavButton + ' signinButton'}
+                    activeStyle={{color: 'rgb(132, 132, 255)'}}>Sign in</NavLink></li>
+                }
             </ul>
             : null}
 
@@ -77,6 +87,11 @@ class Navbar extends React.Component {
                         <li><NavLink to="/create" className={classes.DesktopLink } activeStyle={{color: 'rgb(132, 132, 255)'}}>Create</NavLink></li>
                         <li><NavLink to="/my-workouts" className={classes.DesktopLink} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Workouts</NavLink></li> 
                         <li><NavLink to="/my-favorites" className={classes.DesktopLink} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Favorites</NavLink></li> 
+                        {this.props.authorized ? 
+                            <li key='/logout'><NavLink to="/logout" className={classes.DesktopLink } activeStyle={{color: 'rgb(132, 132, 255)'}}>Logout</NavLink></li>
+                        : 
+                            <li key='/signin'><NavLink to="/signin" className={classes.DesktopLink} activeStyle={{color: 'rgb(132, 132, 255)'}}>Sign in</NavLink></li>
+                        }
                     </ul>
                 </div>
                 
@@ -91,4 +106,10 @@ class Navbar extends React.Component {
     }
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+    return {
+        authorized: state.auth.authorized
+    }
+}
+
+export default connect(mapStateToProps)(Navbar);

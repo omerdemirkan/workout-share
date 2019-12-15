@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 // Only name and sets are required because of this distinction
 
 const exerciseSchema = new mongoose.Schema({
-    name: {
+    title: {
         type: String,
         required: true,
         minlength: 4,
@@ -24,7 +24,7 @@ const exerciseSchema = new mongoose.Schema({
     minutes: {
         type: Number,
         min: [0, 'Minutes must be at least 0'],
-        max: [60, 'Minutes can be 60 at most']
+        max: [120, 'Minutes can be 60 at most']
     },
     seconds: {
         type: Number,

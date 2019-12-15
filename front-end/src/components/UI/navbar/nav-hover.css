@@ -25,6 +25,14 @@
     color: #04af78;
 }
 
+.signinButton:hover {
+    color: green;
+}
+
+.logoutButton:hover {
+    color: red;
+}
+
 @media (min-width: 769px) {
     .createNavButton {
         display: none;
@@ -55,5 +63,13 @@
 }
 
 .myFavoritesNavButton {
+    font-size: 1.4rem;
+}
+
+.signinButton {
+    font-size: 1.4rem;
+}
+
+.logoutButton {
     font-size: 1.4rem;
 }
