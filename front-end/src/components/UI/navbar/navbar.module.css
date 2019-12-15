@@ -8,7 +8,7 @@
     top: 0;
     z-index: 5;
     user-select: none;
-    box-shadow: 0 0 8px 2px #ececec;
+    box-shadow: 0 0 8px 0.5px #9b9b9b;
     border-bottom: rgb(226, 226, 226) 1px solid;
 }
 

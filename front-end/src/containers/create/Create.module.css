@@ -1,10 +1,16 @@
 .Create {
     background-color: #eee;
-    padding: 30px 15px;
+    padding: 5px 15px;
     margin: auto;
     width: 100%;
     box-sizing: border-box;
     max-width: 600px;
+}
+
+.MainHeader {
+  text-align: center;
+  color: rgb(71, 71, 71);
+  margin-bottom: 40px;
 }
 
 .InputBox {
@@ -32,7 +38,7 @@
 .SelectPreviewInput {
   border-bottom: 3px solid;
   border-radius: .2rem;
-  color: rgb(46, 46, 46);
+  color: rgb(61, 61, 61);
 }
 
 .SelectBox {
@@ -82,7 +88,9 @@
 
 .ErrorModalMessage {
   font-size: 1.1rem;
+  font-weight: 600;
   user-select: none;
+  color: rgb(180, 0, 0);
 }
 
 .ErrorModalButton {
@@ -102,12 +110,18 @@
 
 @media (min-width: 769px) {
   .Create {
-    padding-top: 50px;
+    padding-top: 30px;
   }
 }
 
 @media (max-width: 330px) {
   .SelectPreview {
     font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 370px) {
+  .MainHeader {
+    font-size: 1.7rem;
   }
 }

@@ -217,6 +217,7 @@ class Create extends React.Component {
 
 
         return <div className={classes.Create}>
+            <h1 className={classes.MainHeader}>Create Your Workout</h1>
             
             <ThemeProvider theme={theme}>
                 <TextField 

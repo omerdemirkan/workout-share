@@ -1,8 +1,60 @@
 const router = require('express').Router();
 const Workout = require('../models/workout.model');
 
+// -- Search Routes --
+
 router.get('/', (req, res) => {
     Workout.find({}, (err, workouts) => {
+        if (!err) {
+            res.json(workouts).status(200);
+        } else {
+            res.json('eRROR in workouts route \n' + err);
+        }
+    });
+});
+
+router.get('/powerlifting', (req, res) => {
+    Workout.find({type: 'powerlifting'}, (err, workouts) => {
+        if (!err) {
+            res.json(workouts).status(200);
+        } else {
+            res.json('eRROR in workouts route \n' + err);
+        }
+    });
+});
+
+router.get('/bodybuilding', (req, res) => {
+    Workout.find({type: 'bodybuilding'}, (err, workouts) => {
+        if (!err) {
+            res.json(workouts).status(200);
+        } else {
+            res.json('eRROR in workouts route \n' + err);
+        }
+    });
+});
+
+router.get('/weightlifting', (req, res) => {
+    Workout.find({type: 'weightlifting'}, (err, workouts) => {
+        if (!err) {
+            res.json(workouts).status(200);
+        } else {
+            res.json('eRROR in workouts route \n' + err);
+        }
+    });
+});
+
+router.get('/endurance', (req, res) => {
+    Workout.find({type: 'endurance'}, (err, workouts) => {
+        if (!err) {
+            res.json(workouts).status(200);
+        } else {
+            res.json('eRROR in workouts route \n' + err);
+        }
+    });
+});
+
+router.get('/crossfit', (req, res) => {
+    Workout.find({type: 'crossfit'}, (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
