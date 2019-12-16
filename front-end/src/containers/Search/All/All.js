@@ -25,22 +25,27 @@ class All extends React.Component {
                 exercises: [
                     {
                         title: 'Pull ups',
-                        set: 4,
+                        type: 'sets-reps',
+                        sets: 4,
                         reps: 12
                     },
                     {
                         title: 'Barbell row',
-                        set: 4,
+                        type: 'sets-reps',
+                        sets: 4,
                         reps: 12
                     },
                     {
                         title: 'Running',
-                        set: 4,
+                        type: 'sets-min-sec',
+                        sets: 4,
                         minutes: 12,
                         seconds: 0
                     },
                     {
                         title: 'Jumping jacks',
+                        type: 'sets-min-sec',
+                        sets: 2,
                         minutes: 3,
                         seconds: 0
                     }
@@ -52,22 +57,27 @@ class All extends React.Component {
                 exercises: [
                     {
                         title: 'Pull ups',
-                        set: 4,
+                        type: 'sets-reps',
+                        sets: 4,
                         reps: 12
                     },
                     {
                         title: 'Barbell row',
-                        set: 4,
+                        type: 'sets-reps',
+                        sets: 4,
                         reps: 12
                     },
                     {
                         title: 'Running',
-                        set: 4,
+                        type: 'sets-min-sec',
+                        sets: 4,
                         minutes: 12,
                         seconds: 0
                     },
                     {
                         title: 'Jumping jacks',
+                        type: 'sets-min-sec',
+                        sets: 2,
                         minutes: 3,
                         seconds: 0
                     }
@@ -79,22 +89,27 @@ class All extends React.Component {
                 exercises: [
                     {
                         title: 'Pull ups',
-                        set: 4,
+                        type: 'sets-reps',
+                        sets: 4,
                         reps: 12
                     },
                     {
                         title: 'Barbell row',
-                        set: 4,
+                        type: 'sets-reps',
+                        sets: 4,
                         reps: 12
                     },
                     {
                         title: 'Running',
-                        set: 4,
+                        type: 'sets-min-sec',
+                        sets: 4,
                         minutes: 12,
                         seconds: 0
                     },
                     {
                         title: 'Jumping jacks',
+                        type: 'sets-min-sec',
+                        sets: 2,
                         minutes: 3,
                         seconds: 0
                     }
@@ -106,22 +121,27 @@ class All extends React.Component {
                 exercises: [
                     {
                         title: 'Pull ups',
-                        set: 4,
+                        type: 'sets-reps',
+                        sets: 4,
                         reps: 12
                     },
                     {
                         title: 'Barbell row',
-                        set: 4,
+                        type: 'sets-reps',
+                        sets: 4,
                         reps: 12
                     },
                     {
                         title: 'Running',
-                        set: 4,
+                        type: 'sets-min-sec',
+                        sets: 4,
                         minutes: 12,
                         seconds: 0
                     },
                     {
                         title: 'Jumping jacks',
+                        type: 'sets-min-sec',
+                        sets: 2,
                         minutes: 3,
                         seconds: 0
                     }
@@ -133,22 +153,27 @@ class All extends React.Component {
                 exercises: [
                     {
                         title: 'Pull ups',
-                        set: 4,
+                        type: 'sets-reps',
+                        sets: 4,
                         reps: 12
                     },
                     {
                         title: 'Barbell row',
-                        set: 4,
+                        type: 'sets-reps',
+                        sets: 4,
                         reps: 12
                     },
                     {
                         title: 'Running',
-                        set: 4,
+                        type: 'sets-min-sec',
+                        sets: 4,
                         minutes: 12,
                         seconds: 0
                     },
                     {
                         title: 'Jumping jacks',
+                        type: 'sets-min-sec',
+                        sets: 2,
                         minutes: 3,
                         seconds: 0
                     }
