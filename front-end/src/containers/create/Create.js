@@ -3,24 +3,34 @@ import axios from '../../axios';
 import { connect } from 'react-redux'
 import * as actionTypes from '../../store/actions/actionTypes'
 import { colorsByDisplay } from '../../helper/colors-by-path';
+import PreviewCard from '../../components/UI/PreviewCard/PreviewCard'
 
 import classes from './Create.module.css';
+
+import Filter from 'bad-words';
 
 // Material UI
 
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+
 import grey from '@material-ui/core/colors/grey';
-import red from '@material-ui/core/colors/red';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
+
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
+
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
+
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+
+const profanityFilter = new Filter();
 
 const theme = createMuiTheme({
   palette: {
@@ -31,18 +41,20 @@ const theme = createMuiTheme({
   }
 });
 
-const allErrorMessages = {
-    title: 'Exercise titles must be between 4 and 30 characters',
+const exerciseErrorMessages = {
+    title: 'Exercise titles must be between 4 and 20 characters',
     sets: 'Sets must be between 1 and 10',
     reps: 'Reps must be between 1 and 30',
     minutes: 'Minutes must be between 0 and 120',
     seconds: 'Seconds must be between 0 and 59',
-    noDuration: 'Exercises must have a duration'
+    noDuration: 'Exercises must have a duration',
+    uniqueTitle: 'Each exercise title must be unique',
+    profanity: 'No profanity allowed!'
 }
 
 // Number value and string length limites in [min, max] format
 const valueLimits = {
-    title: [4, 30],
+    title: [4, 20],
     sets: [1, 10],
     reps: [1, 30],
     minutes: [0, 120],
@@ -60,7 +72,8 @@ class Create extends React.Component {
             seconds: 0
         },
         errors: [],
-        errorMessages: []
+        errorMessages: [],
+        deleteWorkoutModal: false
     }
 
     updateExerciseHandler = (event, field) => {
@@ -80,7 +93,7 @@ class Create extends React.Component {
             let exercise = null;
             if (this.state.currentExercise.type === 'sets-reps') {
                 exercise = {
-                    title: this.state.currentExercise.title,
+                    title: this.state.currentExercise.title.trim(),
                     type: this.state.currentExercise.type,
                     sets: this.state.currentExercise.sets,
                     reps: this.state.currentExercise.reps
@@ -97,15 +110,32 @@ class Create extends React.Component {
             this.resetCurrentExercise();
         } else {
             const errorMessages = [];
-            Object.keys(allErrorMessages).forEach(errorName => {
+            Object.keys(exerciseErrorMessages).forEach(errorName => {
                 foundErrors.forEach(foundError => {
                     if (errorName === foundError) {
-                        errorMessages.push(allErrorMessages[errorName])
+                        errorMessages.push(exerciseErrorMessages[errorName])
                     }
                 });
             });
-            console.log(errorMessages);
             this.setState({errors: foundErrors, errorMessages: errorMessages});
+        }
+    }
+
+    changeTypeHandler = event => {
+        console.log(event.target.value);
+        if (event.target.value === 'sets-reps') {
+            const newExercise = {...this.state.currentExercise};
+            newExercise.minutes = 0;
+            newExercise.seconds = 0;
+            newExercise.sets = 0;
+            newExercise.type = event.target.value;
+            this.setState({currentExercise: newExercise});
+        } else {
+            const newExercise = {...this.state.currentExercise};
+            newExercise.reps = 0;
+            newExercise.sets = 0;
+            newExercise.type = event.target.value;
+            this.setState({currentExercise: newExercise});
         }
     }
 
@@ -135,6 +165,24 @@ class Create extends React.Component {
             }
         });
 
+        //Checking for unique exercise name:
+        if (this.props.exercises.length > 0) {
+            let copyFound = false;
+            this.props.exercises.forEach(exercise => {
+                if (this.state.currentExercise.title.trim() === exercise.title) {
+                    copyFound = true;
+                }
+            });
+            if (copyFound) {
+                errors.push('uniqueTitle');
+            }
+        }
+
+        //Checking for profanity:
+        if (profanityFilter.clean(this.state.currentExercise.title) !== this.state.currentExercise.title) {
+            errors.push('profanity');
+        }
+
         return errors;
     }
 
@@ -157,6 +205,31 @@ class Create extends React.Component {
         });
     }
 
+    openDeleteModalHandler = () => {
+        this.setState({deleteWorkoutModal: true});
+    }
+
+    closeDeleteModalHandler = () => {
+        this.setState({deleteWorkoutModal: false});
+    }
+
+    deleteWorkoutHandler = () => {
+        this.props.onDeleteWorkout();
+        this.setState({
+            currentExercise: {
+                title: '',
+                type: 'sets-reps',
+                sets: 0,
+                reps: 0,
+                minutes: 0,
+                seconds: 0
+            },
+            errors: [],
+            errorMessages: [],
+            deleteWorkoutModal: false
+        });
+    }
+
     render() {
         // If the user chooses the sets-reps format, we need inputs for sets and reps,
         // otherwise, we need sets, minutes and seconds as inputs.
@@ -167,7 +240,7 @@ class Create extends React.Component {
                 <TextField
                 id="outlined-number"
                 label="Sets"
-                value={this.state.currentExercise.sets ? this.state.currentExercise.sets: null}
+                value={this.state.currentExercise.sets ? this.state.currentExercise.sets: ''}
                 type="number"
                 variant="outlined"
                 style={{width: '50%', height: '30px', color: 'rgb(71, 71, 71)', marginBottom: '30px'}}
@@ -177,7 +250,7 @@ class Create extends React.Component {
                 id="outlined-number"
                 label="Reps"
                 type="number"
-                value={this.state.currentExercise.reps ? this.state.currentExercise.reps: null}
+                value={this.state.currentExercise.reps ? this.state.currentExercise.reps: ''}
                 variant="outlined"
                 style={{width: '50%', height: '30px', color: 'rgb(71, 71, 71)', marginBottom: '30px'}}
                 onChange={event => this.updateExerciseHandler(event, 'reps')}
@@ -189,7 +262,7 @@ class Create extends React.Component {
                 id="outlined-number"
                 label="Sets"
                 type="number"
-                value={this.state.currentExercise.sets ? this.state.currentExercise.sets: null}
+                value={this.state.currentExercise.sets ? this.state.currentExercise.sets: ''}
                 variant="outlined"
                 style={{width: '100%', height: '40px', color: 'rgb(71, 71, 71)', marginBottom: '30px'}}
                 onChange={event => this.updateExerciseHandler(event, 'sets')}
@@ -198,7 +271,7 @@ class Create extends React.Component {
                 id="outlined-number"
                 label="Minutes"
                 type="number"
-                value={this.state.currentExercise.minutes ? this.state.currentExercise.minutes: null}
+                value={this.state.currentExercise.minutes ? this.state.currentExercise.minutes: ''}
                 variant="outlined"
                 style={{width: '50%', height: '40px', color: 'rgb(71, 71, 71)', marginBottom: '30px'}}
                 onChange={event => this.updateExerciseHandler(event, 'minutes')}
@@ -207,18 +280,26 @@ class Create extends React.Component {
                 id="outlined-number"
                 label="Seconds"
                 type="number"
-                value={this.state.currentExercise.seconds ? this.state.currentExercise.seconds: null}
+                value={this.state.currentExercise.seconds ? this.state.currentExercise.seconds: ''}
                 variant="outlined"
                 style={{width: '50%', height: '40px', color: 'rgb(71, 71, 71)', marginBottom: '30px'}}
                 onChange={event => this.updateExerciseHandler(event, 'seconds')}
                 />
             </div>
         }
+        let workout = null;
+        if (this.props.exercises.length > 0) {
+            workout = {
+                title: this.props.title,
+                type: this.props.select,
+                exercises: this.props.exercises
+            }
+        }
 
 
-        return <div className={classes.Create}>
-            <h1 className={classes.MainHeader}>Create Your Workout</h1>
-            
+        return <React.Fragment>
+        <h1 className={classes.MainHeader}>Create Your Workout</h1>
+        <div className={classes.Create}>
             <ThemeProvider theme={theme}>
                 <TextField 
                     id="standard-basic" 
@@ -273,7 +354,7 @@ class Create extends React.Component {
                     aria-label="position" 
                     name="position" 
                     value={this.state.currentExercise.type} 
-                    onChange={event => this.updateExerciseHandler(event, 'type')} row
+                    onChange={event => this.changeTypeHandler(event)} row
                     style={{marginBottom: '20px'}}
                     >
                         <FormControlLabel
@@ -298,11 +379,8 @@ class Create extends React.Component {
                         <div>
                             <Dialog
                             open={this.state.errors.length !== 0}
-                            onClose={this.closeErrorModalHandler}
-                            aria-labelledby="alert-dialog-title"
-                            aria-describedby="alert-dialog-description"
                             >
-                                <h2 className={classes.ErrorModalTitle}>Invalid</h2>
+                                <h2 className={classes.ErrorModalTitle}>Invalid Exercise</h2>
                                     
                                 {this.state.errorMessages.map(errorMessage => {
                                     return <div style={{padding: '0 30px'}}>
@@ -318,9 +396,38 @@ class Create extends React.Component {
                         </div>
                     : null}
                 </div>
-            
             </ThemeProvider>
         </div>
+        
+        <div className={classes.PreviewCardBox} style={this.props.exercises.length === 0 ? {position: 'relative', opacity: '0', top: '100px', transition: '0.2s ease-out'} : null}>
+            {this.props.exercises.length > 0 ?
+                <React.Fragment>
+                    <h1 className={classes.PreviewCardTitle}>Preview</h1>
+                    <PreviewCard deleteWorkout={this.openDeleteModalHandler} disableLike cardStyle={{width: '100%'}} workout={workout}/>
+                </React.Fragment>
+            : null}
+
+        </div>
+        <Dialog
+            open={this.state.deleteWorkoutModal}
+            >
+                <div className={classes.DeleteModalBox}>
+                    <h2 style={{color: 'rgb(71, 71, 71)', margin: '20px 40px 30px'}}>Are you sure you want to delete this workout?</h2>
+                        <div className={classes.DeleteModalOptionBox}>
+                            <button 
+                            className={classes.DeleteModalOptionButton} 
+                            onClick={this.deleteWorkoutHandler}
+                            style={{color: 'rgb(130, 0, 0)', borderColor: 'rgb(130, 0, 0)'}}
+                            >Yes</button>
+                            <button 
+                            className={classes.DeleteModalOptionButton} 
+                            onClick={this.closeDeleteModalHandler}
+                            style={{color: 'rgb(71, 71, 71)', borderColor: 'rgb(71, 71, 71)'}}
+                            >No</button>
+                        </div>
+                </div>
+            </Dialog>
+        </React.Fragment>
     }
 }
 
@@ -338,7 +445,8 @@ const mapDispatchToProps = dispatch => {
         onUpdateTitle: title => dispatch({type: actionTypes.SET_TITLE, title: title}),
         onUpdateSelect: select => dispatch({type: actionTypes.SET_SELECT, select: select}),
         onAddExercise: exercise => dispatch({type: actionTypes.ADD_EXERCISE, exercise: exercise}),
-        onDeleteExercise: id => dispatch({type: actionTypes.DELETE_EXERCISE, id: id})
+        onDeleteExercise: id => dispatch({type: actionTypes.DELETE_EXERCISE, id: id}),
+        onDeleteWorkout: () => dispatch({type: actionTypes.DELETE_WORKOUT})
     }
 }
 

@@ -40,7 +40,7 @@ class All extends React.Component {
                         type: 'sets-min-sec',
                         sets: 4,
                         minutes: 12,
-                        seconds: 0
+                        seconds: 30
                     },
                     {
                         title: 'Jumping jacks',

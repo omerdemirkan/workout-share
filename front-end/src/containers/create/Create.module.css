@@ -1,10 +1,11 @@
 .Create {
-    background-color: #eee;
-    padding: 5px 15px;
+    background-color: white;
+    padding: 25px 5% 8px;
     margin: auto;
-    width: 100%;
     box-sizing: border-box;
+    width: 95%;
     max-width: 600px;
+    border-radius: .5rem;
 }
 
 .MainHeader {
@@ -50,8 +51,8 @@
 }
 
 .NewExerciseBox {
-  background: white;
-  padding: 30px 2rem 15px;
+  background: transparent; 
+  padding: 0px 2rem 15px;
   border-radius: .5rem;
 }
 
@@ -108,9 +109,58 @@
   user-select: none;
 }
 
+.PreviewCardBox {
+  margin: auto;
+  margin-top: 50px;
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  top: 0;
+  opacity: 1;
+  transition: 0.2s ease-out;
+}
+
+.PreviewCardTitle {
+  text-align: center;
+  color: rgb(73, 73, 73);
+}
+
+.DeleteModalBox {
+  padding: 15px 5%;
+  text-align: center;
+}
+
+.DeleteModalOptionBox {
+  margin: auto;
+  margin-bottom: 8px;
+  width: 80%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.DeleteModalOptionButton {
+  width: 40%;
+  max-width: 100px;
+  height: 32px;
+
+  font-size: 1.1rem;
+  font-weight: 700; 
+  
+  background-color: transparent;
+  border: .5px solid rgb(71, 71, 71);
+  color: rgb(71, 71, 71);
+  border-radius: .5rem;
+
+  outline: none;
+  cursor: pointer;
+}
+
 @media (min-width: 769px) {
   .Create {
-    padding-top: 30px;
+    padding-top: 25px;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 

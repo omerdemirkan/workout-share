@@ -8,7 +8,7 @@ const exerciseSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 4,
-        maxlength: 30
+        maxlength: 20
     },
     sets: {
         type: Number,

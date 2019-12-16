@@ -33,7 +33,8 @@ const createReducer = (state = initialState, action) => {
                 ...state,
                 exercises: filteredExercises
             }
-            
+        case actionTypes.DELETE_WORKOUT: 
+            return initialState;
         default:
             return state
     }

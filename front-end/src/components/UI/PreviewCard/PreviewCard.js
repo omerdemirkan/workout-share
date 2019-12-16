@@ -1,5 +1,9 @@
+
+
+// The same as a Card, but with delete functionality for each exercise as well as the whole workout.
+
 import React from 'react';
-import classes from './Card.module.css'
+import classes from './PreviewCard.module.css'
 
 import { colorsByDisplay } from '../../../helper/colors-by-path'
 
@@ -7,6 +11,7 @@ import { colorsByDisplay } from '../../../helper/colors-by-path'
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 // disableLike: disables like button
 
@@ -53,9 +58,12 @@ class Card extends React.PureComponent {
                 </tr>
             }
         });
-        return <div className={classes.Card} style={this.props.cardStyle !== null ? this.props.cardStyle : null}> 
+        return <div className={classes.PreviewCard} style={this.props.cardStyle !== null ? this.props.cardStyle : null}> 
             <div className={classes.CardHeader}>
                 <h2 className={classes.CardTitle} style={{color: colorsByDisplay(displayType).darkColor}}>{this.props.workout.title}</h2>
+                <button onClick={this.props.deleteWorkout} className={classes.DeleteWorkoutButton}>
+                    <DeleteIcon fontSize="large"/>
+                </button>
             </div>
             <div>
                 <table className={classes.ListTable}>
