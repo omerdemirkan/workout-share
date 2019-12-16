@@ -28,6 +28,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const profanityFilter = new Filter();
@@ -73,16 +78,37 @@ class Create extends React.Component {
         },
         errors: [],
         errorMessages: [],
-        deleteWorkoutModal: false
+        deleteWorkoutModal: false,
+
+        //To alert the user to input 3 exercises to be able to post
+        twoMoreAlert: false
     }
 
     updateExerciseHandler = (event, field) => {
         let newExercise = {...this.state.currentExercise};
-        if (field === 'title' || field === 'type') {
+        if (field === 'title') {
             newExercise[field] = event.target.value;
             this.setState({currentExercise: newExercise});
         } else {
             newExercise[field] = Number(event.target.value);
+            this.setState({currentExercise: newExercise});
+        }
+    }
+
+    changeTypeHandler = event => {
+        console.log(event.target.value);
+        if (event.target.value === 'sets-reps') {
+            const newExercise = {...this.state.currentExercise};
+            newExercise.minutes = 0;
+            newExercise.seconds = 0;
+            newExercise.sets = 0;
+            newExercise.type = event.target.value;
+            this.setState({currentExercise: newExercise});
+        } else {
+            const newExercise = {...this.state.currentExercise};
+            newExercise.reps = 0;
+            newExercise.sets = 0;
+            newExercise.type = event.target.value;
             this.setState({currentExercise: newExercise});
         }
     }
@@ -106,6 +132,9 @@ class Create extends React.Component {
                     seconds: this.state.currentExercise.seconds
                 }
             }
+            if (this.props.exercises.length === 0) {
+                this.openTwoMoreAlertHandler();
+            }
             this.props.onAddExercise(exercise);
             this.resetCurrentExercise();
         } else {
@@ -118,24 +147,6 @@ class Create extends React.Component {
                 });
             });
             this.setState({errors: foundErrors, errorMessages: errorMessages});
-        }
-    }
-
-    changeTypeHandler = event => {
-        console.log(event.target.value);
-        if (event.target.value === 'sets-reps') {
-            const newExercise = {...this.state.currentExercise};
-            newExercise.minutes = 0;
-            newExercise.seconds = 0;
-            newExercise.sets = 0;
-            newExercise.type = event.target.value;
-            this.setState({currentExercise: newExercise});
-        } else {
-            const newExercise = {...this.state.currentExercise};
-            newExercise.reps = 0;
-            newExercise.sets = 0;
-            newExercise.type = event.target.value;
-            this.setState({currentExercise: newExercise});
         }
     }
 
@@ -198,20 +209,17 @@ class Create extends React.Component {
         });
     }
 
-    closeErrorModalHandler = () => {
-        this.setState({
-            errors: [],
-            errorMessages: [],
-        });
-    }
+    closeErrorModalHandler = () => {this.setState({errors: [], errorMessages: [],});}
 
-    openDeleteModalHandler = () => {
-        this.setState({deleteWorkoutModal: true});
-    }
 
-    closeDeleteModalHandler = () => {
-        this.setState({deleteWorkoutModal: false});
-    }
+    openTwoMoreAlertHandler = () => {this.setState({twoMoreAlert: true})}
+
+    closeTwoMoreAlertHandler = () => {this.setState({twoMoreAlert: false})}
+
+
+    openDeleteModalHandler = () => {this.setState({deleteWorkoutModal: true});}
+
+    closeDeleteModalHandler = () => {this.setState({deleteWorkoutModal: false});}
 
     deleteWorkoutHandler = () => {
         this.props.onDeleteWorkout();
@@ -373,28 +381,9 @@ class Create extends React.Component {
 
                     {inputsBasedOnFormat}
 
-                    <button onClick={this.addExerciseHandler} className={classes.AddExerciseButton}>Add Exercise</button>
+                    <button onClick={this.addExerciseHandler} className={classes.AddExerciseButton}><AddIcon fontSize='large'/></button>
 
-                    {this.state.errorMessages.length !== 0 ? 
-                        <div>
-                            <Dialog
-                            open={this.state.errors.length !== 0}
-                            >
-                                <h2 className={classes.ErrorModalTitle}>Invalid Exercise</h2>
-                                    
-                                {this.state.errorMessages.map(errorMessage => {
-                                    return <div style={{padding: '0 30px'}}>
-                                        <ul className={classes.ErrorModalList}>
-                                            <li className={classes.ErrorModalMessage}>{errorMessage}</li>
-                                        </ul>
-                                    </div>
-                                })}
-                                <DialogActions>
-                                    <button className={classes.ErrorModalButton} onClick={this.closeErrorModalHandler}><CloseRoundedIcon fontSize="large"/></button>
-                                </DialogActions>
-                            </Dialog>
-                        </div>
-                    : null}
+                    
                 </div>
             </ThemeProvider>
         </div>
@@ -408,7 +397,34 @@ class Create extends React.Component {
             : null}
 
         </div>
-        <Dialog
+
+        <button style={this.props.exercises.length < 3 ? {position: 'relative', opacity: '0', top: '100px'} : null} className={classes.PostWorkoutButton}>Post Workout</button>
+        
+         
+            {/* ----!!!!Alerts!!!!---- */}
+
+            {this.state.errorMessages.length !== 0 ? 
+                <div>
+                    <Dialog
+                    open={this.state.errors.length !== 0}
+                    >
+                        <h2 className={classes.ErrorModalTitle}>Invalid Exercise</h2>
+                                    
+                        {this.state.errorMessages.map(errorMessage => {
+                            return <div style={{padding: '0 30px'}}>
+                                <ul className={classes.ErrorModalList}>
+                                    <li className={classes.ErrorModalMessage}>{errorMessage}</li>
+                                </ul>
+                            </div>
+                        })}
+                        <DialogActions>
+                            <button className={classes.ErrorModalButton} onClick={this.closeErrorModalHandler}><CloseRoundedIcon fontSize="large"/></button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
+            : null}
+            
+            <Dialog
             open={this.state.deleteWorkoutModal}
             >
                 <div className={classes.DeleteModalBox}>
@@ -427,6 +443,28 @@ class Create extends React.Component {
                         </div>
                 </div>
             </Dialog>
+
+            <Snackbar
+            anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+            }}
+            open={this.state.twoMoreAlert}
+            autoHideDuration={6000}
+            onClose={this.closeTwoMoreAlertHandler}
+            message={<span className={classes.TwoMoreModalText} id="message-id">Add two more exercises to be able to post</span>}
+            action={[
+                <IconButton
+                    key="close"
+                    aria-label="close"
+                    color="inherit"
+                    className={classes.close}
+                    onClick={this.closeTwoMoreAlertHandler}
+                >
+                    <CloseIcon />
+                </IconButton>,
+            ]}
+            />
         </React.Fragment>
     }
 }

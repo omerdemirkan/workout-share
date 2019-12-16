@@ -3,16 +3,18 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import Navbar from './components/UI/navbar/navbar';
-import Create from './containers/create/Create';
 import Main from './components/UI/Main/Main';
+import Footer from './components/UI/Footer/Footer'
 
-// Search
+// Routes
 import All from './containers/Search/All/All'
 import Powerlifting from './containers/Search/Powerlifting/Powerlifting'
 import Bodybuilding from './containers/Search/Bodybuilding/Bodybuilding'
 import Weightlifting from './containers/Search/Weightlifting/Weightlifting'
 import Endurance from './containers/Search/Endurance/Endurance'
 import Crossfit from './containers/Search/Crossfit/Crossfit'
+
+import Create from './containers/create/Create';
 
 const App = props => {
   return <div className='App'>
@@ -29,6 +31,7 @@ const App = props => {
         <Route path="/" component={All}/>
       </Switch>
     </Main>
+    <Footer/>
 
   </div>
 }

@@ -1,11 +1,12 @@
 .Create {
     background-color: white;
-    padding: 25px 5% 8px;
+    padding: 25px 5% 70px;
     margin: auto;
     box-sizing: border-box;
     width: 95%;
     max-width: 600px;
     border-radius: .5rem;
+    position: relative;
 }
 
 .MainHeader {
@@ -57,24 +58,23 @@
 }
 
 .AddExerciseButton {
-  width: 180px;
-  height: 40px;
-  margin-left: 50%;
-  transform: translate(-50%);
-  margin-top: 20px;
-  margin-bottom: 10px;
-  background-color: transparent;
-  border: 1px solid;
-  border-radius: .5rem;
-  font-size: 1.3rem;
+  min-width: 55px;
+  min-height: 55px;
+  box-sizing: border-box;
+  position: absolute;
+  right: 20px;
+  bottom: 16px;
+  background-color: rgb(71, 71, 71);
+  color: white;
+  border: 2px solid;
+  border-radius: 4rem;
   outline: none;
-  color: rgb(71, 71, 71);
   user-select: none;
 }
 
 .AddExerciseButton:active {
-  background-color: rgb(71, 71, 71);
-  color: white
+  color: rgb(71, 71, 71);
+  background-color: transparent;
 }
 
 .ErrorModalTitle {
@@ -112,8 +112,8 @@
 .PreviewCardBox {
   margin: auto;
   margin-top: 50px;
-  width: 100%;
-  max-width: 600px;
+  width: 95%;
+  max-width: 500px;
   position: relative;
   top: 0;
   opacity: 1;
@@ -154,6 +154,32 @@
 
   outline: none;
   cursor: pointer;
+}
+
+.PostWorkoutButton {
+  width: 180px;
+  height: 40px;
+  margin-left: 50%;
+  transform: translate(-50%);
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: transparent;
+  border: 2px solid;
+  border-radius: .5rem;
+  font-size: 1.3rem;
+  outline: none;
+  color: rgb(71, 71, 71);
+  user-select: none;
+  position: relative;
+  top: 0;
+  opacity: 1;
+  transition: 0.2s ease-in;
+}
+
+@media (max-width: 768px) {
+  .TwoMoreModalText {
+    font-size: 0.8rem;
+  }
 }
 
 @media (min-width: 769px) {

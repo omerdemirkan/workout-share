@@ -1,17 +1,24 @@
 import * as actionTypes from '../actions/actionTypes'
 
+import Filter from 'bad-words';
+
+const profanityFilter = new Filter();
+
 const initialState = {
     title: '',
     select: 'General',
-    exercises: []
+    exercises: [],
+    titleValid: false
 }
 
 const createReducer = (state = initialState, action) => {
     switch(action.type) {
         case actionTypes.SET_TITLE:
+            const titleValid = action.title.length >= 6 && action.title.length <= 30 && action.title === profanityFilter.clean(action.title) ? true : false;
             return {
                 ...state,
-                title: action.title
+                title: action.title,
+                titleValid: titleValid
             }
         case actionTypes.SET_SELECT:
             return {
