@@ -1,7 +1,4 @@
 import React from 'react';
-import axios from '../../axios';
-import { connect } from 'react-redux'
-import * as actionTypes from '../../store/actions/actionTypes'
 import { colorsByDisplay } from '../../helper/colors-by-path';
 import PreviewCard from '../../components/UI/PreviewCard/PreviewCard'
 import ErrorModal from '../../components/UI/ErrorModal/ErrorModal'
@@ -29,6 +26,11 @@ import AddIcon from '@material-ui/icons/Add';
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+
+// Redux
+import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions/actionTypes';
+import {postAnonAsync} from '../../store/actions/index';
 
 
 const profanityFilter = new Filter();
@@ -81,7 +83,8 @@ class Create extends React.Component {
         //To alert the user to input 3 exercises to be able to post
         twoMoreAlert: false,
 
-        postingWorkout: false
+        //To alert the user of the downsides of posting without an account, possible redirect involved
+        authModal: false
     }
 
     updateExerciseHandler = (event, field) => {
@@ -209,10 +212,6 @@ class Create extends React.Component {
 
     // Modal Handlers
 
-    closeExerciseErrorModalHandler = () => {this.setState({exerciseErrorMessages: []});}
-
-
-
     openTwoMoreAlertHandler = () => {this.setState({twoMoreAlert: true})}
 
     closeTwoMoreAlertHandler = () => {this.setState({twoMoreAlert: false})}
@@ -225,6 +224,10 @@ class Create extends React.Component {
 
 
     closeWorkoutTitleErrorModal = () => {this.setState({workoutErrorMessages: []})}
+
+    closeExerciseErrorModalHandler = () => {this.setState({exerciseErrorMessages: []});}
+
+    closeAuthModalHandler = () => {this.setState({authModal: false})}
 
 
 
@@ -258,9 +261,28 @@ class Create extends React.Component {
                 workoutErrorMessages: errors
             });
         } else {
-            //To be continued
+            if (!this.props.authorized) {
+                this.setState({authModal: true});
+            } else {
+                //To be continued
+            }
         }
     }
+
+    signupRedirectHandler = () => {
+        //To be continued
+    }
+
+    anonymousPostHandler = () => {
+        const workout = {
+            title: this.props.title,
+            type: this.props.select,
+            exercises: this.props.exercises
+        }
+        this.props.onPostAnonHandler(workout);
+    }
+
+
 
     render() {
         // If the user chooses the sets-reps format, we need inputs for sets and reps,
@@ -464,6 +486,25 @@ class Create extends React.Component {
                 list={[...this.state.workoutErrorMessages]}
                 close={this.closeWorkoutTitleErrorModal}/>
             : null}
+
+            {this.state.authModal ?
+                <ErrorModal
+                open={this.state.authModal}
+                header='Not logged in?'
+                close={this.closeAuthModalHandler}>
+                    <p>Posting without an account allows for a link to share with friends, but is posted as anonymous and doesn't save your posts. Are you sure you want to post anonymously?</p>
+                    <button 
+                        className={classes.DeleteModalOptionButton} 
+                        onClick={this.anonymousPostHandler}
+                        style={{color: 'rgb(130, 0, 0)', borderColor: 'rgb(130, 0, 0)'}}
+                        >Yes</button>
+                        <button 
+                        className={classes.DeleteModalOptionButton} 
+                        onClick={this.signupRedirectHandler}
+                        style={{color: 'rgb(71, 71, 71)', borderColor: 'rgb(71, 71, 71)'}}
+                        >No, Sign me up!</button>
+                </ErrorModal>
+            : null}
             
 
             <Snackbar
@@ -508,6 +549,7 @@ const mapDispatchToProps = dispatch => {
         onAddExercise: exercise => dispatch({type: actionTypes.ADD_EXERCISE, exercise: exercise}),
         onDeleteExercise: title => dispatch({type: actionTypes.DELETE_EXERCISE, title: title}),
         onDeleteWorkout: () => dispatch({type: actionTypes.DELETE_WORKOUT}),
+        onPostAnonHandler: workout => dispatch(postAnonAsync(workout))
     }
 }
 

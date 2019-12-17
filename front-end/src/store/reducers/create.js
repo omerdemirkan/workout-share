@@ -3,7 +3,10 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     title: '',
     select: 'General',
-    exercises: []
+    exercises: [],
+    signupRedirect: false,
+    posting: false,
+    postResult: null
 }
 
 const createReducer = (state = initialState, action) => {
@@ -42,6 +45,28 @@ const createReducer = (state = initialState, action) => {
             }
         case actionTypes.DELETE_WORKOUT: 
             return initialState;
+        case actionTypes.SIGNUP_REDIRECT:
+            return {
+                ...state,
+                signupRedirect: true
+            }
+        case actionTypes.POST_ANON_START:
+            return {
+                ...state,
+                posting: true
+            }
+        case actionTypes.POST_ANON_SUCCESS:
+            return {
+                ...state,
+                postResult: true,
+                posting: false
+            }
+        case actionTypes.POST_ANON_FAILURE:
+            return {
+                ...state,
+                postResult: false,
+                posting: false
+            }
         default:
             return state
     }
