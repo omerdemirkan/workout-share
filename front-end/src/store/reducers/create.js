@@ -8,17 +8,21 @@ const initialState = {
     title: '',
     select: 'General',
     exercises: [],
-    titleValid: false
+    errorMessages: ["Workout titles must be between 6 and 30 characters"]
 }
 
 const createReducer = (state = initialState, action) => {
     switch(action.type) {
         case actionTypes.SET_TITLE:
-            const titleValid = action.title.length >= 6 && action.title.length <= 30 && action.title === profanityFilter.clean(action.title) ? true : false;
-            return {
-                ...state,
-                title: action.title,
-                titleValid: titleValid
+            if (action.title.length > 30 ) {
+                return {
+                    ...state
+                }
+            } else {
+                return {
+                    ...state,
+                    title: action.title
+                }
             }
         case actionTypes.SET_SELECT:
             return {
@@ -42,6 +46,19 @@ const createReducer = (state = initialState, action) => {
             }
         case actionTypes.DELETE_WORKOUT: 
             return initialState;
+        case actionTypes.VALIDATE_WORKOUT_TITLE:
+            let errors = [];
+            if (profanityFilter.clean(state.title) !== state.title) {
+                errors.push('Profanity found in title');
+            }
+            if (state.title.length < 6) {
+                errors.push("Workout titles must be over 6 characters");
+            }
+            return {
+                ...state,
+                title: state.title,
+                errorMessages: errors
+            }
         default:
             return state
     }

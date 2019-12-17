@@ -77,38 +77,6 @@
   background-color: transparent;
 }
 
-.ErrorModalTitle {
-  text-align: center;
-}
-
-.ErrorModalList {
-  list-style: none;
-  padding-inline-start: 0;
-  margin: 0, 60px;
-}
-
-.ErrorModalMessage {
-  font-size: 1.1rem;
-  font-weight: 600;
-  user-select: none;
-  color: rgb(180, 0, 0);
-}
-
-.ErrorModalButton {
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background-color: transparent;
-  border: none;
-  border-radius: .5rem;
-  font-size: 1rem;
-  outline: none;
-  cursor: pointer;
-  user-select: none;
-}
-
 .PreviewCardBox {
   margin: auto;
   margin-top: 50px;
@@ -133,6 +101,7 @@
 .DeleteModalOptionBox {
   margin: auto;
   margin-bottom: 8px;
+  margin-top: 30px;
   width: 80%;
   max-width: 400px;
   display: flex;
@@ -167,6 +136,8 @@
   border: 2px solid;
   border-radius: .5rem;
   font-size: 1.3rem;
+  color: rgb(71, 71, 71);
+  background-color: transparent;
   outline: none;
   user-select: none;
   position: relative;
@@ -175,9 +146,11 @@
   transition: 0.2s ease;
 }
 
+.WorkoutTitleErrorModalBox {
+  padding: 0 80px 0;
+}
+
 .PostWorkoutButton:active {
-  background-color: rgb(71, 71, 71);
-  color: white;
   transition: 0.01s ease-in;
 }
 

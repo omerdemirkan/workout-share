@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import * as actionTypes from '../../store/actions/actionTypes'
 import { colorsByDisplay } from '../../helper/colors-by-path';
 import PreviewCard from '../../components/UI/PreviewCard/PreviewCard'
+import ErrorModal from '../../components/UI/ErrorModal/ErrorModal'
 
 import classes from './Create.module.css';
 
@@ -23,10 +24,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import AddIcon from '@material-ui/icons/Add';
 
 import Snackbar from '@material-ui/core/Snackbar';
@@ -75,9 +72,12 @@ class Create extends React.Component {
             minutes: 0,
             seconds: 0
         },
-        errors: [],
         errorMessages: [],
+
+        //Modal State
+        exerciseErrorModal: false,
         deleteWorkoutModal: false,
+        workoutTitleErrorModal: false,
 
         //To alert the user to input 3 exercises to be able to post
         twoMoreAlert: false
@@ -91,32 +91,35 @@ class Create extends React.Component {
                 this.setState({currentExercise: newExercise});
             }
         } else {
-            newExercise[field] = Number(event.target.value);
-            this.setState({currentExercise: newExercise});
+            if (Number(event.target.value) <= valueLimits[field][1]) {
+                newExercise[field] = Number(event.target.value);
+                this.setState({currentExercise: newExercise});
+            }
         }
     }
 
     changeTypeHandler = event => {
-        console.log(event.target.value);
         if (event.target.value === 'sets-reps') {
-            const newExercise = {...this.state.currentExercise};
-            newExercise.minutes = 0;
-            newExercise.seconds = 0;
-            newExercise.sets = 0;
-            newExercise.type = event.target.value;
-            this.setState({currentExercise: newExercise});
+            this.setState({currentExercise: {
+                ...this.state.currentExercise,
+                minutes: 0,
+                seconds: 0,
+                sets: 0,
+                type: event.target.value
+            }});
         } else {
-            const newExercise = {...this.state.currentExercise};
-            newExercise.reps = 0;
-            newExercise.sets = 0;
-            newExercise.type = event.target.value;
-            this.setState({currentExercise: newExercise});
+            this.setState({currentExercise: {
+                ...this.state.currentExercise,
+                reps: 0,
+                sets: 0,
+                type: event.target.value
+            }});
         }
     }
 
     addExerciseHandler = () => {
-        const foundErrors = this.checkForErrors()
-        if (foundErrors.length === 0) {
+        const errorMessages = this.getExerciseErrorMessages()
+        if (errorMessages.length === 0) {
             let exercise = null;
             if (this.state.currentExercise.type === 'sets-reps') {
                 exercise = {
@@ -127,7 +130,8 @@ class Create extends React.Component {
                 }
             } else {
                 exercise = {
-                    title: this.state.currentExercise.title,
+                    title: this.state.currentExercise.title.trim(),
+                    type: this.state.currentExercise.type,
                     sets: this.state.currentExercise.sets,
                     minutes: this.state.currentExercise.minutes,
                     seconds: this.state.currentExercise.seconds
@@ -139,24 +143,16 @@ class Create extends React.Component {
             this.props.onAddExercise(exercise);
             this.resetCurrentExercise();
         } else {
-            const errorMessages = [];
-            Object.keys(exerciseErrorMessages).forEach(errorName => {
-                foundErrors.forEach(foundError => {
-                    if (errorName === foundError) {
-                        errorMessages.push(exerciseErrorMessages[errorName])
-                    }
-                });
-            });
-            this.setState({errors: foundErrors, errorMessages: errorMessages});
+            this.setState({errorMessages: errorMessages, exerciseErrorModal: true});
         }
     }
 
-    checkForErrors = () => {
-        let errors = [];
+    getExerciseErrorMessages = () => {
+        let errorMessages = [];
 
         // Checking title: 
         if (this.state.currentExercise.title.length < valueLimits.title[0] || this.state.currentExercise.title.length > valueLimits.title[1]) {
-            errors.push('title');
+            errorMessages.push(exerciseErrorMessages.title);
         }
 
         // Checking sets-reps / sets-min-sec: 
@@ -168,12 +164,12 @@ class Create extends React.Component {
 
             // Checking for a positive duration (because minutes and seconds can be 0 seperately, but not at the same time): 
             if (this.state.currentExercise.seconds === 0 && this.state.currentExercise.minutes === 0) {
-                errors.push('noDuration');
+                errorMessages.push(exerciseErrorMessages.noDuration);
             }
         }
         relevantFields.forEach(field => {
             if (this.state.currentExercise[field] < valueLimits[field][0] || this.state.currentExercise[field] > valueLimits[field][1]) {
-                errors.push(field);
+                errorMessages.push(exerciseErrorMessages[field]);
             }
         });
 
@@ -186,16 +182,16 @@ class Create extends React.Component {
                 }
             });
             if (copyFound) {
-                errors.push('uniqueTitle');
+                errorMessages.push(exerciseErrorMessages.uniqueTitle);
             }
         }
 
         //Checking for profanity:
         if (profanityFilter.clean(this.state.currentExercise.title) !== this.state.currentExercise.title) {
-            errors.push('profanity');
+            errorMessages.push(exerciseErrorMessages.profanity);
         }
 
-        return errors;
+        return errorMessages;
     }
 
     resetCurrentExercise = () => {
@@ -210,7 +206,12 @@ class Create extends React.Component {
         });
     }
 
-    closeErrorModalHandler = () => {this.setState({errors: [], errorMessages: [],});}
+    // Modal Handlers
+
+    // openExerciseErrorModalHandler = () => {this.setState({exerciseErrorModal: true});}       Redundant as of now
+
+    closeExerciseErrorModalHandler = () => {this.setState({exerciseErrorModal: false});}
+
 
 
     openTwoMoreAlertHandler = () => {this.setState({twoMoreAlert: true})}
@@ -218,9 +219,12 @@ class Create extends React.Component {
     closeTwoMoreAlertHandler = () => {this.setState({twoMoreAlert: false})}
 
 
+
     openDeleteModalHandler = () => {this.setState({deleteWorkoutModal: true});}
 
     closeDeleteModalHandler = () => {this.setState({deleteWorkoutModal: false});}
+
+
 
     deleteWorkoutHandler = () => {
         this.props.onDeleteWorkout();
@@ -237,6 +241,20 @@ class Create extends React.Component {
             errorMessages: [],
             deleteWorkoutModal: false
         });
+    }
+
+
+    openWorkoutTitleErrorModal = () => {this.setState({workoutTitleErrorModal: true})}
+
+    closeWorkoutTitleErrorModal = () => {this.setState({workoutTitleErrorModal: false})}
+
+    postWorkoutHandler = () => {
+        this.props.onValidateTitle();
+        if (this.props.errorMessages.length === 0) {
+            //To be continued
+        } else {
+            this.openWorkoutTitleErrorModal();
+        }
     }
 
     render() {
@@ -363,7 +381,7 @@ class Create extends React.Component {
                     aria-label="position" 
                     name="position" 
                     value={this.state.currentExercise.type} 
-                    onChange={event => this.changeTypeHandler(event)} row
+                    onChange={this.changeTypeHandler} row
                     style={{marginBottom: '20px'}}
                     >
                         <FormControlLabel
@@ -398,51 +416,46 @@ class Create extends React.Component {
             : null}
 
         </div>
-
-        <button style={this.props.exercises.length < 3 ? {position: 'relative', opacity: '0', bottom: '60px'} : null} className={classes.PostWorkoutButton}>Post Workout</button>
+        
+        <button 
+        style={this.props.exercises.length < 3 ? {position: 'relative', opacity: '0', bottom: '60px'} : null} 
+        className={classes.PostWorkoutButton}
+        onClick={this.postWorkoutHandler}
+        >Post Workout</button>
+        
         
             {/* ----!!!!Alerts!!!!---- */}
 
-            {this.state.errorMessages.length !== 0 ? 
-                <div>
-                    <Dialog
-                    open={this.state.errors.length !== 0}
-                    >
-                        <h2 className={classes.ErrorModalTitle}>Invalid Exercise</h2>
-                                    
-                        {this.state.errorMessages.map(errorMessage => {
-                            return <div style={{padding: '0 30px'}}>
-                                <ul className={classes.ErrorModalList}>
-                                    <li className={classes.ErrorModalMessage}>{errorMessage}</li>
-                                </ul>
-                            </div>
-                        })}
-                        <DialogActions>
-                            <button className={classes.ErrorModalButton} onClick={this.closeErrorModalHandler}><CloseRoundedIcon fontSize="large"/></button>
-                        </DialogActions>
-                    </Dialog>
-                </div>
-            : null}
             
-            <Dialog
+            <ErrorModal
+            open={this.state.exerciseErrorModal}
+            header='Invalid Exercise'
+            list={[...this.state.errorMessages]}
+            close={this.closeExerciseErrorModalHandler}/>
+            
+            <ErrorModal
             open={this.state.deleteWorkoutModal}
+            header={'Are you sure you want to delete this workout?'}
             >
-                <div className={classes.DeleteModalBox}>
-                    <h2 style={{color: 'rgb(71, 71, 71)', margin: '20px 40px 30px'}}>Are you sure you want to delete this workout?</h2>
-                        <div className={classes.DeleteModalOptionBox}>
-                            <button 
-                            className={classes.DeleteModalOptionButton} 
-                            onClick={this.deleteWorkoutHandler}
-                            style={{color: 'rgb(130, 0, 0)', borderColor: 'rgb(130, 0, 0)'}}
-                            >Yes</button>
-                            <button 
-                            className={classes.DeleteModalOptionButton} 
-                            onClick={this.closeDeleteModalHandler}
-                            style={{color: 'rgb(71, 71, 71)', borderColor: 'rgb(71, 71, 71)'}}
-                            >No</button>
-                        </div>
+                <div className={classes.DeleteModalOptionBox}>
+                    <button 
+                    className={classes.DeleteModalOptionButton} 
+                    onClick={this.deleteWorkoutHandler}
+                    style={{color: 'rgb(130, 0, 0)', borderColor: 'rgb(130, 0, 0)'}}
+                    >Yes</button>
+                    <button 
+                    className={classes.DeleteModalOptionButton} 
+                    onClick={this.closeDeleteModalHandler}
+                    style={{color: 'rgb(71, 71, 71)', borderColor: 'rgb(71, 71, 71)'}}
+                    >No</button>
                 </div>
-            </Dialog>
+            </ErrorModal>
+
+            <ErrorModal
+            open={this.state.workoutTitleErrorModal}
+            header='Error: Workout Title'
+            list={[...this.props.errorMessages]}
+            close={this.closeWorkoutTitleErrorModal}/>
 
             <Snackbar
             anchorOrigin={{
@@ -474,7 +487,8 @@ const mapStateToProps = state => {
         authorized: state.auth.authorized,
         title: state.create.title,
         select: state.create.select,
-        exercises: state.create.exercises
+        exercises: state.create.exercises,
+        errorMessages: state.create.errorMessages
     }
 }
 
@@ -484,7 +498,8 @@ const mapDispatchToProps = dispatch => {
         onUpdateSelect: select => dispatch({type: actionTypes.SET_SELECT, select: select}),
         onAddExercise: exercise => dispatch({type: actionTypes.ADD_EXERCISE, exercise: exercise}),
         onDeleteExercise: id => dispatch({type: actionTypes.DELETE_EXERCISE, id: id}),
-        onDeleteWorkout: () => dispatch({type: actionTypes.DELETE_WORKOUT})
+        onDeleteWorkout: () => dispatch({type: actionTypes.DELETE_WORKOUT}),
+        onValidateTitle: () => dispatch({type: actionTypes.VALIDATE_WORKOUT_TITLE})
     }
 }
 
