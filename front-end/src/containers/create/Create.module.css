@@ -148,7 +148,7 @@
   font-weight: 700; 
   
   background-color: transparent;
-  border: .5px solid rgb(71, 71, 71);
+  border: 2px solid rgb(71, 71, 71);
   color: rgb(71, 71, 71);
   border-radius: .5rem;
 
@@ -168,12 +168,17 @@
   border-radius: .5rem;
   font-size: 1.3rem;
   outline: none;
-  color: rgb(71, 71, 71);
   user-select: none;
   position: relative;
-  top: 0;
+  bottom: 0;
   opacity: 1;
-  transition: 0.2s ease-in;
+  transition: 0.2s ease;
+}
+
+.PostWorkoutButton:active {
+  background-color: rgb(71, 71, 71);
+  color: white;
+  transition: 0.01s ease-in;
 }
 
 @media (max-width: 768px) {

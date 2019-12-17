@@ -27,7 +27,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
-import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 
 import Snackbar from '@material-ui/core/Snackbar';
@@ -47,7 +46,7 @@ const theme = createMuiTheme({
 });
 
 const exerciseErrorMessages = {
-    title: 'Exercise titles must be between 4 and 20 characters',
+    title: 'Exercise titles must be between 4 and 25 characters',
     sets: 'Sets must be between 1 and 10',
     reps: 'Reps must be between 1 and 30',
     minutes: 'Minutes must be between 0 and 120',
@@ -59,7 +58,7 @@ const exerciseErrorMessages = {
 
 // Number value and string length limites in [min, max] format
 const valueLimits = {
-    title: [4, 20],
+    title: [4, 30],
     sets: [1, 10],
     reps: [1, 30],
     minutes: [0, 120],
@@ -87,8 +86,10 @@ class Create extends React.Component {
     updateExerciseHandler = (event, field) => {
         let newExercise = {...this.state.currentExercise};
         if (field === 'title') {
-            newExercise[field] = event.target.value;
-            this.setState({currentExercise: newExercise});
+            if (this.state.currentExercise.title.length !== valueLimits.title[1] || this.state.currentExercise.title.length > event.target.value.length) {
+                newExercise[field] = event.target.value;
+                this.setState({currentExercise: newExercise});
+            }
         } else {
             newExercise[field] = Number(event.target.value);
             this.setState({currentExercise: newExercise});
@@ -392,15 +393,14 @@ class Create extends React.Component {
             {this.props.exercises.length > 0 ?
                 <React.Fragment>
                     <h1 className={classes.PreviewCardTitle}>Preview</h1>
-                    <PreviewCard deleteWorkout={this.openDeleteModalHandler} disableLike cardStyle={{width: '100%'}} workout={workout}/>
+                    <PreviewCard darkTitle deleteWorkout={this.openDeleteModalHandler} disableLike cardStyle={{width: '100%'}} workout={workout}/>
                 </React.Fragment>
             : null}
 
         </div>
 
-        <button style={this.props.exercises.length < 3 ? {position: 'relative', opacity: '0', top: '100px'} : null} className={classes.PostWorkoutButton}>Post Workout</button>
+        <button style={this.props.exercises.length < 3 ? {position: 'relative', opacity: '0', bottom: '60px'} : null} className={classes.PostWorkoutButton}>Post Workout</button>
         
-         
             {/* ----!!!!Alerts!!!!---- */}
 
             {this.state.errorMessages.length !== 0 ? 

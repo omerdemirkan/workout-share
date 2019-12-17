@@ -10,12 +10,15 @@
     margin: 10px 0;
     max-width: 600px;
     position: relative;
+    z-index: 0;
 }
 
 .CardTitle {
   margin: 4px 0;
   color: white;
   text-align: center;
+  user-select: none;
+  cursor: pointer;
 }
 
 .CardHeader {
@@ -27,7 +30,11 @@
 }
 
 .ListBox {
-  height: 100%;
+  max-width: 100%;
+  min-height: calc(100% - 90px);
+  display: flex;
+  align-items: center;
+
 }
 
 .ListTable {
@@ -37,18 +44,18 @@
 }
 
 .ExerciseListItem {
-  margin: 10px;
+  margin: 7px;
   font-size: 1.1rem;
 }
 
 .CardFooter {
-  background-color: transparent;
+  background-color: white;
   width: 100%;
   min-height: 45px;
   position: absolute;
   bottom: 0;
   box-shadow: 0 0 5px 0.5px rgb(235, 235, 235);
-  border-bottom: 1px solid rgb(235, 235, 235);
+  z-index: 3;
 }
 
 .LikeButton {
@@ -63,6 +70,15 @@
 
 .LikeButton:active {
   animation: shake 0.05s;
+}
+
+.FadeOut {
+  width: 100%;
+  min-height: 45px;
+  position: absolute;
+  bottom: 0;
+  box-shadow: 0 0 50px 20px white;
+  z-index: 1;
 }
 
 @keyframes shake {

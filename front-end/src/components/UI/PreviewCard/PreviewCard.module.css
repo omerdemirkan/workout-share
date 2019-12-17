@@ -1,95 +1,111 @@
 .PreviewCard {
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 5px 10px -4px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: 340px;
-    width: 90%;
-    margin: 10px 0;
-    max-width: 600px;
-    position: relative;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 5px 10px -4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 340px;
+  width: 95%;
+  margin: 10px 0;
+  max-width: 600px;
+  position: relative;
+  z-index: 0;
 }
 
 .CardTitle {
-  margin: 4px 0;
-  color: white;
-  text-align: center;
+margin: 4px 0;
+color: white;
+text-align: center;
+user-select: none;
+cursor: pointer;
 }
 
 .CardHeader {
-  background-color: transparent;
-  width: 100%;
-  min-height: 45px;
-  box-shadow: 0 0 5px 0.5px rgb(235, 235, 235);
-  border-bottom: 1px solid rgb(235, 235, 235);
+background-color: transparent;
+width: 100%;
+min-height: 45px;
+box-shadow: 0 0 5px 0.5px rgb(235, 235, 235);
+border-bottom: 1px solid rgb(235, 235, 235);
 }
 
 .ListBox {
-  height: 100%;
+max-width: 100%;
+min-height: calc(100% - 90px);
+display: flex;
+align-items: center;
+
 }
 
 .ListTable {
-  margin: auto;
-  font-weight: 500;
-  color: rgb(73, 73, 73);
+margin: auto;
+font-weight: 500;
+color: rgb(73, 73, 73);
 }
 
 .ExerciseListItem {
-  margin: 10px;
-  font-size: 1.1rem;
+margin: 7px;
+font-size: 1.1rem;
 }
 
 .CardFooter {
-  background-color: transparent;
+background-color: white;
+width: 100%;
+min-height: 45px;
+position: absolute;
+bottom: 0;
+box-shadow: 0 0 5px 0.5px rgb(235, 235, 235);
+z-index: 3;
+}
+
+.LikeButton {
+position: absolute;
+right: 5px;
+bottom: 0px;
+border: none;
+background-color: transparent;
+outline: none;
+color: rgb(75, 75, 75);
+}
+
+.LikeButton:active {
+animation: shake 0.05s;
+}
+
+.FadeOut {
   width: 100%;
   min-height: 45px;
   position: absolute;
   bottom: 0;
-  box-shadow: 0 0 5px 0.5px rgb(235, 235, 235);
-  border-bottom: 1px solid rgb(235, 235, 235);
-}
-
-.LikeButton {
-  position: absolute;
-  right: 5px;
-  bottom: 0px;
-  border: none;
-  background-color: transparent;
-  outline: none;
-  color: rgb(75, 75, 75);
-}
-
-.LikeButton:active {
-  animation: shake 0.05s;
+  box-shadow: 0 0 50px 20px white;
+  z-index: 1;
 }
 
 @keyframes shake {
-  0% { transform: translate(.7px, .7px) rotate(5deg); }
-  20% { transform: translate(-1px, 0px) rotate(0deg); }
-  40% { transform: translate(.7px, -.7px) rotate(-5deg); }
-  60% { transform: translate(-1.5px, 1px) rotate(0deg); }
-  80% { transform: translate(-.7px, -.7px) rotate(5deg); }
-  100% { transform: translate(.7px, -1.4px) rotate(0deg); }
+0% { transform: translate(.7px, .7px) rotate(5deg); }
+20% { transform: translate(-1px, 0px) rotate(0deg); }
+40% { transform: translate(.7px, -.7px) rotate(-5deg); }
+60% { transform: translate(-1.5px, 1px) rotate(0deg); }
+80% { transform: translate(-.7px, -.7px) rotate(5deg); }
+100% { transform: translate(.7px, -1.4px) rotate(0deg); }
 }
 
 @media (min-width: 900px) {
-    .Card {
-      width: 45%;
-    }
+  .Card {
+    width: 45%;
+  }
 }
-  
+
 @media (min-width: 1365px) {
-    .Card {
-      width: 31%;
-    }
+  .Card {
+    width: 31%;
+  }
 }
 
 .DeleteWorkoutButton {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  left: 5px;
+  top: 10px;
   
   background-color: transparent;
   border: none;

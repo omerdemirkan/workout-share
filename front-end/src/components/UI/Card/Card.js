@@ -53,26 +53,26 @@ class Card extends React.PureComponent {
                 </tr>
             }
         });
-        return <div className={classes.Card} style={this.props.cardStyle !== null ? this.props.cardStyle : null}> 
+        return <div className={classes.Card} style={this.props.cardStyle !== null ? this.props.cardStyle : null}>
             <div className={classes.CardHeader}>
-                <h2 className={classes.CardTitle} style={{color: colorsByDisplay(displayType).darkColor}}>{this.props.workout.title}</h2>
+                <h2 className={classes.CardTitle} style={this.props.darkTitle ? {color: 'rgb(73, 73, 73)'} : {color: colorsByDisplay(displayType).darkColor}}>{this.props.workout.title}</h2>
             </div>
-            <div>
+            <div className={classes.ListBox}>
                 <table className={classes.ListTable}>
                     {exerciseList}
                 </table>
             </div>
     
             <div className={classes.CardFooter}>
+            {this.props.darkTitle ? <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p> : null}
             <button disabled={this.props.disableLike} onClick={this.likeToggleHandler} className={classes.LikeButton}>
+                
                 { !this.state.liked ?
                     <FavoriteBorderOutlinedIcon fontSize="large"/>
                 :
                     <FavoriteIcon fontSize="large" style={{color: colorsByDisplay(displayType).darkColor}}/>
                 }
             </button>
-            
-
             </div>
         </div>
     }
