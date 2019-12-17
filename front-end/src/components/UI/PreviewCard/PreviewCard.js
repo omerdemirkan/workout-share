@@ -5,6 +5,10 @@
 import React from 'react';
 import classes from './PreviewCard.module.css'
 
+// Redux
+import {connect} from 'react-redux';
+import * as actionTypes from '../../../store/actions/actionTypes'
+
 import { colorsByDisplay } from '../../../helper/colors-by-path'
 
 // -- Material UI --
@@ -12,10 +16,11 @@ import { colorsByDisplay } from '../../../helper/colors-by-path'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ClearRoundedIcon from '@material-ui/icons/ClearRounded';
 
 // disableLike: disables like button
 
-class Card extends React.PureComponent {
+class Card extends React.Component {
 
     state = {
         liked: false
@@ -34,7 +39,10 @@ class Card extends React.PureComponent {
             if (exercise.type === 'sets-reps') {
                 return <tr>
                     <td><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p></td>
+                    <td style={{position: 'relative'}}>
+                        <p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p>
+                        <button className={classes.DeleteExerciseButton}><ClearRoundedIcon onClick={() => this.props.onDeleteExercise(exercise.title)}/></button>
+                    </td>
                 </tr>
             } else {
                 let duration = '';
@@ -88,4 +96,10 @@ class Card extends React.PureComponent {
     }
 }
 
-export default Card;
+const mapDispatchToProps = dispatch => {
+    return {
+        onDeleteExercise: title => dispatch({type: actionTypes.DELETE_EXERCISE, title: title})
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Card);

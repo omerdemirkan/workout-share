@@ -1,14 +1,9 @@
-import * as actionTypes from '../actions/actionTypes'
-
-import Filter from 'bad-words';
-
-const profanityFilter = new Filter();
+import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     title: '',
     select: 'General',
-    exercises: [],
-    errorMessages: ["Workout titles must be between 6 and 30 characters"]
+    exercises: []
 }
 
 const createReducer = (state = initialState, action) => {
@@ -38,27 +33,15 @@ const createReducer = (state = initialState, action) => {
             }
         case actionTypes.DELETE_EXERCISE:
             const filteredExercises = state.exercises.filter(exercise => {
-                return exercise.id !== action.id
+                return exercise.title !== action.title
             });
+            console.log(filteredExercises);
             return {
                 ...state,
                 exercises: filteredExercises
             }
         case actionTypes.DELETE_WORKOUT: 
             return initialState;
-        case actionTypes.VALIDATE_WORKOUT_TITLE:
-            let errors = [];
-            if (profanityFilter.clean(state.title) !== state.title) {
-                errors.push('Profanity found in title');
-            }
-            if (state.title.length < 6) {
-                errors.push("Workout titles must be over 6 characters");
-            }
-            return {
-                ...state,
-                title: state.title,
-                errorMessages: errors
-            }
         default:
             return state
     }

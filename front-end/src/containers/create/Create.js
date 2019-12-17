@@ -72,15 +72,16 @@ class Create extends React.Component {
             minutes: 0,
             seconds: 0
         },
-        errorMessages: [],
+        exerciseErrorMessages: [],
+        workoutErrorMessages: [],
 
         //Modal State
-        exerciseErrorModal: false,
         deleteWorkoutModal: false,
-        workoutTitleErrorModal: false,
 
         //To alert the user to input 3 exercises to be able to post
-        twoMoreAlert: false
+        twoMoreAlert: false,
+
+        postingWorkout: false
     }
 
     updateExerciseHandler = (event, field) => {
@@ -143,7 +144,7 @@ class Create extends React.Component {
             this.props.onAddExercise(exercise);
             this.resetCurrentExercise();
         } else {
-            this.setState({errorMessages: errorMessages, exerciseErrorModal: true});
+            this.setState({exerciseErrorMessages: errorMessages});
         }
     }
 
@@ -208,9 +209,7 @@ class Create extends React.Component {
 
     // Modal Handlers
 
-    // openExerciseErrorModalHandler = () => {this.setState({exerciseErrorModal: true});}       Redundant as of now
-
-    closeExerciseErrorModalHandler = () => {this.setState({exerciseErrorModal: false});}
+    closeExerciseErrorModalHandler = () => {this.setState({exerciseErrorMessages: []});}
 
 
 
@@ -223,6 +222,9 @@ class Create extends React.Component {
     openDeleteModalHandler = () => {this.setState({deleteWorkoutModal: true});}
 
     closeDeleteModalHandler = () => {this.setState({deleteWorkoutModal: false});}
+
+
+    closeWorkoutTitleErrorModal = () => {this.setState({workoutErrorMessages: []})}
 
 
 
@@ -243,17 +245,20 @@ class Create extends React.Component {
         });
     }
 
-
-    openWorkoutTitleErrorModal = () => {this.setState({workoutTitleErrorModal: true})}
-
-    closeWorkoutTitleErrorModal = () => {this.setState({workoutTitleErrorModal: false})}
-
     postWorkoutHandler = () => {
-        this.props.onValidateTitle();
-        if (this.props.errorMessages.length === 0) {
-            //To be continued
+        let errors = [];
+        if (profanityFilter.clean(this.props.title) !== this.props.title) {
+            errors.push('Profanity found in title');
+        }
+        if (this.props.title.length < 6) {
+            errors.push("Workout titles must be over 6 characters");
+        }
+        if (errors.length > 0) {
+            this.setState({
+                workoutErrorMessages: errors
+            });
         } else {
-            this.openWorkoutTitleErrorModal();
+            //To be continued
         }
     }
 
@@ -361,8 +366,6 @@ class Create extends React.Component {
                     </Select>
                     
                 </div>
-
-                {/* Stage 2 */}
                     
                 <h2 style={{color: 'rgb(71, 71, 71)'}}>Exercises</h2>
                 <div className={classes.NewExerciseBox}>
@@ -407,7 +410,7 @@ class Create extends React.Component {
             </ThemeProvider>
         </div>
         
-        <div className={classes.PreviewCardBox} style={this.props.exercises.length === 0 ? {position: 'relative', opacity: '0', top: '100px', transition: '0.2s ease-out'} : null}>
+        <div className={classes.PreviewCardBox} style={this.props.exercises.length === 0 ? {position: 'relative', opacity: '0', top: '100px', transition: '0.2s ease-out'} : {}}>
             {this.props.exercises.length > 0 ?
                 <React.Fragment>
                     <h1 className={classes.PreviewCardTitle}>Preview</h1>
@@ -426,36 +429,42 @@ class Create extends React.Component {
         
             {/* ----!!!!Alerts!!!!---- */}
 
+            {this.state.exerciseErrorMessages.length > 0 ?
+                <ErrorModal
+                open={this.state.exerciseErrorMessages.length > 0}
+                header='Invalid Exercise'
+                list={[...this.state.exerciseErrorMessages]}
+                close={this.closeExerciseErrorModalHandler}/>
+            : null}
             
-            <ErrorModal
-            open={this.state.exerciseErrorModal}
-            header='Invalid Exercise'
-            list={[...this.state.errorMessages]}
-            close={this.closeExerciseErrorModalHandler}/>
+            {this.state.deleteWorkoutModal ?
+                <ErrorModal
+                open={this.state.deleteWorkoutModal}
+                header={'Are you sure you want to delete this workout?'}
+                >
+                    <div className={classes.DeleteModalOptionBox}>
+                        <button 
+                        className={classes.DeleteModalOptionButton} 
+                        onClick={this.deleteWorkoutHandler}
+                        style={{color: 'rgb(130, 0, 0)', borderColor: 'rgb(130, 0, 0)'}}
+                        >Yes</button>
+                        <button 
+                        className={classes.DeleteModalOptionButton} 
+                        onClick={this.closeDeleteModalHandler}
+                        style={{color: 'rgb(71, 71, 71)', borderColor: 'rgb(71, 71, 71)'}}
+                        >No</button>
+                    </div>
+                </ErrorModal>
+            : null}
             
-            <ErrorModal
-            open={this.state.deleteWorkoutModal}
-            header={'Are you sure you want to delete this workout?'}
-            >
-                <div className={classes.DeleteModalOptionBox}>
-                    <button 
-                    className={classes.DeleteModalOptionButton} 
-                    onClick={this.deleteWorkoutHandler}
-                    style={{color: 'rgb(130, 0, 0)', borderColor: 'rgb(130, 0, 0)'}}
-                    >Yes</button>
-                    <button 
-                    className={classes.DeleteModalOptionButton} 
-                    onClick={this.closeDeleteModalHandler}
-                    style={{color: 'rgb(71, 71, 71)', borderColor: 'rgb(71, 71, 71)'}}
-                    >No</button>
-                </div>
-            </ErrorModal>
-
-            <ErrorModal
-            open={this.state.workoutTitleErrorModal}
-            header='Error: Workout Title'
-            list={[...this.props.errorMessages]}
-            close={this.closeWorkoutTitleErrorModal}/>
+            {this.state.workoutErrorMessages.length > 0 ?
+                <ErrorModal
+                open={this.state.workoutErrorMessages.length > 0}
+                header='Error: Workout Title'
+                list={[...this.state.workoutErrorMessages]}
+                close={this.closeWorkoutTitleErrorModal}/>
+            : null}
+            
 
             <Snackbar
             anchorOrigin={{
@@ -497,9 +506,8 @@ const mapDispatchToProps = dispatch => {
         onUpdateTitle: title => dispatch({type: actionTypes.SET_TITLE, title: title}),
         onUpdateSelect: select => dispatch({type: actionTypes.SET_SELECT, select: select}),
         onAddExercise: exercise => dispatch({type: actionTypes.ADD_EXERCISE, exercise: exercise}),
-        onDeleteExercise: id => dispatch({type: actionTypes.DELETE_EXERCISE, id: id}),
+        onDeleteExercise: title => dispatch({type: actionTypes.DELETE_EXERCISE, title: title}),
         onDeleteWorkout: () => dispatch({type: actionTypes.DELETE_WORKOUT}),
-        onValidateTitle: () => dispatch({type: actionTypes.VALIDATE_WORKOUT_TITLE})
     }
 }
 

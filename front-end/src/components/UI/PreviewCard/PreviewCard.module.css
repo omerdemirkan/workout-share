@@ -121,3 +121,23 @@ animation: shake 0.05s;
   color: rgb(73, 73, 73);
   transition: color 0.1s ease;
 }
+
+.DeleteExerciseButton {
+  position: absolute;
+  right: -50px;
+  top: 8px;
+
+  min-width: 30px;
+  min-height: 30px;
+
+  color: rgb(170, 170, 170);
+  background-color: transparent;
+  border: none;
+  border-radius: 5rem;
+
+  cursor: pointer;
+}
+
+.DeleteExerciseButton:hover {
+  color: red;
+}

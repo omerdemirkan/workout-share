@@ -70,6 +70,7 @@
   border-radius: 4rem;
   outline: none;
   user-select: none;
+  cursor: pointer;
 }
 
 .AddExerciseButton:active {
