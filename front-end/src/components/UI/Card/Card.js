@@ -31,7 +31,8 @@ class Card extends React.PureComponent {
     }
 
     render() {
-        const displayType = this.props.workout.type.charAt(0).toUpperCase() + this.props.workout.type.substring(1);
+
+        const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.type === 'sets-reps') {
                 return <tr>

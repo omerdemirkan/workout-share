@@ -24,11 +24,11 @@ const App = props => {
       <Switch>
         <Route path="/create" component={Create}/>
 
-        <Route path="/powerlifting" component={Powerlifting}/>
+        {/* <Route path="/powerlifting" component={Powerlifting}/>
         <Route path="/bodybuilding" component={Bodybuilding}/>
         <Route path="/weightlifting" component={Weightlifting}/>
         <Route path="/endurance" component={Endurance}/>
-        <Route path="/crossfit" component={Crossfit}/>
+        <Route path="/crossfit" component={Crossfit}/> */}
         <Route path="/" component={All}/>
       </Switch>
     </Main>

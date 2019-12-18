@@ -18,7 +18,7 @@ class Inspect extends React.Component {
         copied: false
     }
     componentDidMount() {
-        axios.get('/workouts/' + this.props.match.params.id)
+        axios.get('/workouts/' + this.props.id)
         .then(res => {
             this.setState({
                 workout: res.data
@@ -27,7 +27,6 @@ class Inspect extends React.Component {
         .catch(err => {
             console.log(err)
         });
-        console.log(window.location.href);
     }
 
     openCopyToClipboardAlertHandler = () => {
@@ -78,8 +77,6 @@ class Inspect extends React.Component {
                 </React.Fragment>
                 
             : <CircularProgress/>}
-            
-
         </div>
     }
 }

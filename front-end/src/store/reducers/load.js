@@ -7,7 +7,9 @@ const initialState = {
     weightlifting: [],
     endurance: [],
     crossfit: [],
-    loading: false
+    currentPath: null,
+    loading: false,
+    error: null
 }
 
 const load = (state = initialState, action) => {
@@ -15,17 +17,19 @@ const load = (state = initialState, action) => {
         case actionTypes.LOAD_POSTS_START:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                currentPath: action.route
             }
         case actionTypes.LOAD_POSTS_SUCCESS:
-            return {
-                ...state,
-                [action.route]: action.posts
-            }
+            let newState = {...state};
+            newState[action.list] = action.posts;
+            newState.loading = false;
+            return newState;
         case actionTypes.LOAD_POSTS_FAILURE:
             return {
                 ...state,
-                loading: false
+                loading: false,
+                error: action.error
             }
         default:
             return state

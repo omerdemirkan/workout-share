@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/powerlifting', (req, res) => {
-    Workout.find({type: 'powerlifting'}, (err, workouts) => {
+    Workout.find({type: 'Powerlifting'}, (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
@@ -24,7 +24,7 @@ router.get('/powerlifting', (req, res) => {
 });
 
 router.get('/bodybuilding', (req, res) => {
-    Workout.find({type: 'bodybuilding'}, (err, workouts) => {
+    Workout.find({type: 'Bodybuilding'}, (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
@@ -34,7 +34,7 @@ router.get('/bodybuilding', (req, res) => {
 });
 
 router.get('/weightlifting', (req, res) => {
-    Workout.find({type: 'weightlifting'}, (err, workouts) => {
+    Workout.find({type: 'Weightlifting'}, (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
@@ -44,7 +44,7 @@ router.get('/weightlifting', (req, res) => {
 });
 
 router.get('/endurance', (req, res) => {
-    Workout.find({type: 'endurance'}, (err, workouts) => {
+    Workout.find({type: 'Endurance'}, (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
@@ -54,7 +54,7 @@ router.get('/endurance', (req, res) => {
 });
 
 router.get('/crossfit', (req, res) => {
-    Workout.find({type: 'crossfit'}, (err, workouts) => {
+    Workout.find({type: 'Crossfit'}, (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {

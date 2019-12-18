@@ -376,8 +376,12 @@ class Create extends React.Component {
 
         return <React.Fragment>
             {this.props.postResult ?
-                <Redirect to={"/" + this.props.postID}/>
+            <Redirect to={{
+                pathname: '/',
+                search: '?id=' + this.props.postID
+            }}/>
             : null}
+
             <div className={classes.MainHeaderBox}>
                 <h1 className={classes.MainHeader}>Create Your Workout</h1>
             </div>
