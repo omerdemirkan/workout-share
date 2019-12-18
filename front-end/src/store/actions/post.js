@@ -6,8 +6,7 @@ export const postAnonAsync = workout => {
         dispatch(postAnonStart());
         axios.post('/workouts', workout)
         .then(res => {
-            console.log(res);
-            dispatch(postAnonSuccess());
+            dispatch(postAnonSuccess(res.data));
         })
         .catch(err => {
             console.log(err);
@@ -20,8 +19,8 @@ const postAnonStart = () => {
     return {type: actionTypes.POST_ANON_START};
 }
 
-const postAnonSuccess = () => {
-    return {type: actionTypes.POST_ANON_SUCCESS}
+const postAnonSuccess = id => {
+    return {type: actionTypes.POST_ANON_SUCCESS, id: id}
 }
 
 const postAnonFailure = () => {

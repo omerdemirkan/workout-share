@@ -64,17 +64,19 @@ router.get('/crossfit', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    res.json(req.body)
-    // const workout = req.body;
-    // const newWorkout = new Workout(workout);
-    // newWorkout.save(err => {
-    //     if (!err) {
-    //         res.json('Workout successfully saved').status(200);
-    //     } else {
-    //         console.log('eRROR in workouts route \n' + err);
-    //         return handleError(err);
-    //     }
-    // });
+    const newWorkout = new Workout({
+        title: req.body.title,
+        type: req.body.type,
+        exercises: req.body.exercises
+    });
+    newWorkout.save((err, workout) => {
+        if (!err) {
+            res.json(workout.id).status(200);
+        } else {
+            console.log('eRROR in workouts route \n' + err);
+            res.send(err);
+        }
+    });
 });
 
 router.get('/:id', (req, res) => {

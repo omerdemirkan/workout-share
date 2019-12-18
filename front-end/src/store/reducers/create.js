@@ -6,7 +6,8 @@ const initialState = {
     exercises: [],
     signupRedirect: false,
     posting: false,
-    postResult: null
+    postResult: null,
+    postID: null
 }
 
 const createReducer = (state = initialState, action) => {
@@ -59,6 +60,7 @@ const createReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postResult: true,
+                postID: action.id,
                 posting: false
             }
         case actionTypes.POST_ANON_FAILURE:

@@ -1,11 +1,12 @@
 import React from 'react';
 import { colorsByDisplay } from '../../helper/colors-by-path';
-import PreviewCard from '../../components/UI/PreviewCard/PreviewCard'
-import ErrorModal from '../../components/UI/ErrorModal/ErrorModal'
+import PreviewCard from '../../components/UI/PreviewCard/PreviewCard';
+import ErrorModal from '../../components/UI/ErrorModal/ErrorModal';
 
+import {Redirect} from 'react-router-dom'
+
+// Styling
 import classes from './Create.module.css';
-
-import Filter from 'bad-words';
 
 // Material UI
 
@@ -27,13 +28,17 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
+
+
 // Redux
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions/actionTypes';
 import {postAnonAsync} from '../../store/actions/index';
 
-
+// Profanity Filter
+import Filter from 'bad-words';
 const profanityFilter = new Filter();
+
 
 const theme = createMuiTheme({
   palette: {
@@ -352,6 +357,9 @@ class Create extends React.Component {
 
 
         return <React.Fragment>
+            {this.props.postResult ?
+                <Redirect to={"/:" + this.props.postID}/>
+            : null}
         <h1 className={classes.MainHeader}>Create Your Workout</h1>
         <div className={classes.Create}>
             <ThemeProvider theme={theme}>
@@ -492,7 +500,8 @@ class Create extends React.Component {
                 open={this.state.authModal}
                 header='Not logged in?'
                 close={this.closeAuthModalHandler}>
-                    <p>Posting without an account allows for a link to share with friends, but is posted as anonymous and doesn't save your posts. Are you sure you want to post anonymously?</p>
+                    <p>Posting without an account allows for a link to share with friends, but is posted as anonymous and doesn't save your posts.</p>
+                    <p style={{fontWeight: '500'}}>Are you sure you want to post anonymously?</p>
                     <div className={classes.AuthModalOptionBox}>
                         <button 
                         className={classes.AuthModalOptionButton} 
@@ -541,7 +550,9 @@ const mapStateToProps = state => {
         title: state.create.title,
         select: state.create.select,
         exercises: state.create.exercises,
-        errorMessages: state.create.errorMessages
+        errorMessages: state.create.errorMessages,
+        postResult: state.create.postResult,
+        postID: state.create.postID
     }
 }
 
