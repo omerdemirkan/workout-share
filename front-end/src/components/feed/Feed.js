@@ -7,7 +7,7 @@ const Feed = props => {
     return <div className={classes.Cards}>
         { props.workouts ?
         props.workouts.map(workout => {
-            return <Card darkTitle={props.darkTitles} workout={workout}/>
+            return <Card history={props.history} darkTitle={props.darkTitles} workout={workout}/>
         })
         : null}
     </div>

@@ -23,6 +23,13 @@ class Card extends React.PureComponent {
         });
     }
 
+    titleClickHandler = () => {
+        console.log(this.props.history.location.pathname);
+        // if (workout.id !== null) {
+        //     this.props.history.push(this.props.history.location.pathname + workout.id);
+        // }
+    }
+
     render() {
         const displayType = this.props.workout.type.charAt(0).toUpperCase() + this.props.workout.type.substring(1);
         const exerciseList = this.props.workout.exercises.map(exercise => {
@@ -55,7 +62,11 @@ class Card extends React.PureComponent {
         });
         return <div className={classes.Card} style={this.props.cardStyle !== null ? this.props.cardStyle : null}>
             <div className={classes.CardHeader}>
-                <h2 className={classes.CardTitle} style={this.props.darkTitle ? {color: 'rgb(73, 73, 73)'} : {color: colorsByDisplay(displayType).darkColor}}>{this.props.workout.title}</h2>
+                <h2 
+                className={classes.CardTitle} 
+                style={this.props.darkTitle ? {color: 'rgb(73, 73, 73)'} : {color: colorsByDisplay(displayType).darkColor}}
+                onClick={this.titleClickHandler}
+                >{this.props.workout.title}</h2>
             </div>
             <div className={classes.ListBox}>
                 <table className={classes.ListTable}>

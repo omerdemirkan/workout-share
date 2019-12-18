@@ -1,3 +1,4 @@
+// ___ CREATE ___
 export const SET_TITLE = 'SET_TITLE';
 export const SET_SELECT = 'SET_SELECT';
 export const ADD_EXERCISE = 'ADD_EXERCISE';
@@ -5,8 +6,16 @@ export const DELETE_EXERCISE = 'DELETE_EXERCISE';
 export const DELETE_WORKOUT = 'DELETE_WORKOUT';
 export const SIGNUP_REDIRECT = 'SIGNUP_REDIRECT';
 
+// ___ POST ___
 export const POST_ANON_START = 'POST_ANON_START';
 export const POST_ANON_SUCCESS = 'POST_ANON_SUCCESS';
 export const POST_ANON_FAILURE = 'POST_ANON_FAILURE';
 
+// ___ AUTH ___
 export const AUTHORIZE_USER = 'AUTHORIZE_USER';
+
+//___ LOAD ___
+export const LOAD_POSTS_START = 'LOAD_POSTS_START';
+export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
+export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
+

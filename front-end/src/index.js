@@ -9,12 +9,15 @@ import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
-import createReducer from './store/reducers/create'
-import authReducer from './store/reducers/auth'
+
+import createReducer from './store/reducers/create';
+import authReducer from './store/reducers/auth';
+import loadReducer from './store/reducers/load';
 
 const rootReducer = combineReducers({
     create: createReducer,
-    auth: authReducer
+    auth: authReducer,
+    load: loadReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
