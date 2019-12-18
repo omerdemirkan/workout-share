@@ -15,10 +15,14 @@
 
 .CardTitle {
   margin: 4px 0;
-  color: white;
+  color: rgb(71, 71, 71);
   text-align: center;
   user-select: none;
   cursor: pointer;
+}
+
+.CardTitle:hover {
+  color: rgb(49, 49, 49);
 }
 
 .CardHeader {

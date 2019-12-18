@@ -32,6 +32,15 @@ class All extends React.Component {
         this.updateSearchHandler();
     }
 
+    componentDidUpdate() {
+        if (this.state.currentPath !== this.props.history.location.pathname) {
+            this.updatePathHandler();
+        }
+        if (this.props.location.search !== this.state.search) {
+            this.updateSearchHandler();
+        }
+    }
+
     updatePathHandler = () => {
         this.setState({
             currentPath: this.props.history.location.pathname
@@ -39,9 +48,10 @@ class All extends React.Component {
         this.props.onLoadPosts(this.props.history.location.pathname);
     }
 
-    updateSearchHandler = () => {
-        let searchID = null
+    updateSearchHandler = () => {  
+        console.log('updating search params');
         const query = new URLSearchParams(this.props.location.search);
+        let searchID = null
         for (let param of query.entries()) {
             searchID = param[1];
         }
@@ -52,12 +62,7 @@ class All extends React.Component {
     }
 
     render() {
-        if (this.state.currentPath !== this.props.history.location.pathname) {
-            this.updatePathHandler();
-        }
-        if (this.props.location.search !== this.state.search) {
-            this.updateSearchHandler();
-        }
+        
         
         const type = routeToType(this.props.history.location.pathname);
         const workouts = this.props[type];
@@ -74,7 +79,6 @@ class All extends React.Component {
             : <CircularProgress style={{marginTop: '60px'}}/>}
             {this.props.error ? <p>{this.props.error}</p>: null}
         </div>
-        return <h1>Yoo</h1>
     }
 }
 

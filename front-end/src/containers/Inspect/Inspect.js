@@ -15,13 +15,25 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 class Inspect extends React.Component {
     state = {
         workout: null,
+        workoutID: null,
         copied: false
     }
     componentDidMount() {
+        this.refreshSearchHandler();
+    }
+
+    componentDidUpdate() {
+        if (this.props.id !== this.state.workoutID) {
+            this.refreshSearchHandler();
+        }
+    }
+
+    refreshSearchHandler = () => {
         axios.get('/workouts/' + this.props.id)
         .then(res => {
             this.setState({
-                workout: res.data
+                workout: res.data,
+                workoutID: this.props.id
             })
         })
         .catch(err => {

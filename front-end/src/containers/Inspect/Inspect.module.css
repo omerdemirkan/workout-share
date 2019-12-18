@@ -6,7 +6,19 @@
     display: flex;
     justify-content: center;
     position: relative;
+    animation: slideDown .2s ease forwards;
 }
+
+@keyframes slideDown{
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 
 .CardBox {
     display: flex;
@@ -15,6 +27,10 @@
     width: 100%;
     padding: 0;
     margin: 0;
+    animation: slideDown 0.4s ease forwards;
+    animation-delay: 0.2s;
+    transform: translateY(-100%);
+    opacity: 0;
 }
 
 .CopyToClipboardBox {

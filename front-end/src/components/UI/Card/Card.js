@@ -25,16 +25,20 @@ class Card extends React.PureComponent {
 
     titleClickHandler = () => {
         console.log(this.props.history.location.pathname);
-        // if (workout.id !== null) {
-        //     this.props.history.push(this.props.history.location.pathname + workout.id);
-        // }
+        console.log(this.props.workout._id);
+        if (this.props.workout._id !== null) {
+            this.props.history.push({
+                pathname: this.props.history.location.pathname,
+                search: '?id=' + this.props.workout._id
+            });
+        }
     }
 
     render() {
 
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
-            if (exercise.type === 'sets-reps') {
+            if (exercise.reps) {
                 return <tr>
                     <td><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p></td>
@@ -65,7 +69,7 @@ class Card extends React.PureComponent {
             <div className={classes.CardHeader}>
                 <h2 
                 className={classes.CardTitle} 
-                style={this.props.darkTitle ? {color: 'rgb(73, 73, 73)'} : {color: colorsByDisplay(displayType).darkColor}}
+                style={this.props.darkTitle ? {} : {color: colorsByDisplay(displayType).darkColor}}
                 onClick={this.titleClickHandler}
                 >{this.props.workout.title}</h2>
             </div>
