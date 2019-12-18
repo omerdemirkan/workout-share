@@ -2,6 +2,7 @@
     background-color: white;
     padding: 25px 5% 70px;
     margin: auto;
+    margin-top: 0;
     box-sizing: border-box;
     width: 95%;
     max-width: 600px;
@@ -9,9 +10,14 @@
     position: relative;
 }
 
+.MainHeaderBox {
+  padding-top: 70px;
+}
+
 .MainHeader {
   text-align: center;
   color: rgb(71, 71, 71);
+  margin-top: 0;
   margin-bottom: 40px;
 }
 
@@ -21,7 +27,7 @@
 
 .InputLabel {
   display: block;
-  margin-bottom: 5px;
+  margin: 5px;
   font-size: 1.6rem;
   width: 100%;
 }
@@ -158,6 +164,9 @@
 @media (max-width: 768px) {
   .TwoMoreModalText {
     font-size: 0.8rem;
+  }
+  .MainHeaderBox {
+    padding-top: 40px;
   }
 }
 

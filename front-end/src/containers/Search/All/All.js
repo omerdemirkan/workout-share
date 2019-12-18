@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from '../../../axios';
 import Feed from '../../../components/feed/Feed';
+import {Route} from 'react-router-dom'
+import Inspect from '../../../containers/Inspect/Inspect'
 
 
 class All extends React.Component {
@@ -15,6 +17,7 @@ class All extends React.Component {
         // .catch(err => {
             
         // });
+        window.scrollTo(0, 0)
     }
 
     state = {
@@ -248,6 +251,7 @@ class All extends React.Component {
 
     render() {
         return <div>
+            <Route path="/:id" exact component={Inspect}/>
             <Feed darkTitles workouts={this.state.workouts}/>
         </div>
     }

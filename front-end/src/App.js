@@ -20,6 +20,7 @@ const App = props => {
   return <div className='App'>
     <Navbar/>
     <Main>
+      
       <Switch>
         <Route path="/create" component={Create}/>
 

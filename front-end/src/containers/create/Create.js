@@ -356,11 +356,31 @@ class Create extends React.Component {
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return <React.Fragment>
             {this.props.postResult ?
-                <Redirect to={"/:" + this.props.postID}/>
+                <Redirect to={"/" + this.props.postID}/>
             : null}
-        <h1 className={classes.MainHeader}>Create Your Workout</h1>
+            <div className={classes.MainHeaderBox}>
+                <h1 className={classes.MainHeader}>Create Your Workout</h1>
+            </div>
         <div className={classes.Create}>
             <ThemeProvider theme={theme}>
                 <TextField 
@@ -369,7 +389,7 @@ class Create extends React.Component {
                     placeholder="e.g. Heavy Chest Day"
                     value={this.props.title}
                     autoComplete="off"
-                    style={{width: '100%', height: '40px', fontSize: '1.5rem', color: 'rgb(71, 71, 71)'}}
+                    style={{marginTop: '8px', width: '100%', height: '40px', fontSize: '1.5rem', color: 'rgb(71, 71, 71)'}}
                     className={classes.TitleInput}
                     onChange={event => this.props.onUpdateTitle(event.target.value)}
                 />
