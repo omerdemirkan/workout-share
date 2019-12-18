@@ -180,3 +180,43 @@
     font-size: 1.7rem;
   }
 }
+
+@media (max-width: 640px) {
+  .AuthModalOptionBox {
+    flex-direction: column;
+    min-width: 150px;
+    max-width: 200px;
+  }
+}
+
+.AuthModalOptionButton {
+  min-width: 40%;
+  height: 32px;
+
+  font-size: 1.1rem;
+  font-weight: 700; 
+  
+  background-color: transparent;
+  border: 2px solid rgb(71, 71, 71);
+  color: rgb(71, 71, 71);
+  border-radius: .5rem;
+
+  outline: none;
+  cursor: pointer;
+}
+
+.AuthModalBox {
+  padding: 15px 5%;
+  text-align: center;
+  position: relative;
+}
+
+.AuthModalOptionBox {
+  margin: auto;
+  margin-bottom: 8px;
+  margin-top: 30px;
+  width: 80%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-evenly;
+}

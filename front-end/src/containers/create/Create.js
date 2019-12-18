@@ -267,7 +267,7 @@ class Create extends React.Component {
                 //To be continued
             }
         }
-    }
+    } 
 
     signupRedirectHandler = () => {
         //To be continued
@@ -493,16 +493,19 @@ class Create extends React.Component {
                 header='Not logged in?'
                 close={this.closeAuthModalHandler}>
                     <p>Posting without an account allows for a link to share with friends, but is posted as anonymous and doesn't save your posts. Are you sure you want to post anonymously?</p>
-                    <button 
-                        className={classes.DeleteModalOptionButton} 
+                    <div className={classes.AuthModalOptionBox}>
+                        <button 
+                        className={classes.AuthModalOptionButton} 
                         onClick={this.anonymousPostHandler}
                         style={{color: 'rgb(130, 0, 0)', borderColor: 'rgb(130, 0, 0)'}}
                         >Yes</button>
                         <button 
-                        className={classes.DeleteModalOptionButton} 
+                        className={classes.AuthModalOptionButton} 
                         onClick={this.signupRedirectHandler}
                         style={{color: 'rgb(71, 71, 71)', borderColor: 'rgb(71, 71, 71)'}}
                         >No, Sign me up!</button>
+                    </div>
+                    
                 </ErrorModal>
             : null}
             
