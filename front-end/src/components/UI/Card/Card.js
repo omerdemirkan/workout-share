@@ -31,6 +31,7 @@ class Card extends React.PureComponent {
                 pathname: this.props.history.location.pathname,
                 search: '?id=' + this.props.workout._id
             });
+            window.scrollTo(0, 0);
         }
     }
 

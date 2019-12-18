@@ -5,7 +5,6 @@
     background-color: rgb(73, 73, 73);
     display: flex;
     justify-content: center;
-    position: relative;
     animation: slideDown .2s ease forwards;
 }
 
@@ -33,6 +32,30 @@
     opacity: 0;
 }
 
+.CloseButton {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+
+    min-width: 40px;
+    min-height: 40px;
+
+    background-color: transparent;
+    border: none;
+
+    color: rgb(187, 187, 187);
+    z-index: 3;
+
+    outline: none;
+    cursor: pointer;
+}
+
+.CloseButton:hover {
+    color: white;
+}
+
+
+
 .CopyToClipboardBox {
     position: absolute;
     bottom: 5px;
@@ -58,4 +81,10 @@
 
 .CopyIcon:hover {
     color: white;
+}
+
+@media (max-width: 768px) {
+    .InspectBox {
+        padding-top: 80px;
+    }
 }

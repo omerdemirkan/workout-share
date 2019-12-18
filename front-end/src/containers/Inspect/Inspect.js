@@ -11,6 +11,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 
 class Inspect extends React.Component {
     state = {
@@ -41,6 +42,10 @@ class Inspect extends React.Component {
         });
     }
 
+    closeInspectHandler = () => {
+        this.props.history.push(this.props.history.location.pathname);
+    }
+
     openCopyToClipboardAlertHandler = () => {
         this.setState({copied: true});
     }
@@ -50,7 +55,9 @@ class Inspect extends React.Component {
     }
 
     render() {
-        return <div className={classes.InspectBox}>
+        return <React.Fragment>
+            <div className={classes.InspectBox}>
+                <button className={classes.CloseButton} onClick={this.closeInspectHandler}><CloseRoundedIcon fontSize='large'/></button>
             
             {this.state.workout ?
                 <React.Fragment>
@@ -65,31 +72,33 @@ class Inspect extends React.Component {
                         <p className={classes.ShareText}>Share</p>
                     </div>
 
-                    <Snackbar
-                    anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                    }}
-                    open={this.state.copied}
-                    autoHideDuration={3000}
-                    onClose={this.closeCopyToClipboardAlertHandler}
-                    message={<span className={classes.TwoMoreModalText} id="message-id">Link copied to clipboard</span>}
-                    action={[
-                        <IconButton
-                            key="close"
-                            aria-label="close"
-                            color="inherit"
-                            onClick={this.closeCopyToClipboardAlertHandler}
-                        >
-                            <CloseIcon />
-                        </IconButton>,
-                    ]}
-                    />
+                    
 
                 </React.Fragment>
                 
             : <CircularProgress/>}
         </div>
+        <Snackbar
+        anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'left',
+        }}
+        open={this.state.copied}
+        autoHideDuration={3000}
+        onClose={this.closeCopyToClipboardAlertHandler}
+        message={<span className={classes.TwoMoreModalText} id="message-id">Link copied to clipboard</span>}
+        action={[
+            <IconButton
+                key="close"
+                aria-label="close"
+                color="inherit"
+                onClick={this.closeCopyToClipboardAlertHandler}
+            >
+                <CloseIcon />
+            </IconButton>,
+        ]}
+        />
+        </React.Fragment>
     }
 }
 

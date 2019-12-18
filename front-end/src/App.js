@@ -11,20 +11,25 @@ import All from './containers/Search/All/All'
 
 import Create from './containers/create/Create';
 
-const App = props => {
-  return <div className='App'>
-    <Navbar/>
-    <Main>
-      
-      <Switch>
-        <Route path="/create" component={Create}/>
+class App extends React.Component {
+  componentDidMount() {
+    //
+  }
+  render() {
+    return <div className='App'>
+      <Navbar/>
+      <Main>
         
-        <Route path="/" component={All}/>
-      </Switch>
-    </Main>
-    <Footer/>
+        <Switch>
+          <Route path="/create" component={Create}/>
 
-  </div>
+          <Route path="/" component={All}/>
+        </Switch>
+      </Main>
+      <Footer/>
+
+    </div>
+  }
 }
 
 export default App;

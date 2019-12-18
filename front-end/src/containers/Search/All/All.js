@@ -69,7 +69,7 @@ class All extends React.Component {
         
         return <div style={{textAlign: 'center'}}>
             {this.state.searchID ? 
-                <Route path={this.props.history.location.pathname} exact render={() => <Inspect id={this.state.searchID}/>}/>
+                <Route path={this.props.history.location.pathname} exact render={() => <Inspect history={this.props.history} id={this.state.searchID}/>}/>
             : null}
             {workouts && !this.props.loading ? 
             <React.Fragment>
