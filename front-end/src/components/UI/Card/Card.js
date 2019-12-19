@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './Card.module.css'
+import axios from '../../../axios'
 
 import { colorsByDisplay } from '../../../helper/colors-by-path'
 
@@ -20,6 +21,24 @@ class Card extends React.PureComponent {
         const reverse = !this.state.liked;
         this.setState({
             liked: reverse
+        });
+
+        let modifier = null;
+        if (this.state.liked) {
+            //Like
+            modifier = '/dec/' + this.props.workout._id;
+        } else {
+            //Unlike
+            modifier = '/inc/' + this.props.workout._id;
+        }
+        
+        axios.defaults.headers.post['authorization'] = "Bearer " + localStorage.getItem('authToken')
+        axios.post('/like' + modifier)
+        .then(res => {
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
         });
     }
 

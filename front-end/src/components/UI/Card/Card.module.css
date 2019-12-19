@@ -50,6 +50,7 @@
 .ExerciseListItem {
   margin: 7px;
   font-size: 1.1rem;
+  text-align: left;
 }
 
 .CardFooter {

@@ -28,8 +28,6 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-
-
 // Redux
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions/actionTypes';
@@ -86,10 +84,13 @@ class Create extends React.Component {
         deleteWorkoutModal: false,
 
         //To alert the user to input 3 exercises to be able to post
-        twoMoreAlert: false,
+        twoMoreAlert: false
+    }
 
-        //To alert the user of the downsides of posting without an account, possible redirect involved
-        authModal: false
+    componentDidMount() {
+        if (!this.props.authToken) {
+            this.props.history.push('/');
+        }
     }
 
     updateExerciseHandler = (event, field) => {
@@ -232,8 +233,6 @@ class Create extends React.Component {
 
     closeExerciseErrorModalHandler = () => {this.setState({exerciseErrorMessages: []});}
 
-    closeAuthModalHandler = () => {this.setState({authModal: false})}
-
 
 
     deleteWorkoutHandler = () => {
@@ -266,30 +265,17 @@ class Create extends React.Component {
                 workoutErrorMessages: errors
             });
         } else {
-            if (!this.props.authorized) {
-                this.setState({authModal: true});
-            } else {
-                //To be continued
+            const workout = {
+                title: this.props.title,
+                type: this.props.select,
+                exercises: this.props.exercises
             }
+            this.props.onPostAnonHandler(workout, this.props.authToken);
         }
-    } 
-
-    signupRedirectHandler = () => {
-        //To be continued
     }
-
-    anonymousPostHandler = () => {
-        const workout = {
-            title: this.props.title,
-            type: this.props.select,
-            exercises: this.props.exercises
-        }
-        this.props.onPostAnonHandler(workout);
-    }
-
-
 
     render() {
+        
         // If the user chooses the sets-reps format, we need inputs for sets and reps,
         // otherwise, we need sets, minutes and seconds as inputs.
 
@@ -519,30 +505,6 @@ class Create extends React.Component {
                 close={this.closeWorkoutTitleErrorModal}/>
             : null}
 
-            {this.state.authModal ?
-                <ErrorModal
-                open={this.state.authModal}
-                header='Not logged in?'
-                close={this.closeAuthModalHandler}>
-                    <p>Posting without an account allows for a link to share with friends, but is posted as anonymous and doesn't save your posts.</p>
-                    <p style={{fontWeight: '500'}}>Are you sure you want to post anonymously?</p>
-                    <div className={classes.AuthModalOptionBox}>
-                        <button 
-                        className={classes.AuthModalOptionButton} 
-                        onClick={this.anonymousPostHandler}
-                        style={{color: 'rgb(130, 0, 0)', borderColor: 'rgb(130, 0, 0)'}}
-                        >Yes</button>
-                        <button 
-                        className={classes.AuthModalOptionButton} 
-                        onClick={this.signupRedirectHandler}
-                        style={{color: 'rgb(71, 71, 71)', borderColor: 'rgb(71, 71, 71)'}}
-                        >No, Sign me up!</button>
-                    </div>
-                    
-                </ErrorModal>
-            : null}
-            
-
             <Snackbar
             anchorOrigin={{
             vertical: 'bottom',
@@ -570,13 +532,13 @@ class Create extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        authorized: state.auth.authorized,
         title: state.create.title,
         select: state.create.select,
         exercises: state.create.exercises,
         errorMessages: state.create.errorMessages,
         postResult: state.create.postResult,
-        postID: state.create.postID
+        postID: state.create.postID,
+        authToken: state.auth.authToken
     }
 }
 
@@ -587,7 +549,7 @@ const mapDispatchToProps = dispatch => {
         onAddExercise: exercise => dispatch({type: actionTypes.ADD_EXERCISE, exercise: exercise}),
         onDeleteExercise: title => dispatch({type: actionTypes.DELETE_EXERCISE, title: title}),
         onDeleteWorkout: () => dispatch({type: actionTypes.DELETE_WORKOUT}),
-        onPostAnonHandler: workout => dispatch(postAnonAsync(workout))
+        onPostAnonHandler: (workout, authToken) => dispatch(postAnonAsync(workout, authToken))
     }
 }
 

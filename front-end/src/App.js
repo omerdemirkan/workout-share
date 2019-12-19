@@ -20,26 +20,52 @@ import Create from './containers/create/Create';
 
 class App extends React.Component {
   componentDidMount() {
+    //Authorization on mount (NO REDUX!, we don't need to set a loading state, this is meant to be in the background after mount)
     if (localStorage.getItem('authToken')) {
-      //
-    } else {
-      axios.get('/users/create')
+      this.props.onSetAuthToken(localStorage.getItem('authToken'));
+
+      axios.get('/users/likedID', {
+        headers: {
+          authorization: 'Bearer ' + localStorage.getItem('authToken')
+        } 
+      })
       .then(res => {
-        console.log(res.data.accessToken);
+        this.props.onSetLikedID(res.data)
       })
       .catch(err => {
         console.log(err);
       });
+
+      axios.get('/users/postedID', {
+        headers: {
+          authorization: 'Bearer ' + localStorage.getItem('authToken')
+        } 
+      })
+      .then(res => {
+        this.props.onSetPostedID(res.data)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    } else {
+      axios.get('/users/create')
+      .then(res => {
+        localStorage.setItem('authToken', res.data.accessToken);
+        this.props.onSetAuthToken(res.data.accessToken);
+      })
+      .catch(err => {
+        console.log('eRROR in fetching /create authToken \n' + err);
+      });
     }
   }
+
   render() {
     return <div className='App'>
       <Navbar/>
       <Main>
-        
         <Switch>
           <Route path="/create" component={Create}/>
-
           <Route path="/" component={All}/>
         </Switch>
       </Main>
@@ -49,9 +75,17 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    authToken: state.auth.authToken
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
-    onSetAuthToken: authToken => dispatch({type: actionTypes.SET_AUTH_TOKEN, authToken: authToken})
+    onSetAuthToken: authToken => dispatch({type: actionTypes.SET_AUTH_TOKEN, authToken: authToken}),
+    onSetLikedID: likedID => dispatch({type: actionTypes.SET_LIKED_ID, likedID: likedID}),
+    onSetPostedID: postedID => dispatch({type: actionTypes.SET_POSTED_ID, postedID: postedID})
   }
 }
 

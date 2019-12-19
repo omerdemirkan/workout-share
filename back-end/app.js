@@ -13,7 +13,7 @@ app.use(cors());
 // .then(() => console.log('Connected to atlas'))
 // .catch(() => console.log('eRROR in mongoDB connection'));
 
-mongoose.connect(process.env.LOCAL_URI, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.LOCAL_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 .then(() => console.log('Connected to mongo shell'))
 .catch(() => console.log('eRROR in mongoDB connection'));
 

@@ -5,9 +5,9 @@ const Workout = require('../models/workout.model');
 const User = require('../models/user.model');
 
 const verify = (req, res, next) => {
-    const authToken = req.headers['authorization'].split(' ')[1];
-    if (token == null) return res.sendStatus(401);
-
+    const authToken = req.headers['authorization'].split(' ')[1]
+    if (authToken == null) return res.sendStatus(401);
+    console.log(authToken);
     jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
         req.user = user;
@@ -17,9 +17,11 @@ const verify = (req, res, next) => {
 
 router.post('/inc/:workoutID', verify, async (req, res) => {
     if (req.user) {
-        const likedWorkout = await Workout.findOneAndUpdate({_id: req.params.id}, {$inc: { likes: 1 }}, {new: true});
-        User.findOneAndUpdate({_id: req.user.id}, {$push: {workoutID: likedWorkout._id}});
-        res.json('like successful').sendStatus(200);
+        const likedWorkout = await Workout.findOneAndUpdate({_id: req.params.workoutID}, {$inc: { likes: 1 }});
+        User.findByIdAndUpdate(req.user._id, {$push: {liked: likedWorkout}}, {new: true}, (err, user) => {
+            if (err) return res.json(err)
+            res.json(user)
+        })
     } else {
         res.json('eRROR in post route');
     }
@@ -27,9 +29,11 @@ router.post('/inc/:workoutID', verify, async (req, res) => {
 
 router.post('/dec/:workoutID', verify, async (req, res) => {
     if (req.user) {
-        let likedWorkout = await Workout.findOneAndUpdate({_id: req.params.id}, {$inc: { likes: -1 }}, {new: true});
-        User.findOneAndUpdate({_id: req.user.id}, {$pull: {workoutID: likedWorkout._id}});
-        res.json('unlike successful').sendStatus(200);
+        let likedWorkout = await Workout.findOneAndUpdate({_id: req.params.workoutID}, {$inc: { likes: -1 }});
+        User.findByIdAndUpdate(req.user._id, {$pull: {liked: {_id: likedWorkout._id}}}, {new: true}, (err, user) => {
+            if (err) return res.json(err)
+            res.json(user)
+        })
     } else {
         res.json('eRROR in post route');
     }

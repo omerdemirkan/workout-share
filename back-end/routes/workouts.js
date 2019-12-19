@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Workout = require('../models/workout.model');
 const User = require('../models/user.model');
+const jwt = require('jsonwebtoken');
 
 // -- Load Routes --
 
@@ -92,8 +93,8 @@ router.delete('/:id', (req, res) => {
 // -- Create Route --
 
 const verify = (req, res, next) => {
-    const authToken = req.headers['authorization'].split(' ')[1];
-    if (token == null) return res.sendStatus(401);
+    const authToken = req.headers["authorization"].split(' ')[1]
+    if (authToken == null) return res.json('authToken is null').sendStatus(401);
 
     jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
@@ -103,26 +104,27 @@ const verify = (req, res, next) => {
 }
 
 router.post('/', verify, (req, res) => {
-    if (req.user) {
-        const newWorkout = new Workout({
-            title: req.body.title,
-            type: req.body.type,
-            exercises: req.body.exercises,
-            likes: 0,
-            posterID: req.user._id
-        });
-        newWorkout.save((err, workout) => {
-            if (!err) {
-                // res.json(workout.id).status(200);
-                User.updateOne({_id: workout.posterID}, {$push: {posted: workout}}, err => {
+    const newWorkout = new Workout({
+        title: req.body.title,
+        type: req.body.type,
+        exercises: req.body.exercises,
+        likes: 0,
+        posterID: req.user._id
+    });
+    newWorkout.save((err, workout) => {
+        if (!err) {
+            User.updateOne({_id: workout.posterID}, {$push: {posted: workout}}, err => {
+                if (err) {
                     res.json(err);
-                })
-            } else {
-                console.log('eRROR in workouts route \n' + err);
-                res.send(err);
-            }
-        });
-    }
+                } else {
+                    res.json(workout.id).status(200);
+                }
+            })
+        } else {
+            console.log('eRROR in workouts route \n' + err);
+            res.json(err);
+        }
+    });
 });
 
 module.exports = router;

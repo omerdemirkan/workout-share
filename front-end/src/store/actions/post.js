@@ -1,9 +1,10 @@
 import axios from '../../axios';
 import * as actionTypes from '../actions/actionTypes'
 
-export const postAnonAsync = workout => {
+export const postAnonAsync = (workout, authToken) => {
     return dispatch => {
         dispatch(postAnonStart());
+        axios.defaults.headers.post['authorization'] = "Bearer " + authToken
         axios.post('/workouts', workout)
         .then(res => {
             dispatch(postAnonSuccess(res.data));
@@ -11,7 +12,7 @@ export const postAnonAsync = workout => {
         .catch(err => {
             console.log(err);
             dispatch(postAnonFailure());
-        });
+        }); 
     }
 }
 
