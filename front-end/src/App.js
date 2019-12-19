@@ -6,6 +6,13 @@ import Navbar from './components/UI/navbar/navbar';
 import Main from './components/UI/Main/Main';
 import Footer from './components/UI/Footer/Footer'
 
+// Axios for potentially fetching a token
+import axios from './axios';
+
+//Redux for storing token in global state
+import {connect} from 'react-redux';
+import * as actionTypes from './store/actions/actionTypes';
+
 // Routes
 import All from './containers/Search/All/All'
 
@@ -13,7 +20,17 @@ import Create from './containers/create/Create';
 
 class App extends React.Component {
   componentDidMount() {
-    //
+    if (localStorage.getItem('authToken')) {
+      //
+    } else {
+      axios.get('/users/create')
+      .then(res => {
+        console.log(res.data.accessToken);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
   }
   render() {
     return <div className='App'>
@@ -32,4 +49,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onSetAuthToken: authToken => dispatch({type: actionTypes.SET_AUTH_TOKEN, authToken: authToken})
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);

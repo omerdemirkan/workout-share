@@ -1,14 +1,14 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    authorized: false
+    authToken: null
 };
 
 const authReducer = (state = initialState, action) => {
     switch(action.type) {
-        case actionTypes.AUTHORIZE_USER:
+        case actionTypes.SET_AUTH_TOKEN:
             return {
-                authorized: true
+                authToken: action.authToken
             }
         default: 
             return state;

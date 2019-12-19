@@ -12,7 +12,7 @@ export const POST_ANON_SUCCESS = 'POST_ANON_SUCCESS';
 export const POST_ANON_FAILURE = 'POST_ANON_FAILURE';
 
 // ___ AUTH ___
-export const AUTHORIZE_USER = 'AUTHORIZE_USER';
+export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
 
 //___ LOAD ___
 export const LOAD_POSTS_START = 'LOAD_POSTS_START';

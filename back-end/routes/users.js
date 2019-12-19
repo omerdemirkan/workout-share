@@ -6,7 +6,9 @@ router.get('/create', (req, res) => {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     const newUser = new User({
         ip: ip,
-        epoch: Date.now()
+        epoch: Date.now(),
+        liked: [],
+        posted: []
     });
     let accessToken = null;
     newUser.save((err, user) => {
@@ -19,7 +21,7 @@ router.get('/create', (req, res) => {
     });
 });
 
-const authToken = (req, res, next) => {
+const verify = (req, res, next) => {
     const authToken = req.headers['authorization'].split(' ')[1];
     if (token == null) return res.sendStatus(401);
 
@@ -29,5 +31,13 @@ const authToken = (req, res, next) => {
         next();
     })
 }
+
+router.get('/test', verify, (req, res) => {
+    if (req.user) {
+        res.json(req.user)
+    } else {
+        res.json('authorization failed');
+    }
+});
 
 module.exports = router;

@@ -17,11 +17,13 @@ mongoose.connect(process.env.LOCAL_URI, {useNewUrlParser: true, useUnifiedTopolo
 .then(() => console.log('Connected to mongo shell'))
 .catch(() => console.log('eRROR in mongoDB connection'));
 
-const workoutsRouter = require('./routes/workouts');
+const workoutsRouter = require('./routes/workouts');  
 const usersRouter = require('./routes/users');
+const likeRouter = require('./routes/like');
 
 app.use('/api/workouts', workoutsRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/like', likeRouter);
  
 app.listen(process.env.PORT || 5000, () => {
     console.log(`Yoo we live on port ${process.env.PORT || 5000}`);

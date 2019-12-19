@@ -8,7 +8,9 @@ const userSchema = new mongoose.Schema({
     epoch: {
         type: String,
         required: true
-    }
+    },
+    liked: Array,
+    posted: Array
 });
 
 module.exports = userSchema;
