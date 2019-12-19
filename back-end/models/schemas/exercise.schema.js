@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 
-// There are two types of exercises: set/rep and set/min/sec
-// Only name and sets are required because of this distinction
-
 const exerciseSchema = new mongoose.Schema({
     title: {
         type: String,

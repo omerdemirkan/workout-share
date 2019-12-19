@@ -8,17 +8,6 @@
     animation: slideDown .2s ease forwards;
 }
 
-@keyframes slideDown{
-    from {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
 .CardBox {
     display: flex;
     justify-content: center;
@@ -30,6 +19,31 @@
     animation-delay: 0.2s;
     transform: translateY(-100%);
     opacity: 0;
+}
+
+.CopyToClipboardBox {
+    position: absolute;
+    bottom: 5px;
+    width: 100px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 12px;
+    transform: translateY(-100%);
+    opacity: 0;
+    animation: slideDown 0.2s ease forwards;
+    animation-delay: 0.6s;
+}
+
+@keyframes slideDown{
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
 }
 
 .CloseButton {
@@ -52,18 +66,6 @@
 
 .CloseButton:hover {
     color: white;
-}
-
-
-
-.CopyToClipboardBox {
-    position: absolute;
-    bottom: 5px;
-    width: 100px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-bottom: 12px;
 }
 
 .ShareText {
