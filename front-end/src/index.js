@@ -13,11 +13,13 @@ import thunk from 'redux-thunk';
 import createReducer from './store/reducers/create';
 import authReducer from './store/reducers/auth';
 import loadReducer from './store/reducers/load';
+import inspectReducer from './store/reducers/inspect';
 
 const rootReducer = combineReducers({
     create: createReducer,
     auth: authReducer,
-    load: loadReducer
+    load: loadReducer,
+    inspect: inspectReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

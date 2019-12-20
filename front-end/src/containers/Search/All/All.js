@@ -8,6 +8,9 @@ import routeToType from '../../../helper/route-to-type';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import axios from '../../../axios';
+import * as actionTypes from '../../../store/actions/actionTypes';
+
 
 class All extends React.Component {
     constructor(props) {
@@ -18,35 +21,39 @@ class All extends React.Component {
     state = {
         currentPath: '',
         search: null,
-        searchID: null
+        searchID: null,
+        type: null
     }
 
     componentDidMount() {
-        if (this.props[routeToType(this.props.history.location.pathname)]) {
-            const workouts = this.props[routeToType(this.props.history.location.pathname)];
-            if (workouts.length === 0) {
-                this.updatePathHandler();
-                this.updateSearchHandler();
-            }
+        //Checking if this page has already been loaded and saved in redux
+        const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)];
+        if (loadedWorkouts && loadedWorkouts.length === 0) {
+            this.updatePathHandler();
+            this.updateSearchHandler();
         }
     }
 
     componentDidUpdate() {
-        if (this.props[routeToType(this.props.history.location.pathname)]) {
-            const workouts = this.props[routeToType(this.props.history.location.pathname)];
-
-            if (this.state.currentPath !== this.props.history.location.pathname && workouts.length === 0) {
+        const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)];
+        if (loadedWorkouts) {
+            if (this.state.currentPath !== this.props.history.location.pathname && loadedWorkouts.length === 0) {
                 this.updatePathHandler();
             }
-            if (this.props.location.search !== this.state.search) {
-                this.updateSearchHandler();
-            }
+
+            //Not updating search on update because I want it to be handled by the Card component on title click after the initial load.
+            //This is because the initial load is the only way to inspect a post without having actively clicked on a post.
+
+            // if (this.props.location.search !== this.state.search) {
+            //     this.updateSearchHandler();
+            // }
         }
     }
 
     updatePathHandler = () => {
         this.setState({
-            currentPath: this.props.history.location.pathname
+            currentPath: this.props.history.location.pathname,
+            type: routeToType(this.props.history.location.pathname)
         });
         this.props.onLoadPosts(this.props.history.location.pathname);
     }
@@ -61,6 +68,15 @@ class All extends React.Component {
             searchID: searchID,
             search: this.props.location.search
         });
+        if (searchID && searchID.length > 0) {
+            axios.get('/workouts/' + searchID)
+            .then(res => {
+                this.props.onSetInspect(res.data, routeToType(this.props.history.location.pathname));
+            })
+            .catch(err => {
+                console.log(err)
+            });
+        }
     }
 
     render() {
@@ -70,9 +86,7 @@ class All extends React.Component {
         const workouts = this.props[type];
         
         return <div style={{textAlign: 'center'}}>
-            {this.state.searchID ? 
-                <Route path={this.props.history.location.pathname} exact render={() => <Inspect history={this.props.history} id={this.state.searchID}/>}/>
-            : null}
+            <Route path={this.props.history.location.pathname} exact render={() => <Inspect history={this.props.history}/>}/>
             {workouts && !this.props.loading ? 
             <React.Fragment>
                 <Feed history={this.props.history} darkTitles workouts={workouts}/>
@@ -100,7 +114,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLoadPosts: route => dispatch(loadPostsAsync(route))
+        onLoadPosts: route => dispatch(loadPostsAsync(route)),
+        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
     }
 }
 

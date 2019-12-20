@@ -2,7 +2,8 @@ import React from 'react';
 import classes from './Card.module.css';
 import axios from '../../../axios';
 import {connect} from 'react-redux';
-import * as actionTypes from '../../../store/actions/actionTypes'
+import * as actionTypes from '../../../store/actions/actionTypes';
+import routeToType from '../../../helper/route-to-type';
 
 import { colorsByDisplay } from '../../../helper/colors-by-path'
 
@@ -31,7 +32,7 @@ class Card extends React.PureComponent {
     }
 
     checkPreviouslyLiked = () => {
-        if (this.props.likedIDs && this.props.likedIDs.length) {
+        if (this.props.likedIDs) {
             if (this.props.likedIDs.includes(this.props.workout._id) && !this.state.liked) {
                 this.setState({
                     previouslyLiked: true,
@@ -76,11 +77,13 @@ class Card extends React.PureComponent {
                 pathname: this.props.history.location.pathname,
                 search: '?id=' + this.props.workout._id
             });
+            this.props.onSetInspect(this.props.workout, routeToType(this.props.history.location.pathname));
             window.scrollTo(0, 0);
         }
     }
 
     render() {
+        console.log(this.state.previouslyLiked);
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
@@ -149,7 +152,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-      onSetLikedID: likedIDs => dispatch({type: actionTypes.SET_LIKED_ID, likedIDs: likedIDs})
+      onSetLikedID: likedIDs => dispatch({type: actionTypes.SET_LIKED_ID, likedIDs: likedIDs}),
+      onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
     }
 }
 

@@ -412,7 +412,7 @@ class Create extends React.Component {
                         color='primary' 
                         id="standard-basic" 
                         label={"Exercise " + (this.props.exercises.length + 1)}
-                        placeholder="e.g. Inline Bench Press"
+                        placeholder="e.g. Incline Bench Press"
                         autoComplete="off"
                         style={{width: '100%', height: '40px', fontSize: '1.5rem', color: 'rgb(71, 71, 71)', marginBottom: '40px'}}
                         className={classes.TitleInput}
