@@ -21,11 +21,6 @@ const authReducer = (state = initialState, action) => {
                     ...state,
                     likedIDs: action.likedIDs
                 }
-            case actionTypes.SET_POSTED_ID:
-                return {
-                    ...state,
-                    postedIDs: action.postedIDs
-                }
         default: 
             return state;
     }

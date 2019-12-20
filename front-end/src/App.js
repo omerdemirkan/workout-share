@@ -40,20 +40,6 @@ class App extends React.Component {
         console.log(err);
       });
 
-      // Setting id's for posted workouts
-
-      axios.get('/users/postedID', {
-        headers: {
-          authorization: 'Bearer ' + localStorage.getItem('authToken')
-        } 
-      })
-      .then(res => {
-        this.props.onSetPostedID(res.data)
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
     } else {
       axios.get('/users/create')
       .then(res => {
@@ -92,8 +78,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onSetAuthToken: authToken => dispatch({type: actionTypes.SET_AUTH_TOKEN, authToken: authToken}),
-    onSetLikedID: likedIDs => dispatch({type: actionTypes.SET_LIKED_ID, likedIDs: likedIDs}),
-    onSetPostedID: postedIDs => dispatch({type: actionTypes.SET_POSTED_ID, postedIDs: postedIDs})
+    onSetLikedID: likedIDs => dispatch({type: actionTypes.SET_LIKED_ID, likedIDs: likedIDs})
   }
 }
 

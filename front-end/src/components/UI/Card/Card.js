@@ -1,6 +1,8 @@
 import React from 'react';
-import classes from './Card.module.css'
-import axios from '../../../axios'
+import classes from './Card.module.css';
+import axios from '../../../axios';
+import {connect} from 'react-redux';
+import * as actionTypes from '../../../store/actions/actionTypes'
 
 import { colorsByDisplay } from '../../../helper/colors-by-path'
 
@@ -15,7 +17,32 @@ class Card extends React.PureComponent {
 
     state = {
         liked: false,
-        previouslyLiked: false
+        previouslyLiked: 'unknown'
+    }
+
+    componentDidMount() {
+        this.checkPreviouslyLiked();
+    }
+
+    componentDidUpdate() {
+        if (this.props.likedIDs && this.state.previouslyLiked === 'unknown') {
+            this.checkPreviouslyLiked();
+        }
+    }
+
+    checkPreviouslyLiked = () => {
+        if (this.props.likedIDs && this.props.likedIDs.length) {
+            if (this.props.likedIDs.includes(this.props.workout._id) && !this.state.liked) {
+                this.setState({
+                    previouslyLiked: true,
+                    liked: true
+                });
+            } else {
+                this.setState({
+                    previouslyLiked: false
+                });
+            }
+        }
     }
 
     likeToggleHandler = () => {
@@ -50,15 +77,6 @@ class Card extends React.PureComponent {
                 search: '?id=' + this.props.workout._id
             });
             window.scrollTo(0, 0);
-        }
-    }
-
-    componentDidUpdate() {
-        if (this.props.liked !== 'unknown' && this.props.liked && !this.state.liked && !this.state.previouslyLiked) {
-            this.setState({
-                liked: true,
-                previouslyLiked: true
-            });
         }
     }
 
@@ -108,7 +126,7 @@ class Card extends React.PureComponent {
     
             <div className={classes.CardFooter}>
             {this.props.darkTitle ? <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p> : null}
-            <button disabled={this.props.disableLike} onClick={this.likeToggleHandler} className={classes.LikeButton}>
+            <button disabled={this.props.disableLike || this.state.previouslyLiked === 'unknown'} onClick={this.likeToggleHandler} className={classes.LikeButton}>
                 
                 { !this.state.liked ?
                     <FavoriteBorderOutlinedIcon fontSize="large"/>
@@ -121,4 +139,16 @@ class Card extends React.PureComponent {
     }
 }
 
-export default Card;
+const mapStateToProps = state => {
+    return {
+        likedIDs: state.auth.likedIDs
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+      onSetLikedID: likedIDs => dispatch({type: actionTypes.SET_LIKED_ID, likedIDs: likedIDs})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
