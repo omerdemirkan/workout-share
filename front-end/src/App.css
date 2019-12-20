@@ -1,3 +1,5 @@
+/* Padding top is altered in orer to account for the navbar. */
+
 .App {
     padding-top: 60px;
     position: relative;

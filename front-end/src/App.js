@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import Navbar from './components/UI/navbar/navbar';
-import Main from './components/UI/Main/Main';
 import Footer from './components/UI/Footer/Footer'
 
 // Axios for potentially fetching a token
@@ -14,8 +13,9 @@ import {connect} from 'react-redux';
 import * as actionTypes from './store/actions/actionTypes';
 
 // Routes
-import All from './containers/Search/All/All'
-
+import All from './containers/Search/All/All';
+import MyFavorites from './containers/MyFavorites/MyFavorites';
+import MyWorkouts from './containers/MyWorkouts/MyWorkouts';
 import Create from './containers/create/Create';
 
 class App extends React.Component {
@@ -26,21 +26,26 @@ class App extends React.Component {
     if (localStorage.getItem('authToken')) {
       this.props.onSetAuthToken(localStorage.getItem('authToken'));
 
-      // Setting id's for liked posts
+      // Setting id's for liked posts. This is to ensure a max of one like per post per person.
+      //These id's are used to determine the prior state of a card before load
 
       axios.get('/users/likedID', {
         headers: {
           authorization: 'Bearer ' + localStorage.getItem('authToken')
-        } 
+        }
       })
       .then(res => {
-        this.props.onSetLikedID(res.data)
+        this.props.onSetLikedIDs(res.data)
       })
       .catch(err => {
         console.log(err);
       });
 
     } else {
+
+      //If there is no token in localstorage, a new token is fetched and likedID's are set to an empty array.
+
+      this.props.onSetLikedID([]);
       axios.get('/users/create')
       .then(res => {
         localStorage.setItem('authToken', res.data.accessToken);
@@ -49,22 +54,22 @@ class App extends React.Component {
       .catch(err => {
         console.log('eRROR in fetching /create authToken \n' + err);
       });
-      this.props.onSetLikedID([])
-      this.props.onSetPostedID([])
     }
+
   }
 
   render() {
     return <div className='App'>
       <Navbar/>
-      <Main>
-        <Switch>
-          <Route path="/create" component={Create}/>
-          <Route path="/" component={All}/>
-        </Switch>
-      </Main>
-      <Footer/>
 
+      <Switch>
+        <Route path="/create" component={Create}/>
+        <Route path='my-favorites' component={MyFavorites}/>
+        <Route path='my-workouts' component={MyWorkouts}/>
+        <Route path="/" component={All}/>
+      </Switch>
+
+      <Footer/>
     </div>
   }
 }
@@ -78,7 +83,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onSetAuthToken: authToken => dispatch({type: actionTypes.SET_AUTH_TOKEN, authToken: authToken}),
-    onSetLikedID: likedIDs => dispatch({type: actionTypes.SET_LIKED_ID, likedIDs: likedIDs})
+    onSetLikedIDs: likedIDs => dispatch({type: actionTypes.SET_LIKED_ID, likedIDs: likedIDs})
   }
 }
 

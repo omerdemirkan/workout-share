@@ -1,9 +1,8 @@
 import React from 'react';
-import classes from './navbar.module.css'
+import classes from './navbar.module.css';
 import './nav-hover.css';
 import {NavLink, Link} from 'react-router-dom';
 import Backdrop from '../Backdrop/Backdrop';
-import {connect} from 'react-redux';
 
 import colorsByPath from '../../../helper/colors-by-path';
 
@@ -31,7 +30,8 @@ class Navbar extends React.Component {
 
     render() {
         let navList = <React.Fragment>
-            {/* To position the 'More' links below the navbar links in the mobile sidebar */}
+            {/* To position the 'More' dropdown links below the navbar links in the mobile sidebar, because the dropdown doesn't exist on mobile */}
+
             {this.state.sideDrawerMoved ? <ul style={{top: '295px'}} className="MoreNavButtonsBox">
                 <hr style={{width: '90%', marginLeft: '-10%', border: 'none', borderTop: '1px solid rgb(180, 180, 180)'}}/>
 
@@ -44,15 +44,6 @@ class Navbar extends React.Component {
                 <li key='/my-favorites'><NavLink to="/my-favorites"
                 onClick={this.toggleSideDrawerHandler} 
                 className={classes.NavButton + ' myFavoritesNavButton'} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Favorites</NavLink></li>
-                {this.props.authorized ? 
-                    <li key='/logout'><NavLink to="/logout" 
-                    onClick={this.toggleSideDrawerHandler}  
-                    className={classes.NavButton + ' signinButton'} activeStyle={{color: 'rgb(132, 132, 255)'}}>Logout</NavLink></li>
-                : 
-                    <li key='/signin'><NavLink to="/signin" onClick={this.toggleSideDrawerHandler}  
-                    className={classes.NavButton + ' signinButton'}
-                    activeStyle={{color: 'rgb(132, 132, 255)'}}>Sign in</NavLink></li>
-                }
             </ul>
             : null}
 
@@ -84,21 +75,16 @@ class Navbar extends React.Component {
                 <div className={classes.DropdownBox}>
                     <button className={classes.MoreButton}>More</button>
                     <ul className={classes.MoreDropdown}>
-                        <li><NavLink to="/create" className={classes.DesktopLink } activeStyle={{color: 'rgb(132, 132, 255)'}}>Create</NavLink></li>
-                        <li><NavLink to="/my-workouts" className={classes.DesktopLink} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Workouts</NavLink></li> 
-                        <li><NavLink to="/my-favorites" className={classes.DesktopLink} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Favorites</NavLink></li> 
-                        {this.props.authorized ? 
-                            <li key='/logout'><NavLink to="/logout" className={classes.DesktopLink } activeStyle={{color: 'rgb(132, 132, 255)'}}>Logout</NavLink></li>
-                        : 
-                            <li key='/signin'><NavLink to="/signin" className={classes.DesktopLink} activeStyle={{color: 'rgb(132, 132, 255)'}}>Sign in</NavLink></li>
-                        }
+                        <li key={"/create"}><NavLink to="/create" className={classes.DesktopLink } activeStyle={{color: 'rgb(132, 132, 255)'}}>Create</NavLink></li>
+                        <li key={"/my-workouts"}><NavLink to="/my-workouts" className={classes.DesktopLink} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Workouts</NavLink></li> 
+                        <li key={"/my-favorites"}><NavLink to="/my-favorites" className={classes.DesktopLink} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Favorites</NavLink></li>
                     </ul>
                 </div>
                 
                 <div className={classes.Burger} onClick={this.toggleSideDrawerHandler}>
-                    <div className={classes.Line1}></div>
-                    <div className={classes.Line2}></div>
-                    <div className={classes.Line3}></div>
+                    <div className={this.state.sideDrawerOpen ? classes.Line1 : null}></div>
+                    <div className={this.state.sideDrawerOpen ? classes.Line2 : null}></div>
+                    <div className={this.state.sideDrawerOpen ? classes.Line3 : null}></div>
                 </div>
             </nav>
             {this.state.sideDrawerOpen ? <Backdrop clicked={this.toggleSideDrawerHandler}/> : null}
@@ -106,10 +92,4 @@ class Navbar extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        authorized: state.auth.authorized
-    }
-}
-
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;

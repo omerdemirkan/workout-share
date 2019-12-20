@@ -28,16 +28,23 @@ class All extends React.Component {
     }
 
     componentDidMount() {
-        this.updatePathHandler();
-        this.updateSearchHandler();
+        const workouts = this.props[routeToType(this.props.history.location.pathname)];
+        if (workouts.length === 0) {
+            this.updatePathHandler();
+            this.updateSearchHandler();
+        }
     }
 
     componentDidUpdate() {
-        if (this.state.currentPath !== this.props.history.location.pathname) {
-            this.updatePathHandler();
-        }
-        if (this.props.location.search !== this.state.search) {
-            this.updateSearchHandler();
+        if (this.props[routeToType(this.props.history.location.pathname)]) {
+            const workouts = this.props[routeToType(this.props.history.location.pathname)];
+
+            if (this.state.currentPath !== this.props.history.location.pathname && workouts.length === 0) {
+                this.updatePathHandler();
+            }
+            if (this.props.location.search !== this.state.search) {
+                this.updateSearchHandler();
+            }
         }
     }
 
