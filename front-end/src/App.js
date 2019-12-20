@@ -74,12 +74,6 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    authToken: state.auth.authToken
-  }
-}
-
 const mapDispatchToProps = dispatch => {
   return {
     onSetAuthToken: authToken => dispatch({type: actionTypes.SET_AUTH_TOKEN, authToken: authToken}),

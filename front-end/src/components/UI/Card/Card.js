@@ -84,9 +84,9 @@ class Card extends React.PureComponent {
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
-                return <tr>
-                    <td><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p></td>
+                return <tr key={exercise.title + ' row'}>
+                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title + ' sets/reps'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p></td>
                 </tr>
             } else {
                 let duration = '';
@@ -104,9 +104,9 @@ class Card extends React.PureComponent {
                     duration = exercise.seconds + ' seconds'
                 }
                 
-                return <tr>
-                    <td><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {duration}</p></td>
+                return <tr key={exercise.title + ' row'}>
+                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title + ' sets/min/sec'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {duration}</p></td>
                 </tr>
             }
         });
@@ -120,7 +120,9 @@ class Card extends React.PureComponent {
             </div>
             <div className={classes.ListBox}>
                 <table className={classes.ListTable}>
-                    {exerciseList}
+                    <tbody>
+                        {exerciseList}
+                    </tbody>
                 </table>
             </div>
     

@@ -1,18 +1,12 @@
 import React from 'react';
-import axios from '../../../axios';
 import Feed from '../../../components/feed/Feed';
 import {Route} from 'react-router-dom';
 import Inspect from '../../../containers/Inspect/Inspect';
 import {connect} from 'react-redux';
 import {loadPostsAsync} from '../../../store/actions/index'
 import routeToType from '../../../helper/route-to-type';
-import * as actionTypes from '../../../store/actions/actionTypes'
 
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-const getCurrentPathWithoutID = path => {
-    return path.slice(0, path.lastIndexOf('/'))
-}
 
 
 class All extends React.Component {
@@ -28,10 +22,12 @@ class All extends React.Component {
     }
 
     componentDidMount() {
-        const workouts = this.props[routeToType(this.props.history.location.pathname)];
-        if (workouts.length === 0) {
-            this.updatePathHandler();
-            this.updateSearchHandler();
+        if (this.props[routeToType(this.props.history.location.pathname)]) {
+            const workouts = this.props[routeToType(this.props.history.location.pathname)];
+            if (workouts.length === 0) {
+                this.updatePathHandler();
+                this.updateSearchHandler();
+            }
         }
     }
 
@@ -55,8 +51,7 @@ class All extends React.Component {
         this.props.onLoadPosts(this.props.history.location.pathname);
     }
 
-    updateSearchHandler = () => {  
-        console.log('updating search params');
+    updateSearchHandler = () => {
         const query = new URLSearchParams(this.props.location.search);
         let searchID = null
         for (let param of query.entries()) {

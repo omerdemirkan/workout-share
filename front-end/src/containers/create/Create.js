@@ -88,7 +88,7 @@ class Create extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.props.authToken) {
+        if (localStorage.getItem('authToken') == null) {
             this.props.history.push('/');
         }
     }
@@ -390,7 +390,6 @@ class Create extends React.Component {
                     labelId="demo-simple-select-placeholder-label-label" 
                     id="demo-simple-select-placeholder-label"
                     value={this.props.select}
-                    onChange={this.props.onSelectHandler}
                     displayEmpty
                     color='primary'
                     className={classes.SelectInput}
