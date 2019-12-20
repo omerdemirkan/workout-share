@@ -14,7 +14,8 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 class Card extends React.PureComponent {
 
     state = {
-        liked: false
+        liked: false,
+        previouslyLiked: false
     }
 
     likeToggleHandler = () => {
@@ -43,8 +44,6 @@ class Card extends React.PureComponent {
     }
 
     titleClickHandler = () => {
-        console.log(this.props.history.location.pathname);
-        console.log(this.props.workout._id);
         if (this.props.workout._id !== null) {
             this.props.history.push({
                 pathname: this.props.history.location.pathname,
@@ -54,8 +53,16 @@ class Card extends React.PureComponent {
         }
     }
 
-    render() {
+    componentDidUpdate() {
+        if (this.props.liked !== 'unknown' && this.props.liked && !this.state.liked && !this.state.previouslyLiked) {
+            this.setState({
+                liked: true,
+                previouslyLiked: true
+            });
+        }
+    }
 
+    render() {
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {

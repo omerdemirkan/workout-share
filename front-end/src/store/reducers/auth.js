@@ -5,25 +5,26 @@ const initialState = {
     likes: null,
     posted: null,
 
-    likedID: [],
-    postedID: []
+    likedIDs: null,
+    postedIDs: null
 };
 
 const authReducer = (state = initialState, action) => {
     switch(action.type) {
         case actionTypes.SET_AUTH_TOKEN:
             return {
+                ...state,
                 authToken: action.authToken
             }
             case actionTypes.SET_LIKED_ID:
                 return {
                     ...state,
-                    likedID: action.likedID
+                    likedIDs: action.likedIDs
                 }
             case actionTypes.SET_POSTED_ID:
                 return {
                     ...state,
-                    postedID: action.postedID
+                    postedIDs: action.postedIDs
                 }
         default: 
             return state;
