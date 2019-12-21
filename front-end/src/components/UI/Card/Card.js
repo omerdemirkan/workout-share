@@ -19,7 +19,8 @@ class Card extends React.Component {
     state = {
         liked: false,
         previouslyLiked: 'unknown',
-        numLikedIDs: null
+        numLikedIDs: null,
+        currentPath: null
     }
 
     componentDidMount() {
@@ -31,9 +32,20 @@ class Card extends React.Component {
         // updates for inspect cards need to check for previously liked on every update to update previouslyLiked on every new card inspected,
         // otherwise there will be a glitch that allows for multiple likes (or unlikes) per user.
 
-        if (this.state.numLikedIDs !== this.props.likedIDs.length || this.state.previouslyLiked !== this.props.likedIDs.includes(this.props.workout._id)) {
-            console.log('rechecking previously liked ');
+        if (this.state.numLikedIDs > this.props.likedIDs.length || this.state.previouslyLiked !== this.props.likedIDs.includes(this.props.workout._id)) {
+            // Checking 
             this.checkPreviouslyLiked();
+        } else if (this.state.numLikedIDs < this.props.likedIDs.length) {
+
+            // Adding and removing from likedIDs is treated differently because adding a new liked ID should only involve the last ID in the array, a small performance boost.
+
+            if (!this.state.previouslyLiked && !this.state.liked) {
+                this.setState({
+                    previouslyLiked: this.props.likedIDs[this.props.likedIDs.length - 1] === this.props.workout._id,
+                    liked: this.props.likedIDs[this.props.likedIDs.length - 1] === this.props.workout._id,
+                    numLikedIDs: this.props.likedIDs.length
+                });
+            }
         }
     }
 
@@ -91,7 +103,6 @@ class Card extends React.Component {
     }
 
     render() {
-        console.log(Number());
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {

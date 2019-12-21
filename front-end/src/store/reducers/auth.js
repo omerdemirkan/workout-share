@@ -2,9 +2,6 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     authToken: null,
-    likes: null,
-    posted: null,
-
     likedIDs: null,
     postedIDs: null
 };

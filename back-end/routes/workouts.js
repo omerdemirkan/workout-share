@@ -131,11 +131,11 @@ router.post('/', verify, (req, res) => {
     });
     newWorkout.save((err, workout) => {
         if (!err) {
-            User.updateOne({_id: workout.posterID}, {$push: {posted: workout}}, err => {
+            User.updateOne({_id: req.user._id}, {$push: {posted: workout}}, err => {
                 if (err) {
                     res.json(err);
                 } else {
-                    res.json(workout.id).status(200);
+                    res.json(workout._id).status(200);
                 }
             })
         } else {

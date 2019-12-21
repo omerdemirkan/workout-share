@@ -72,6 +72,7 @@ class All extends React.Component {
             axios.get('/workouts/' + searchID)
             .then(res => {
                 this.props.onSetInspect(res.data, routeToType(this.props.history.location.pathname));
+                this.setState({currentPath: this.props.history.location.pathname});
             })
             .catch(err => {
                 console.log(err)
@@ -87,7 +88,7 @@ class All extends React.Component {
         
         return <div style={{textAlign: 'center'}}>
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>
-            {workouts && !this.props.loading ? 
+            {workouts && !this.props.loading ?
                 <Feed history={this.props.history} darkTitles workouts={workouts}/>
                 
             : <CircularProgress style={{marginTop: '60px'}}/>}

@@ -1,0 +1,14 @@
+.MyWorkouts {
+    padding-top: 30px;
+}
+
+.Header {
+    text-align: center;
+    color: rgb(73, 73, 73);
+}
+
+@media (max-width: 768px) {
+    .MyWorkouts {
+        padding-top: 15px;
+    }
+}

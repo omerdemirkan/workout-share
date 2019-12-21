@@ -87,12 +87,6 @@ class Create extends React.Component {
         twoMoreAlert: false
     }
 
-    componentDidMount() {
-        if (localStorage.getItem('authToken') == null) {
-            this.props.history.push('/');
-        }
-    }
-
     updateExerciseHandler = (event, field) => {
         let newExercise = {...this.state.currentExercise};
         if (field === 'title') {
@@ -548,7 +542,8 @@ const mapDispatchToProps = dispatch => {
         onAddExercise: exercise => dispatch({type: actionTypes.ADD_EXERCISE, exercise: exercise}),
         onDeleteExercise: title => dispatch({type: actionTypes.DELETE_EXERCISE, title: title}),
         onDeleteWorkout: () => dispatch({type: actionTypes.DELETE_WORKOUT}),
-        onPostAnonHandler: (workout, authToken) => dispatch(postAnonAsync(workout, authToken))
+        onPostAnonHandler: (workout, authToken) => dispatch(postAnonAsync(workout, authToken)),
+        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
     }
 }
 
