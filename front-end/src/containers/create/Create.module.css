@@ -64,8 +64,8 @@
 }
 
 .AddExerciseButton {
-  min-width: 55px;
-  min-height: 55px;
+  min-width: 52px;
+  min-height: 52px;
   box-sizing: border-box;
   position: absolute;
   right: 20px;
@@ -77,6 +77,8 @@
   outline: none;
   user-select: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .AddExerciseButton:active {

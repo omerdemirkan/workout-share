@@ -87,12 +87,7 @@ class All extends React.Component {
         
         return <div style={{textAlign: 'center'}}>
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>
-            {workouts && !this.props.loading ? 
-            <React.Fragment>
-                <Feed history={this.props.history} darkTitles workouts={workouts}/>
-            </React.Fragment>
-                
-            : <CircularProgress style={{marginTop: '60px'}}/>}
+            <Feed history={this.props.history} darkTitles workouts={workouts}/>
             {this.props.error ? <p>{this.props.error}</p>: null}
         </div>
     }
@@ -105,10 +100,7 @@ const mapStateToProps = state => {
         bodybuilding: state.load.bodybuilding,
         weightlifting: state.load.weightlifting,
         endurance: state.load.endurance,
-        crossfit: state.load.crossfit,
-        error: state.load.error,
-        state: state.load,
-        loading: state.load.loading
+        crossfit: state.load.crossfit
     }
 }
 

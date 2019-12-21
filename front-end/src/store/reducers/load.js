@@ -7,9 +7,7 @@ const initialState = {
     weightlifting: [],
     endurance: [],
     crossfit: [],
-    currentPath: null,
     loading: false,
-    error: null
 }
 
 const load = (state = initialState, action) => {

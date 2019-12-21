@@ -14,6 +14,7 @@ import * as actionTypes from './store/actions/actionTypes';
 
 // Routes
 import All from './containers/Search/All/All';
+import Main from './components/UI/Main/Main';
 import MyFavorites from './containers/MyFavorites/MyFavorites';
 import MyWorkouts from './containers/MyWorkouts/MyWorkouts';
 import Create from './containers/create/Create';
@@ -61,13 +62,14 @@ class App extends React.Component {
   render() {
     return <div className='App'>
       <Navbar/>
-
-      <Switch>
-        <Route path="/create" component={Create}/>
-        <Route path='my-favorites' component={MyFavorites}/>
-        <Route path='my-workouts' component={MyWorkouts}/>
-        <Route path="/" component={All}/>
-      </Switch>
+      <Main>
+        <Switch>
+          <Route path="/create" component={Create}/>
+          <Route path='my-favorites' component={MyFavorites}/>
+          <Route path='my-workouts' component={MyWorkouts}/>
+          <Route path="/" component={All}/>
+        </Switch>
+      </Main>
 
       <Footer/>
     </div>

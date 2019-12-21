@@ -120,7 +120,7 @@ class Card extends React.Component {
                 </tr>
             }
         });
-        return <div className={classes.Card} style={this.props.cardStyle !== null ? this.props.cardStyle : null}>
+        return <div className={classes.Card}>
             <div className={classes.CardHeader}>
                 <h2 
                 className={classes.CardTitle} 

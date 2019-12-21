@@ -9,8 +9,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    liked: Array,
-    posted: Array
+    liked: {
+        type: Array,
+        unique: true
+    },
+    posted: {
+        type: Array,
+        unique: true
+    }
 });
 
 module.exports = userSchema;
