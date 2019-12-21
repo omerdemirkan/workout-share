@@ -76,6 +76,15 @@
   z-index: 2;
 }
 
+.LikesNumber {
+  position: absolute;
+  right: 54px;
+  bottom: 10px;
+  margin: 0;
+  color: rgb(73, 73, 73);
+  font-size: 1.2rem;
+}
+
 .LikeButton {
   position: absolute;
   right: 5px;

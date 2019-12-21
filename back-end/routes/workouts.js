@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 // -- Load Routes --
 
 router.get('/', (req, res) => {
-    Workout.find({}, (err, workouts) => {
+    Workout.find({}).sort({likes: -1}).exec((err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/powerlifting', (req, res) => {
-    Workout.find({type: 'Powerlifting'}, (err, workouts) => {
+    Workout.find({type: 'Powerlifting'}).sort({likes: -1}).exec( (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
@@ -26,7 +26,7 @@ router.get('/powerlifting', (req, res) => {
 });
 
 router.get('/bodybuilding', (req, res) => {
-    Workout.find({type: 'Bodybuilding'}, (err, workouts) => {
+    Workout.find({type: 'Bodybuilding'}).sort({likes: -1}).exec( (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
@@ -36,7 +36,7 @@ router.get('/bodybuilding', (req, res) => {
 });
 
 router.get('/weightlifting', (req, res) => {
-    Workout.find({type: 'Weightlifting'}, (err, workouts) => {
+    Workout.find({type: 'Weightlifting'}).sort({likes: -1}).exec( (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
@@ -46,7 +46,7 @@ router.get('/weightlifting', (req, res) => {
 });
 
 router.get('/endurance', (req, res) => {
-    Workout.find({type: 'Endurance'}, (err, workouts) => {
+    Workout.find({type: 'Endurance'}).sort({likes: -1}).exec( (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
@@ -56,7 +56,7 @@ router.get('/endurance', (req, res) => {
 });
 
 router.get('/crossfit', (req, res) => {
-    Workout.find({type: 'Crossfit'}, (err, workouts) => {
+    Workout.find({type: 'Crossfit'}).sort({likes: -1}).exec( (err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);
         } else {
@@ -95,7 +95,7 @@ router.get('/my-workouts', verify, (req, res) => {
         } else {
             res.json('error: cannot load liked posts');
         }
-    });
+    }).sort({date:-1});
 });
 
 router.get('/:id', (req, res) => {

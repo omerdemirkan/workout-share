@@ -20,7 +20,7 @@ class Card extends React.Component {
         liked: false,
         previouslyLiked: 'unknown',
         numLikedIDs: null,
-        currentPath: null
+        likes: null
     }
 
     componentDidMount() {
@@ -29,35 +29,29 @@ class Card extends React.Component {
 
     componentDidUpdate() {
 
-        // updates for inspect cards need to check for previously liked on every update to update previouslyLiked on every new card inspected,
-        // otherwise there will be a glitch that allows for multiple likes (or unlikes) per user.
+        this.checkPreviouslyLiked();
 
-        if (this.state.numLikedIDs > this.props.likedIDs.length || this.state.previouslyLiked !== this.props.likedIDs.includes(this.props.workout._id)) {
+        if (this.state.numLikedIDs !== this.props.likedIDs.length) {
             // Checking 
-            this.checkPreviouslyLiked();
-        } else if (this.state.numLikedIDs < this.props.likedIDs.length) {
-
-            // Adding and removing from likedIDs is treated differently because adding a new liked ID should only involve the last ID in the array, a small performance boost.
-
-            if (!this.state.previouslyLiked && !this.state.liked) {
-                this.setState({
-                    previouslyLiked: this.props.likedIDs[this.props.likedIDs.length - 1] === this.props.workout._id,
-                    liked: this.props.likedIDs[this.props.likedIDs.length - 1] === this.props.workout._id,
-                    numLikedIDs: this.props.likedIDs.length
-                });
-            }
-        }
-    }
-
-    checkPreviouslyLiked = () => {
-        if (this.props.likedIDs) {
             this.setState({
-                previouslyLiked: this.props.likedIDs.includes(this.props.workout._id),
                 liked: this.props.likedIDs.includes(this.props.workout._id),
                 numLikedIDs: this.props.likedIDs.length
             });
         }
     }
+
+    checkPreviouslyLiked = () => {
+        if (this.props.likedIDs && this.state.previouslyLiked === 'unknown') {
+            this.setState({
+                previouslyLiked: this.props.likedIDs.includes(this.props.workout._id),
+                liked: this.props.likedIDs.includes(this.props.workout._id),
+                numLikedIDs: this.props.likedIDs.length,
+                likes: this.props.workout.likes
+            });
+        }
+    }
+
+    checkPreviouslyLikedUpdate
 
     likeToggleHandler = () => {
 
@@ -79,7 +73,7 @@ class Card extends React.Component {
         axios.defaults.headers.post['authorization'] = "Bearer " + localStorage.getItem('authToken')
         axios.post('/like' + modifier)
         .then(res => {
-            console.log(res.data.liked.length);
+            this.setState({likes: res.data.likes});
         })
         .catch(err => {
             console.log(err);
@@ -93,10 +87,6 @@ class Card extends React.Component {
 
     titleClickHandler = () => {
         if (this.props.workout._id !== null) {
-            this.props.history.push({
-                pathname: this.props.history.location.pathname,
-                search: '?id=' + this.props.workout._id
-            });
             this.props.onSetInspect(this.props.workout, routeToType(this.props.history.location.pathname));
             window.scrollTo(0, 0);
         }
@@ -132,6 +122,12 @@ class Card extends React.Component {
                 </tr>
             }
         });
+
+        let likes = null;
+        if (this.state.likes > 0) {
+            likes = <h2 style={this.state.liked ? {color: colorsByDisplay(displayType).darkColor} : {}} className={classes.LikesNumber}>{this.state.likes}</h2>
+        }
+        
         return <div className={classes.Card} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's'}: {}}>
             <div className={classes.CardHeader}>
                 <h2 
@@ -150,14 +146,19 @@ class Card extends React.Component {
     
             <div className={classes.CardFooter}>
             {this.props.darkTitle ? <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p> : null}
-            <button disabled={this.props.disableLike || this.state.previouslyLiked === 'unknown'} onClick={this.likeToggleHandler} className={classes.LikeButton}>
+            
+            
+            {likes}
                 
+            <button disabled={this.props.disableLike || this.state.previouslyLiked === 'unknown'} onClick={this.likeToggleHandler} className={classes.LikeButton}>
+                    
                 { !this.state.liked ?
                     <FavoriteBorderOutlinedIcon fontSize="large"/>
                 :
                     <FavoriteIcon fontSize="large" style={{color: colorsByDisplay(displayType).darkColor}}/>
                 }
             </button>
+            
             </div>
         </div>
     }

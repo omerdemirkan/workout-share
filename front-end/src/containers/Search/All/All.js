@@ -26,6 +26,7 @@ class All extends React.Component {
     }
 
     componentDidMount() {
+        console.log('inside All componentDidMount');
         //Checking if this page has already been loaded and saved in redux
         const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)];
         if (loadedWorkouts && loadedWorkouts.length === 0) {
@@ -40,13 +41,10 @@ class All extends React.Component {
             if (this.state.currentPath !== this.props.history.location.pathname && loadedWorkouts.length === 0) {
                 this.updatePathHandler();
             }
-
-            //Not updating search on update because I want it to be handled by the Card component on title click after the initial load.
-            //This is because the initial load is the only way to inspect a post without having actively clicked on a post.
-
-            // if (this.props.location.search !== this.state.search) {
-            //     this.updateSearchHandler();
-            // }
+            if (this.state.search !== this.props.location.search) {
+                this.updateSearchHandler();
+            }
+            console.log(this.props.allInspect);
         }
     }
 
@@ -71,6 +69,7 @@ class All extends React.Component {
         if (searchID && searchID.length > 0) {
             axios.get('/workouts/' + searchID)
             .then(res => {
+                console.log(res)
                 this.props.onSetInspect(res.data, routeToType(this.props.history.location.pathname));
                 this.setState({currentPath: this.props.history.location.pathname});
             })
@@ -104,7 +103,8 @@ const mapStateToProps = state => {
         bodybuilding: state.load.bodybuilding,
         weightlifting: state.load.weightlifting,
         endurance: state.load.endurance,
-        crossfit: state.load.crossfit
+        crossfit: state.load.crossfit,
+        allInspect: state.inspect.all
     }
 }
 

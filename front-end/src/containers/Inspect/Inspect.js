@@ -23,6 +23,7 @@ class Inspect extends React.Component {
 
     closeInspectHandler = () => {
         this.props.onSetInspect(null, routeToType(this.props.history.location.pathname));
+        this.props.history.push(this.props.history.location.pathname);
     }
 
     openCopyToClipboardAlertHandler = () => {
@@ -37,6 +38,10 @@ class Inspect extends React.Component {
         const workout = this.props[routeToType(this.props.history.location.pathname)]
         
         if (workout) {
+            let shareURL = window.location.href;
+            if (!shareURL.includes('?')) {
+                shareURL = shareURL + '?id=' + workout._id
+            }
             return <React.Fragment>
                 <div className={classes.InspectBox}>
                     <button className={classes.CloseButton} onClick={this.closeInspectHandler}><CloseRoundedIcon fontSize='large'/></button>
@@ -46,7 +51,7 @@ class Inspect extends React.Component {
                             <Card inspect darkTitle workout={workout}/>
                         </div>
                         <div className={classes.CopyToClipboardBox}>
-                            <CopyToClipboard text={window.location.href}
+                            <CopyToClipboard text={shareURL}
                                 onCopy={this.openCopyToClipboardAlertHandler}>
                                 <span><FileCopyIcon className={classes.CopyIcon}/></span>
                             </CopyToClipboard>

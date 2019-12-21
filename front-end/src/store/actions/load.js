@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 import routeToType from '../../helper/route-to-type';
 
-export const loadPostsAsync = route => {
+export const loadPostsAsync = (route, currentNumPosts) => {
     return dispatch => {
         dispatch(loadPostsStart(route));
         axios.get('/workouts' + route, {

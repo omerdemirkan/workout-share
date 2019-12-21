@@ -37,9 +37,9 @@ class Card extends React.Component {
         const displayType = this.props.workout.type.charAt(0).toUpperCase() + this.props.workout.type.substring(1);
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.type === 'sets-reps') {
-                return <tr>
-                    <td><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td style={{position: 'relative'}}>
+                return <tr key={exercise.title + ' row'}>
+                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title + ' sets/reps'} style={{position: 'relative'}}>
                         <p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p>
                         <button className={classes.DeleteExerciseButton}><ClearRoundedIcon onClick={() => this.props.onDeleteExercise(exercise.title)}/></button>
                     </td>
@@ -60,9 +60,9 @@ class Card extends React.Component {
                     duration = exercise.seconds + ' seconds'
                 }
                 
-                return <tr>
-                    <td><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {duration}</p></td>
+                return <tr key={exercise.title + ' row'}>
+                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title + ' sets/min/sec'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {duration}</p></td>
                 </tr>
             }
         });
