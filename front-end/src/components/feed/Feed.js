@@ -5,13 +5,15 @@ import Card from '../UI/Card/Card';
 class Feed extends React.Component {
     
     render() {
-        if (this.props.favorites && this.props.workouts) {
+        let delay = 0;
+        if (this.props.favorites && this.props.workouts && this.props.workouts.length > 0) {
             // In the favorites route, we make sure that everything in this route complies with likedIDs
 
             return <div className={classes.Cards}>
             {this.props.workouts.map(workout => {
                 if (this.props.favorites.includes(workout._id)) {
-                    return <Card key={workout._id} disableLike={false} history={this.props.history} darkTitle={this.props.darkTitles} workout={workout}/>
+                    delay += 0.10;
+                    return <Card delay={delay} key={workout._id} disableLike={false} history={this.props.history} darkTitle={this.props.darkTitles} workout={workout}/>
                 }
             })}
         </div>
@@ -20,13 +22,11 @@ class Feed extends React.Component {
 
             return <div className={classes.Cards}>
                 {this.props.workouts.map(workout => {
-                    return <Card key={workout._id} disableLike={false} history={this.props.history} darkTitle={this.props.darkTitles} workout={workout}/>
+                    delay += 0.10;
+                    return <Card delay={delay} key={workout._id} disableLike={false} history={this.props.history} darkTitle={this.props.darkTitles} workout={workout}/>
                 })}
             </div>
-
-            
         }
-        
     }
 }
 

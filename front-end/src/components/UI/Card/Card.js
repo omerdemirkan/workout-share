@@ -91,6 +91,7 @@ class Card extends React.Component {
     }
 
     render() {
+        console.log(Number());
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
@@ -120,7 +121,7 @@ class Card extends React.Component {
                 </tr>
             }
         });
-        return <div className={classes.Card}>
+        return <div className={classes.Card} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's'}: {}}>
             <div className={classes.CardHeader}>
                 <h2 
                 className={classes.CardTitle} 
