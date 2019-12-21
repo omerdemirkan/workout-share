@@ -14,11 +14,12 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 
 // disableLike: disables like button
 
-class Card extends React.PureComponent {
+class Card extends React.Component {
 
     state = {
         liked: false,
-        previouslyLiked: 'unknown'
+        previouslyLiked: 'unknown',
+        numLikedIDs: null
     }
 
     componentDidMount() {
@@ -26,48 +27,55 @@ class Card extends React.PureComponent {
     }
 
     componentDidUpdate() {
-        if (this.props.likedIDs && this.state.previouslyLiked === 'unknown') {
+
+        // updates for inspect cards need to check for previously liked on every update to update previouslyLiked on every new card inspected,
+        // otherwise there will be a glitch that allows for multiple likes (or unlikes) per user.
+
+        if (this.state.numLikedIDs !== this.props.likedIDs.length || this.state.previouslyLiked !== this.props.likedIDs.includes(this.props.workout._id)) {
+            console.log('rechecking previously liked ');
             this.checkPreviouslyLiked();
         }
     }
 
     checkPreviouslyLiked = () => {
         if (this.props.likedIDs) {
-            if (this.props.likedIDs.includes(this.props.workout._id) && !this.state.liked) {
-                this.setState({
-                    previouslyLiked: true,
-                    liked: true
-                });
-            } else {
-                this.setState({
-                    previouslyLiked: false
-                });
-            }
+            this.setState({
+                previouslyLiked: this.props.likedIDs.includes(this.props.workout._id),
+                liked: this.props.likedIDs.includes(this.props.workout._id),
+                numLikedIDs: this.props.likedIDs.length
+            });
         }
     }
 
     likeToggleHandler = () => {
-        const reverse = !this.state.liked;
-        this.setState({
-            liked: reverse
-        });
 
         let modifier = null;
         if (this.state.liked) {
             //Like
+            this.props.onSetLikedID(this.props.likedIDs.filter(id => {
+                return id !== this.props.workout._id
+            }));
+
             modifier = '/dec/' + this.props.workout._id;
         } else {
             //Unlike
+            this.props.onSetLikedID([...this.props.likedIDs, this.props.workout._id]);
+
             modifier = '/inc/' + this.props.workout._id;
         }
         
         axios.defaults.headers.post['authorization'] = "Bearer " + localStorage.getItem('authToken')
         axios.post('/like' + modifier)
         .then(res => {
-            console.log(res.data);
+            console.log(res.data.liked.length);
         })
         .catch(err => {
             console.log(err);
+        });
+
+        const reverse = !this.state.liked;
+        this.setState({
+            liked: reverse
         });
     }
 
@@ -83,7 +91,6 @@ class Card extends React.PureComponent {
     }
 
     render() {
-        console.log(this.state.previouslyLiked);
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {

@@ -86,7 +86,7 @@ class All extends React.Component {
         const workouts = this.props[type];
         
         return <div style={{textAlign: 'center'}}>
-            <Route path={this.props.history.location.pathname} exact render={() => <Inspect history={this.props.history}/>}/>
+            <Route path={this.props.history.location.pathname} exact component={Inspect}/>
             {workouts && !this.props.loading ? 
             <React.Fragment>
                 <Feed history={this.props.history} darkTitles workouts={workouts}/>

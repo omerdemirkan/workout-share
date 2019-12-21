@@ -43,7 +43,7 @@ class Inspect extends React.Component {
                 
                 <React.Fragment>
                         <div className={classes.CardBox}>
-                            <Card darkTitle workout={workout}/>
+                            <Card inspect darkTitle workout={workout}/>
                         </div>
                         <div className={classes.CopyToClipboardBox}>
                             <CopyToClipboard text={window.location.href}
