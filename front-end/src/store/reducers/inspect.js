@@ -6,7 +6,9 @@ const initialState = {
     bodybuilding: null,
     weightlifting: null,
     enurance: null,
-    crossfit: null
+    crossfit: null,
+    myFavorites: null,
+    myWorkouts: null
 }
 
 const inspect = (state = initialState, action) => {

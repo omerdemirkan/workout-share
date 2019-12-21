@@ -90,6 +90,8 @@ const mapStateToProps = state => {
         weightlifting: state.inspect.weightlifting,
         endurance: state.inspect.endurance,
         crossfit: state.inspect.crossfit,
+        myFavorites: state.inspect.myFavorites,
+        myWorkouts: state.inspect.myWorkouts
     }
 }
 

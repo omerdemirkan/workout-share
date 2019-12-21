@@ -87,7 +87,10 @@ class All extends React.Component {
         
         return <div style={{textAlign: 'center'}}>
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>
-            <Feed history={this.props.history} darkTitles workouts={workouts}/>
+            {workouts && !this.props.loading ? 
+                <Feed history={this.props.history} darkTitles workouts={workouts}/>
+                
+            : <CircularProgress style={{marginTop: '60px'}}/>}
             {this.props.error ? <p>{this.props.error}</p>: null}
         </div>
     }

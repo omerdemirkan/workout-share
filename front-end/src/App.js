@@ -65,8 +65,8 @@ class App extends React.Component {
       <Main>
         <Switch>
           <Route path="/create" component={Create}/>
-          <Route path='my-favorites' component={MyFavorites}/>
-          <Route path='my-workouts' component={MyWorkouts}/>
+          <Route path='/my-favorites' component={MyFavorites}/>
+          <Route path='/my-workouts' component={MyWorkouts}/>
           <Route path="/" component={All}/>
         </Switch>
       </Main>

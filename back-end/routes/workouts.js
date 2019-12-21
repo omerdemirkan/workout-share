@@ -65,7 +65,38 @@ router.get('/crossfit', (req, res) => {
     });
 });
 
-// -- Search Route --
+// -- Create Route --
+
+const verify = (req, res, next) => {
+    const authToken = req.headers["authorization"].split(' ')[1]
+    if (authToken == null) return res.json('authToken is null').sendStatus(401);
+
+    jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    })
+}
+
+router.get('/my-favorites', verify, (req, res) => {
+    User.findOne({_id: req.user._id}, (err, user) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(user.liked);
+        }
+    });
+});
+
+router.get('/my-workouts', verify, (req, res) => {
+    User.findOne({_id: req.user._id}, (err, user) => {
+        if (!err) {
+            res.json(user.posted);
+        } else {
+            res.json('error: cannot load liked posts');
+        }
+    });
+});
 
 router.get('/:id', (req, res) => {
     const workoutId = req.params.id;
@@ -89,19 +120,6 @@ router.delete('/:id', (req, res) => {
         }
     });
 });
-
-// -- Create Route --
-
-const verify = (req, res, next) => {
-    const authToken = req.headers["authorization"].split(' ')[1]
-    if (authToken == null) return res.json('authToken is null').sendStatus(401);
-
-    jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.user = user;
-        next();
-    })
-}
 
 router.post('/', verify, (req, res) => {
     const newWorkout = new Workout({

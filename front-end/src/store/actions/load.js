@@ -5,11 +5,18 @@ import routeToType from '../../helper/route-to-type';
 export const loadPostsAsync = route => {
     return dispatch => {
         dispatch(loadPostsStart(route));
-        axios.get('/workouts' + route)
+        axios.get('/workouts' + route, {
+            headers: {
+              authorization: 'Bearer ' + localStorage.getItem('authToken')
+            }
+        })
         .then(res => {
+            console.log(res.data)
+            console.log(routeToType(route));
             dispatch(loadPostsSuccess(routeToType(route), res.data));
         })
         .catch(err => {
+            console.log(err)
             dispatch(loadPostsFailure(err));
         });
     }

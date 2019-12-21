@@ -7,6 +7,8 @@ const initialState = {
     weightlifting: [],
     endurance: [],
     crossfit: [],
+    myFavorites: [],
+    myWorkouts: [],
     loading: false,
 }
 
