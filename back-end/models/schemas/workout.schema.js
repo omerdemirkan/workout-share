@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const exerciseSchema = require('./exercise.schema');
+const likeSchema = require('./like.schema');
 
 const workoutSchema = new mongoose.Schema({
     type: String,
@@ -11,7 +12,7 @@ const workoutSchema = new mongoose.Schema({
         maxlength: 30
     },
     exercises: [exerciseSchema],
-    likes: Number
+    likes: [likeSchema]
 }, {timestamps: true});
 
 module.exports = workoutSchema;

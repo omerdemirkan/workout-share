@@ -16,27 +16,23 @@ const verify = (req, res, next) => {
 }
 
 router.post('/inc/:workoutID', verify, async (req, res) => {
-    if (req.user) {
-        const likedWorkout = await Workout.findOneAndUpdate({_id: req.params.workoutID}, {$inc: { likes: 1 }}, {new: true});
-        User.findByIdAndUpdate(req.user._id, {$push: {liked: likedWorkout}}, {new: true}, (err, user) => {
+    Workout.findByIdAndUpdate(req.params.workoutID, {$push: {likes: req.user._id}}, (error, workout) => {
+        if (error) return res.json(error)
+        User.updateOne(req.user._id, {$push: {liked: workout}}, {new: true}, err => {
             if (err) return res.json(err)
-            res.json(likedWorkout)
+            res.json(workout.likes)
         })
-    } else {
-        res.json('eRROR in post route');
-    }
+    })
 });
 
 router.post('/dec/:workoutID', verify, async (req, res) => {
-    if (req.user) {
-        let likedWorkout = await Workout.findOneAndUpdate({_id: req.params.workoutID}, {$inc: { likes: -1 }}, {new: true});
-        User.findByIdAndUpdate(req.user._id, {$pull: {liked: {_id: likedWorkout._id}}}, {new: true}, (err, user) => {
+    Workout.findByIdAndUpdate(req.params.workoutID, {$pull: {likes: req.user._id}}, (error, workout) => {
+        if (error) return res.json(error)
+        User.updateOne(req.user._id, {$pull: {liked: workout}}, {new: true}, err => {
             if (err) return res.json(err)
-            res.json(likedWorkout)
+            res.json(workout.likes)
         })
-    } else {
-        res.json('eRROR in post route');
-    }
+    })
 });
 
 module.exports = router;

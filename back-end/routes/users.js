@@ -11,12 +11,9 @@ router.get('/create', (req, res) => {
         posted: []
     }); 
     newUser.save((err, user) => {
-        if (err) {
-            res.json(err);
-        } else {
-            const accessToken = jwt.sign({_id: user._id, ip: user.ip, epoch: user.epoch}, process.env.ACCESS_TOKEN_SECRET);
-            res.json({accessToken: accessToken}); 
-        }
+        if (err) return res.json(err);  
+        const accessToken = jwt.sign({_id: user._id, ip: user.ip, epoch: user.epoch}, process.env.ACCESS_TOKEN_SECRET);
+        res.json({accessToken: accessToken});
     }); 
 });
 
@@ -31,53 +28,20 @@ const verify = (req, res, next) => {
     });
 }
 
-router.get('/liked', verify, (req, res) => {
-    User.findOne({_id: req.user._id}, (err, user) => {
-        if (err) {
-            res.json(err);
-        } else {
-            res.json(user.liked);
-        }
-    });
-});
-
-router.get('/posted', verify, (req, res) => {
-    User.findOne({_id: req.user._id}, (err, user) => {
-        if (!err) {
-            res.json(user.posted);
-        } else {
-            res.json('error: cannot load liked posts');
-        }
-    });
-});
-
 router.get('/likedID', verify, (req, res) => {
-    User.findOne({_id: req.user._id}, (err, user) => {
-        if (!err) {
-            let likedID = [];
-            user.liked.forEach(like => {
-                likedID.push(like._id);
-            })
-            res.json(likedID);
+    User.findById(req.user._id, 'liked', (err, user) => {
+        if (err) return res.json(err)
 
-        } else {
-            res.json('error: cannot load liked posts');
-        }
+        res.json(user.liked);
     });
 });
 
 router.get('/postedID', verify, (req, res) => {
-    User.findOne({_id: req.user._id}, (err, user) => {
-        if (!err) { 
-            let postedID = [];
-            user.posted.forEach(post => {
-                postedID.push(post._id);
-            })
-            res.json(postedID);
-        } else {
-            res.json('error: cannot load posted posts');
-        } 
-    }); 
+    User.findById(req.user._id, 'posted', (err, user) => {
+        if (err) return res.json(err)
+        
+        res.json(user.posted);
+    });
 });
 
 module.exports = router;

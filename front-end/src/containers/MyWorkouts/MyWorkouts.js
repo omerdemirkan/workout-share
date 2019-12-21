@@ -5,7 +5,7 @@ import classes from './MyWorkouts.module.css';
 import Feed from '../../components/feed/Feed';
 import {Route} from 'react-router-dom';
 import Inspect from '../Inspect/Inspect'
-import empty from '../../images/empty.svg';
+import empty2 from '../../images/empty2.svg';
 
 
 class MyWorkouts extends React.Component {
@@ -24,7 +24,8 @@ class MyWorkouts extends React.Component {
                 : 
                     <React.Fragment>
                         <h2 className={classes.EmptyText}>Hmm, looks like you haven't posted.</h2>
-                        <img className={classes.EmptyImage} src={empty}/>
+                        <p className={classes.EmptySubext}>Remember: Workout Hub is personalized out of the box, so <strong>no account needed. Ever.</strong></p>
+                        <img className={classes.EmptyImage} src={empty2}/>
                     </React.Fragment>
                 }
             </div>

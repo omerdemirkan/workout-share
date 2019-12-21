@@ -24,6 +24,11 @@
     margin-top: 40px;
 }
 
+.EmptySubext {
+    color: rgb(73, 73, 73);
+    font-weight: 500;
+}  
+
 @keyframes PhaseIn {
     from {
         opacity: 0;
@@ -38,5 +43,8 @@
 @media (max-width: 768px) {
     .MyFavorites {
         padding-top: 15px;
+    }
+    .EmptyImage {
+        margin-top: 0px;
     }
 }

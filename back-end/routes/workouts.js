@@ -65,7 +65,10 @@ router.get('/crossfit', (req, res) => {
     });
 });
 
-// -- Create Route --
+
+
+
+// -- Protected Routes --
 
 const verify = (req, res, next) => {
     const authToken = req.headers["authorization"].split(' ')[1]
@@ -79,28 +82,29 @@ const verify = (req, res, next) => {
 }
 
 router.get('/my-favorites', verify, (req, res) => {
-    User.findOne({_id: req.user._id}, (err, user) => {
-        if (err) {
-            res.json(err);
-        } else {
-            res.json(user.liked);
-        }
+    User.findById(req.user._id, 'liked', (error, user) => {
+        if (error) return res.json(error)
+
+        Workout.find({_id: {$in: user.liked}}, (err, workouts) => {
+            if (err) return res.json(err)
+            res.json(workouts);
+        });
     });
 });
 
 router.get('/my-workouts', verify, (req, res) => {
-    User.findOne({_id: req.user._id}, (err, user) => {
-        if (!err) {
-            res.json(user.posted);
-        } else {
-            res.json('error: cannot load liked posts');
-        }
-    }).sort({date:-1});
+    User.findById(req.user._id, 'posted', (error, user) => {
+        if (error) return res.json(error)
+
+        Workout.find({_id: {$in: user.posted}}, (err, workouts) => {
+            if (err) return res.json(err)
+            res.json(workouts);
+        });
+    });
 });
 
 router.get('/:id', (req, res) => {
-    const workoutId = req.params.id;
-    Workout.findOne({_id: workoutId}, (err, workout) => {
+    Workout.findById(req.params.id, (err, workout) => {
         if(!err) {
             res.json(workout).status(200);
         } else {
@@ -126,22 +130,18 @@ router.post('/', verify, (req, res) => {
         title: req.body.title,
         type: req.body.type,
         exercises: req.body.exercises,
-        likes: 0,
-        posterID: req.user._id
+        likes: []
     });
     newWorkout.save((err, workout) => {
-        if (!err) {
-            User.updateOne({_id: req.user._id}, {$push: {posted: workout}}, err => {
-                if (err) {
-                    res.json(err);
-                } else {
-                    res.json(workout._id).status(200);
-                }
-            })
-        } else {
-            console.log('eRROR in workouts route \n' + err);
-            res.json(err);
-        }
+        if (err) return res.json(err);
+        
+        User.updateOne({_id: req.user._id}, {$push: {posted: workout}}, err => {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(workout._id).status(200);
+            }
+        })
     });
 });
 
