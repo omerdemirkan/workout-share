@@ -1,10 +1,38 @@
 .MyFavorites {
     padding-top: 30px;
+    text-align: center;
 }
 
 .Header {
     text-align: center;
     color: rgb(73, 73, 73);
+}
+
+.EmptyImage {
+    position: relative;
+    width: 80%;
+    max-width: 800px;
+    margin-top: 30px;
+    top: 30px;
+    opacity: 0;
+    animation: PhaseIn 0.3s ease forwards;
+    animation-delay: 0.2s;
+}
+
+.EmptyText {
+    color: rgb(73, 73, 73);
+    margin-top: 40px;
+}
+
+@keyframes PhaseIn {
+    from {
+        opacity: 0;
+        top: 30;
+    }
+    to {
+        opacity: 1;
+        top: 0;
+    }
 }
 
 @media (max-width: 768px) {

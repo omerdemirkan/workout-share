@@ -5,6 +5,7 @@ import classes from './MyFavorites.module.css';
 import Feed from '../../components/feed/Feed';
 import {Route} from 'react-router-dom';
 import Inspect from '../Inspect/Inspect'
+import empty from '../../images/empty.svg';
 
 class MyFavorites extends React.Component {
 
@@ -17,9 +18,14 @@ class MyFavorites extends React.Component {
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>  
             <div className={classes.MyFavorites}>
                 <h1 className={classes.Header}>My Favorites</h1>
-                {this.props.myFavorites.length > 0 ?
+                {this.props.myFavorites.length || this.props.loading > 0 ?
                     <Feed favorites={this.props.likedIDs} history={this.props.history} darkTitles workouts={this.props.myFavorites}/>
-                : null}
+                : 
+                    <React.Fragment>
+                        <h2 className={classes.EmptyText}>Hmm, looks like you haven't favorited anything.</h2>
+                        <img className={classes.EmptyImage} src={empty}/>
+                    </React.Fragment>
+                }
             </div>
         </React.Fragment>
     }
@@ -28,7 +34,8 @@ class MyFavorites extends React.Component {
 const mapStateToProps = state => {
     return {
         myFavorites: state.load.myFavorites,
-        likedIDs: state.auth.likedIDs
+        likedIDs: state.auth.likedIDs,
+        loading: state.load.loading
     }
 }
 

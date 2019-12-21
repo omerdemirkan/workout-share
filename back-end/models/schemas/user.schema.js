@@ -11,11 +11,11 @@ const userSchema = new mongoose.Schema({
     },
     liked: {
         type: Array,
-        unique: true
+        default: []
     },
     posted: {
         type: Array,
-        unique: true
+        default: []
     }
 });
 

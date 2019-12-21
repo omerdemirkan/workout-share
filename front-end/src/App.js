@@ -46,7 +46,7 @@ class App extends React.Component {
 
       //If there is no token in localstorage, a new token is fetched and likedID's are set to an empty array.
 
-      this.props.onSetLikedID([]);
+      this.props.onSetLikedIDs([]);
       axios.get('/users/create')
       .then(res => {
         localStorage.setItem('authToken', res.data.accessToken);

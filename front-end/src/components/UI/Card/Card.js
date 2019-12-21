@@ -28,14 +28,23 @@ class Card extends React.Component {
     }
 
     componentDidUpdate() {
+        const wasLiked = this.props.likedIDs.includes(this.props.workout._id);
 
+        //Just in case, doesn't cause infinite loop:
         this.checkPreviouslyLiked();
 
-        if (this.state.numLikedIDs !== this.props.likedIDs.length) {
+        if (this.state.previouslyLiked !== 'unknown' && this.state.numLikedIDs !== this.props.likedIDs.length && this.state.liked !== wasLiked) {
             // Checking 
+            let newLikes = this.state.likes;
+            if (wasLiked) {
+                newLikes += 1;
+            } else {
+                newLikes -= 1;
+            }
             this.setState({
-                liked: this.props.likedIDs.includes(this.props.workout._id),
-                numLikedIDs: this.props.likedIDs.length
+                liked: wasLiked,
+                numLikedIDs: this.props.likedIDs.length,
+                likes: newLikes
             });
         }
     }
@@ -50,8 +59,6 @@ class Card extends React.Component {
             });
         }
     }
-
-    checkPreviouslyLikedUpdate
 
     likeToggleHandler = () => {
 

@@ -10,12 +10,11 @@ router.get('/create', (req, res) => {
         liked: [],
         posted: []
     }); 
-    let accessToken = null;
     newUser.save((err, user) => {
         if (err) {
-            res.json(err)
+            res.json(err);
         } else {
-            accessToken = jwt.sign({_id: user._id, ip: user.ip, epoch: user.epoch}, process.env.ACCESS_TOKEN_SECRET);
+            const accessToken = jwt.sign({_id: user._id, ip: user.ip, epoch: user.epoch}, process.env.ACCESS_TOKEN_SECRET);
             res.json({accessToken: accessToken}); 
         }
     }); 

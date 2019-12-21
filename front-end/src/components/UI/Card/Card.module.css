@@ -93,6 +93,7 @@
   background-color: transparent;
   outline: none;
   color: rgb(75, 75, 75);
+  cursor: pointer;
 }
 
 .LikeButton:active {

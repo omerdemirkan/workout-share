@@ -5,6 +5,8 @@ import classes from './MyWorkouts.module.css';
 import Feed from '../../components/feed/Feed';
 import {Route} from 'react-router-dom';
 import Inspect from '../Inspect/Inspect'
+import empty from '../../images/empty.svg';
+
 
 class MyWorkouts extends React.Component {
 
@@ -17,9 +19,14 @@ class MyWorkouts extends React.Component {
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>  
             <div className={classes.MyWorkouts}>
                 <h1 className={classes.Header}>My Workouts</h1>
-                {this.props.myWorkouts.length > 0 ?
+                {this.props.myWorkouts.length || this.props.loading > 0 ?
                     <Feed history={this.props.history} darkTitles workouts={this.props.myWorkouts}/>
-                : null}
+                : 
+                    <React.Fragment>
+                        <h2 className={classes.EmptyText}>Hmm, looks like you haven't posted.</h2>
+                        <img className={classes.EmptyImage} src={empty}/>
+                    </React.Fragment>
+                }
             </div>
         </React.Fragment>
     }
@@ -28,7 +35,8 @@ class MyWorkouts extends React.Component {
 const mapStateToProps = state => {
     return {
         myWorkouts: state.load.myWorkouts,
-        likedIDs: state.auth.likedIDs
+        likedIDs: state.auth.likedIDs,
+        loading: state.load.loading
     }
 }
 
