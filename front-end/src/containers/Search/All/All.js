@@ -29,7 +29,9 @@ class All extends React.Component {
 
     componentDidMount() {
         //Checking if this page has already been loaded and saved in redux
-        if (this.props.history.search) {
+        
+        
+        if (this.props.history.location.search) {
             this.updateSearchHandler();
         }
         const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)];
@@ -71,7 +73,7 @@ class All extends React.Component {
         }
         this.setState({
             searchID: searchID,
-            search: this.props.location.search
+            search: this.props.history.location.search
         });
         if (searchID && searchID.length > 0) {
             axios.get('/workouts/' + searchID)

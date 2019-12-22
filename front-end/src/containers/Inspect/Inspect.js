@@ -47,9 +47,11 @@ class Inspect extends React.Component {
                     <button className={classes.CloseButton} onClick={this.closeInspectHandler}><CloseRoundedIcon fontSize='large'/></button>
                 
                 <React.Fragment>
-                        <div className={classes.CardBox}>
-                            <Card inspect darkTitle workout={workout}/>
-                        </div>
+                        {workout ?
+                            <div className={classes.CardBox}>
+                                <Card inspect darkTitle workout={workout}/>
+                            </div>
+                        : null}
                         <div className={classes.CopyToClipboardBox}>
                             <CopyToClipboard text={shareURL}
                                 onCopy={this.openCopyToClipboardAlertHandler}>

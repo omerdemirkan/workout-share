@@ -98,7 +98,6 @@ class Card extends React.Component {
     }
 
     titleClickHandler = () => {
-        console.log(this.props.workout)
         if (this.props.workout._id !== null) {
             this.props.history.push('/?id=' + this.props.workout._id);
             window.scrollTo(0, 0);
@@ -140,8 +139,15 @@ class Card extends React.Component {
         if (this.state.likes > 0) {
             likes = <h2 style={this.state.liked ? {color: colorsByDisplay(displayType).darkColor} : {}} className={classes.LikesNumber}>{this.state.likes}</h2>
         }
+
+        let inspectStyleModifer = {};
+
+        if (this.props.inspect && this.props.workout.exercises.length > 6) {
+            const extraSpace = ((this.props.workout.exercises.length - 6) * 50) + 340
+            inspectStyleModifer = {minHeight: extraSpace + 'px'}
+        }
         
-        return <div className={classes.Card} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's'}: {}}>
+        return <div className={classes.Card} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's', ...inspectStyleModifer}: inspectStyleModifer}>
             <div className={classes.CardHeader}>
                 <h2 
                 className={classes.CardTitle} 
@@ -156,6 +162,8 @@ class Card extends React.Component {
                     </tbody>
                 </table>
             </div>
+
+            {!this.props.inspect && this.props.workout.exercises.length > 6  ? <div className={classes.FadeOut}></div> : null}
     
             <div className={classes.CardFooter}>
             {this.props.darkTitle ? <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p> : null}

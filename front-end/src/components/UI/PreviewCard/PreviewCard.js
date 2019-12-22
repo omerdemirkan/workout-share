@@ -75,7 +75,9 @@ class Card extends React.Component {
             </div>
             <div className={classes.ListBox}>
                 <table className={classes.ListTable}>
-                    {exerciseList}
+                    <tbody>
+                        {exerciseList}
+                    </tbody>
                 </table>
             </div>
             

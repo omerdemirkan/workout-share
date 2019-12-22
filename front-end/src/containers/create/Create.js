@@ -371,7 +371,6 @@ class Create extends React.Component {
         <div className={classes.Create}>
             <ThemeProvider theme={theme}>
                 <TextField 
-                    id="standard-basic" 
                     label="Title" 
                     placeholder="e.g. Heavy Chest Day"
                     value={this.props.title}
@@ -384,8 +383,6 @@ class Create extends React.Component {
                     {/* To be gramatically correct, I check if the selected value is 'endurance' in order to place 'An' instead of 'A'. */}
                     <h2 className={classes.SelectPreview}>{this.props.select === 'Endurance' ? 'An' : 'A'} <span className={classes.SelectPreviewInput} style={{borderColor: colorsByDisplay(this.props.select).activeColor}}>{this.props.select}</span> Workout</h2>
                     <Select
-                    labelId="demo-simple-select-placeholder-label-label" 
-                    id="demo-simple-select-placeholder-label"
                     value={this.props.select}
                     displayEmpty
                     color='primary'
@@ -407,7 +404,6 @@ class Create extends React.Component {
                 <div className={classes.NewExerciseBox}>
                     <TextField 
                         color='primary' 
-                        id="standard-basic" 
                         label={"Exercise " + (this.props.exercises.length + 1)}
                         placeholder="e.g. Incline Bench Press"
                         autoComplete="off"
@@ -417,8 +413,6 @@ class Create extends React.Component {
                         onChange={event => this.updateExerciseHandler(event, 'title')}
                     />
                     <RadioGroup 
-                    aria-label="position" 
-                    name="position" 
                     value={this.state.currentExercise.type} 
                     onChange={this.changeTypeHandler} row
                     style={{marginBottom: '20px'}}
@@ -439,7 +433,7 @@ class Create extends React.Component {
 
                     {inputsBasedOnFormat}
 
-                    <button onClick={this.addExerciseHandler} className={classes.AddExerciseButton}><AddIcon fontSize='large'/></button>
+                    <button disabled={this.props.exercises.length > 10} onClick={this.addExerciseHandler} className={classes.AddExerciseButton}><AddIcon fontSize='large'/></button>
 
                     
                 </div>
