@@ -10,7 +10,9 @@ import empty from '../../images/empty.svg';
 class MyFavorites extends React.Component {
 
     componentDidMount() {
-        this.props.onLoadPosts('/my-favorites');
+        if (this.props.myFavorites.length === 0) {
+            this.props.onLoadPosts('/my-favorites');
+        }
     }
 
     render() {

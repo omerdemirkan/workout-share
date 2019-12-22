@@ -22,7 +22,7 @@ const load = (state = initialState, action) => {
             }
         case actionTypes.LOAD_POSTS_SUCCESS:
             let newState = {...state};
-            newState[action.list] = action.posts;
+            newState[action.list] = [...newState[action.list], ...action.posts];
             newState.loading = false;
             return newState;
         case actionTypes.LOAD_POSTS_FAILURE:

@@ -52,7 +52,7 @@ class All extends React.Component {
             currentPath: this.props.history.location.pathname,
             type: routeToType(this.props.history.location.pathname)
         });
-        this.props.onLoadPosts(this.props.history.location.pathname);
+        this.props.onLoadPosts(this.props.history.location.pathname, this.props[routeToType(this.props.history.location.pathname)].length);
     }
 
     updateSearchHandler = () => {
@@ -109,7 +109,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLoadPosts: route => dispatch(loadPostsAsync(route)),
+        onLoadPosts: (route, numPosts) => dispatch(loadPostsAsync(route, numPosts)),
         onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
     }
 }

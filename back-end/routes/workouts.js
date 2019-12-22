@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 // -- Load Routes --
 
 router.get('/', (req, res) => {
+    const numPosts = Number(req.headers['currentposts']);
     Workout.find({}).sort({likes: -1}).exec((err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);

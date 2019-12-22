@@ -11,7 +11,9 @@ import empty2 from '../../images/empty2.svg';
 class MyWorkouts extends React.Component {
 
     componentDidMount() {
-        this.props.onLoadPosts('/my-workouts');
+        if (this.props.myWorkouts.length === 0) {
+            this.props.onLoadPosts('/my-workouts');
+        }
     }
 
     render() {

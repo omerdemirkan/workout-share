@@ -4,10 +4,12 @@ import routeToType from '../../helper/route-to-type';
 
 export const loadPostsAsync = (route, currentNumPosts) => {
     return dispatch => {
+        console.log(currentNumPosts);
         dispatch(loadPostsStart(route));
         axios.get('/workouts' + route, {
             headers: {
-              authorization: 'Bearer ' + localStorage.getItem('authToken')
+              authorization: 'Bearer ' + localStorage.getItem('authToken'),
+              currentPosts: currentNumPosts
             }
         })
         .then(res => {
