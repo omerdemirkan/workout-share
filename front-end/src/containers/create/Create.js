@@ -264,11 +264,12 @@ class Create extends React.Component {
                 type: this.props.select,
                 exercises: this.props.exercises
             }
-            this.props.onPostAnonHandler(workout, this.props.authToken);
+            this.props.onPostAnonHandler(workout, localStorage.getItem('authToken'));
         }
     }
 
     render() {
+        console.log(this.props.postID)
         
         // If the user chooses the sets-reps format, we need inputs for sets and reps,
         // otherwise, we need sets, minutes and seconds as inputs.
@@ -355,12 +356,12 @@ class Create extends React.Component {
 
 
         return <React.Fragment>
-            {this.props.postResult ?
+            {/* {this.props.postResult ?
             <Redirect to={{
                 pathname: '/',
                 search: '?id=' + this.props.postID
             }}/>
-            : null}
+            : null} */}
 
             <div className={classes.MainHeaderBox}>
                 <h1 className={classes.MainHeader}>Create Your Workout</h1>

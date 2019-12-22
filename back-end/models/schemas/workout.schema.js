@@ -12,7 +12,10 @@ const workoutSchema = new mongoose.Schema({
         maxlength: 30
     },
     exercises: [exerciseSchema],
-    likes: [likeSchema]
+    likes: [{
+        type: String,
+        default: []
+    }]
 }, {timestamps: true});
 
 module.exports = workoutSchema;

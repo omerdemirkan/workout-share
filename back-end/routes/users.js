@@ -29,18 +29,18 @@ const verify = (req, res, next) => {
 }
 
 router.get('/likedID', verify, (req, res) => {
-    User.findById(req.user._id, 'liked', (err, user) => {
+    User.findById(req.user._id, (err, foundUser) => {
         if (err) return res.json(err)
 
-        res.json(user.liked);
+        res.json(foundUser.liked);
     });
 });
 
 router.get('/postedID', verify, (req, res) => {
-    User.findById(req.user._id, 'posted', (err, user) => {
+    User.findById(req.user._id, (err, foundUser) => {
         if (err) return res.json(err)
-        
-        res.json(user.posted);
+
+        res.json(foundUser.posted);
     });
 });
 

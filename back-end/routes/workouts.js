@@ -132,10 +132,10 @@ router.post('/', verify, (req, res) => {
         exercises: req.body.exercises,
         likes: []
     });
-    newWorkout.save((err, workout) => {
-        if (err) return res.json(err);
-        
-        User.updateOne({_id: req.user._id}, {$push: {posted: workout}}, err => {
+    newWorkout.save((error, workout) => {
+        if (error) return res.json(error);
+
+        User.updateOne({_id: req.user._id}, {$push: {posted: workout._id}}, err => {
             if (err) {
                 res.json(err);
             } else {
