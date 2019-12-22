@@ -44,7 +44,7 @@ class All extends React.Component {
 
         if (loadedWorkouts.length === 0 && this.state.currentPath !== this.props.history.location.pathname) {
             this.loadPostsHandler();
-            this.updatePathHandler();
+            
         }
         
 
@@ -91,15 +91,21 @@ class All extends React.Component {
         
         const type = routeToType(this.props.history.location.pathname);
         const workouts = this.props[type];
+        if (this.state.currentPath === this.props.history.location.pathname) {
+            
+            return <div style={{textAlign: 'center'}}>
+                <Route path={this.props.history.location.pathname} exact component={Inspect}/>
+                {workouts && !this.props.loading ?
+                    <Feed history={this.props.history} darkTitles workouts={workouts}/>
+                    
+                : <CircularProgress style={{marginTop: '60px'}}/>}
+                {this.props.error ? <p>{this.props.error}</p>: null}
+            </div>
+        } else {
+            this.updatePathHandler()
+            return null
+        }
         
-        return <div style={{textAlign: 'center'}}>
-            <Route path={this.props.history.location.pathname} exact component={Inspect}/>
-            {workouts && !this.props.loading ?
-                <Feed history={this.props.history} darkTitles workouts={workouts}/>
-                
-            : <CircularProgress style={{marginTop: '60px'}}/>}
-            {this.props.error ? <p>{this.props.error}</p>: null}
-        </div>
     }
 }
 
