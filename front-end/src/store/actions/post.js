@@ -20,8 +20,8 @@ const postAnonStart = () => {
     return {type: actionTypes.POST_ANON_START};
 }
 
-const postAnonSuccess = id => {
-    return {type: actionTypes.POST_ANON_SUCCESS, id: id}
+const postAnonSuccess = workout => {
+    return {type: actionTypes.POST_ANON_SUCCESS, workout: workout}
 }
 
 const postAnonFailure = () => {

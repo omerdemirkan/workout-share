@@ -269,7 +269,9 @@ class Create extends React.Component {
     }
 
     render() {
-        console.log(this.props.postID)
+        if (this.props.postedWorkout) {
+            this.props.onSetInspect(this.props.postedWorkout, 'all')
+        }
         
         // If the user chooses the sets-reps format, we need inputs for sets and reps,
         // otherwise, we need sets, minutes and seconds as inputs.
@@ -356,12 +358,12 @@ class Create extends React.Component {
 
 
         return <React.Fragment>
-            {/* {this.props.postResult ?
+            {this.props.postedWorkout ?
             <Redirect to={{
                 pathname: '/',
-                search: '?id=' + this.props.postID
+                search: '?id=' + this.props.postedWorkout._id
             }}/>
-            : null} */}
+            : null}
 
             <div className={classes.MainHeaderBox}>
                 <h1 className={classes.MainHeader}>Create Your Workout</h1>
@@ -531,7 +533,7 @@ const mapStateToProps = state => {
         exercises: state.create.exercises,
         errorMessages: state.create.errorMessages,
         postResult: state.create.postResult,
-        postID: state.create.postID,
+        postedWorkout: state.create.postedWorkout,
         authToken: state.auth.authToken
     }
 }

@@ -19,39 +19,47 @@ class All extends React.Component {
     }
 
     state = {
-        currentPath: '',
-        search: null,
+        currentPath: this.props.history.location.pathname,
+        search: this.props.location.search,
         searchID: null,
-        type: null
+
+        // In order to enforce a re-render of the cards (without deleting them from our redux state) to complete the phase-in animation regardless
+        // of the previous path. This is strictly for changing the path from / or all to other browse paths.
     }
 
     componentDidMount() {
-        console.log('inside All componentDidMount');
         //Checking if this page has already been loaded and saved in redux
+        if (this.props.history.search) {
+            this.updateSearchHandler();
+        }
         const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)];
         if (loadedWorkouts && loadedWorkouts.length === 0) {
-            this.updatePathHandler();
-            this.updateSearchHandler();
+            this.loadPostsHandler();
         }
     }
 
     componentDidUpdate() {
+
         const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)];
-        if (loadedWorkouts) {
-            if (this.state.currentPath !== this.props.history.location.pathname && loadedWorkouts.length === 0) {
-                this.updatePathHandler();
-            }
-            if (this.state.search !== this.props.location.search) {
-                this.updateSearchHandler();
-            }
+
+        if (loadedWorkouts.length === 0 && this.state.currentPath !== this.props.history.location.pathname) {
+            this.loadPostsHandler();
+            this.updatePathHandler();
+        }
+        
+
+        if (this.state.search !== this.props.location.search) {
+            this.updateSearchHandler();
         }
     }
 
     updatePathHandler = () => {
         this.setState({
-            currentPath: this.props.history.location.pathname,
-            type: routeToType(this.props.history.location.pathname)
+            currentPath: this.props.history.location.pathname
         });
+    }
+
+    loadPostsHandler = () => {
         this.props.onLoadPosts(this.props.history.location.pathname, this.props[routeToType(this.props.history.location.pathname)].length);
     }
 
@@ -79,7 +87,7 @@ class All extends React.Component {
     }
 
     render() {
-        
+        console.log(this.state.display)
         
         const type = routeToType(this.props.history.location.pathname);
         const workouts = this.props[type];

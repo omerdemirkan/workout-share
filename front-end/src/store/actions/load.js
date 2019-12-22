@@ -4,7 +4,6 @@ import routeToType from '../../helper/route-to-type';
 
 export const loadPostsAsync = (route, currentNumPosts) => {
     return dispatch => {
-        console.log(currentNumPosts);
         dispatch(loadPostsStart(route));
         axios.get('/workouts' + route, {
             headers: {
@@ -13,8 +12,6 @@ export const loadPostsAsync = (route, currentNumPosts) => {
             }
         })
         .then(res => {
-            console.log(res.data)
-            console.log(routeToType(route));
             dispatch(loadPostsSuccess(routeToType(route), res.data));
         })
         .catch(err => {

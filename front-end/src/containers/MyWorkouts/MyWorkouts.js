@@ -26,7 +26,7 @@ class MyWorkouts extends React.Component {
                 : 
                     <React.Fragment>
                         <h2 className={classes.EmptyText}>Hmm, looks like you haven't posted.</h2>
-                        <p className={classes.EmptySubext}>Remember: Workout Hub is personalized out of the box, so <strong>no account needed. Ever.</strong></p>
+                        <p className={classes.EmptySubext}>Remember: Workout Hub is personalized out of the box, so <strong>no account needed.   Ever.</strong></p>
                         <img className={classes.EmptyImage} src={empty2}/>
                     </React.Fragment>
                 }
