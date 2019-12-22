@@ -44,7 +44,6 @@ class All extends React.Component {
             if (this.state.search !== this.props.location.search) {
                 this.updateSearchHandler();
             }
-            console.log(this.props.allInspect);
         }
     }
 

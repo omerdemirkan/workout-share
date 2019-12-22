@@ -51,16 +51,17 @@ class Card extends React.Component {
 
     checkPreviouslyLiked = () => {
         if (this.props.likedIDs && this.state.previouslyLiked === 'unknown') {
+            const wasLiked = this.props.likedIDs.includes(this.props.workout._id);
             this.setState({
-                previouslyLiked: this.props.likedIDs.includes(this.props.workout._id),
-                liked: this.props.likedIDs.includes(this.props.workout._id),
+                previouslyLiked: wasLiked,
+                liked: wasLiked,
                 numLikedIDs: this.props.likedIDs.length,
-                likes: this.props.workout.likes
+                likes: this.props.workout.likes.length
             });
         }
     }
 
-    likeToggleHandler = () => {
+    likeButtonClickHandler = () => {
 
         let modifier = null;
         if (this.state.liked) {
@@ -80,7 +81,11 @@ class Card extends React.Component {
         axios.defaults.headers.post['authorization'] = "Bearer " + localStorage.getItem('authToken')
         axios.post('/like' + modifier)
         .then(res => {
-            this.setState({likes: res.data.likes});
+            console.log(res.data)
+            this.setState({
+                likes: res.data.likes,
+                liked: res.data.liked
+            });
         })
         .catch(err => {
             console.log(err);
@@ -93,8 +98,9 @@ class Card extends React.Component {
     }
 
     titleClickHandler = () => {
+        console.log(this.props.workout)
         if (this.props.workout._id !== null) {
-            this.props.onSetInspect(this.props.workout, routeToType(this.props.history.location.pathname));
+            this.props.history.push('/?id=' + this.props.workout._id);
             window.scrollTo(0, 0);
         }
     }
@@ -157,7 +163,7 @@ class Card extends React.Component {
             
             {likes}
                 
-            <button disabled={this.props.disableLike || this.state.previouslyLiked === 'unknown'} onClick={this.likeToggleHandler} className={classes.LikeButton}>
+            <button disabled={this.props.disableLike || this.state.previouslyLiked === 'unknown'} onClick={this.likeButtonClickHandler} className={classes.LikeButton}>
                     
                 { !this.state.liked ?
                     <FavoriteBorderOutlinedIcon fontSize="large"/>

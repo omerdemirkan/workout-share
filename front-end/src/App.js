@@ -30,17 +30,17 @@ class App extends React.Component {
       // Setting id's for liked posts. This is to ensure a max of one like per post per person.
       //These id's are used to determine the prior state of a card before load
 
-      // axios.get('/users/likedID', {
-      //   headers: {
-      //     authorization: 'Bearer ' + localStorage.getItem('authToken')
-      //   }
-      // })
-      // .then(res => {
-      //   this.props.onSetLikedIDs(res.data)
-      // })
-      // .catch(err => {
-      //   console.log(err);
-      // });
+      axios.get('/users/likedID', {
+        headers: {
+          authorization: 'Bearer ' + localStorage.getItem('authToken')
+        }
+      })
+      .then(res => {
+        this.props.onSetLikedIDs(res.data)
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
     } else {
 
