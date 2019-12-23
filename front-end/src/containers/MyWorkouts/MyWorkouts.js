@@ -15,7 +15,8 @@ class MyWorkouts extends React.Component {
 
     state = {
         search: null,
-        searchID: null
+        searchID: null,
+        numWorkouts: null
     }
 
     componentDidMount() {
@@ -30,6 +31,12 @@ class MyWorkouts extends React.Component {
             console.log('rechecking search');
             this.checkSearchHandler();
         }
+
+        // if (this.props.myWorkouts && this.state.numWorkouts !== this.props.myWorkouts.length) {
+        //     this.setState({
+
+        //     });
+        // }
     }
 
     checkSearchHandler = () => {
@@ -60,11 +67,11 @@ class MyWorkouts extends React.Component {
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>  
             <div className={classes.MyWorkouts}>
                 <h1 className={classes.Header}>My Workouts</h1>
-                {this.props.myWorkouts.length || this.props.loading > 0 ?
+                {this.props.myWorkouts.length > 0 ?
                     <Feed myWorkouts history={this.props.history} darkTitles workouts={this.props.myWorkouts}/>
                 : 
                     <React.Fragment>
-                        <h2 className={classes.EmptyText}>Hmm, looks like you haven't posted.</h2>
+                        <h2 className={classes.EmptyText}>Hmm, looks like you haven't posted yet.</h2>
                         <p className={classes.EmptySubext}>Remember: Workout Hub is personalized out of the box, so <strong>no account needed.   Ever.</strong></p>
                         <img className={classes.EmptyImage} src={empty2}/>
                     </React.Fragment>
