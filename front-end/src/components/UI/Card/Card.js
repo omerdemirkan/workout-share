@@ -90,11 +90,6 @@ class Card extends React.Component {
         .catch(err => {
             console.log(err);
         });
-
-        const reverse = !this.state.liked;
-        this.setState({
-            liked: reverse
-        });
     }
 
     titleClickHandler = () => {

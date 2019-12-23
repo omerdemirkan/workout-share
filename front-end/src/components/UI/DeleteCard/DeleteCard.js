@@ -12,6 +12,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
 import ErrorModal from '../ErrorModal/ErrorModal';
 
 // disableLike: disables like button
@@ -24,7 +28,8 @@ class DeleteCard extends React.Component {
         numLikedIDs: null,
         likes: null,
         deleteWorkoutModal: false,
-        deleted: false
+        deleted: false,
+        deletedMessage: false
     }
 
     componentDidMount() {
@@ -94,11 +99,6 @@ class DeleteCard extends React.Component {
         .catch(err => {
             console.log(err);
         });
-
-        const reverse = !this.state.liked;
-        this.setState({
-            liked: reverse
-        });
     }
 
     titleClickHandler = () => {
@@ -120,13 +120,20 @@ class DeleteCard extends React.Component {
         });
     }
 
+    deletedMessageClosedHandler = () => {
+        this.setState({
+            deletedMessage: false
+        });
+    }
+
     deleteWorkoutHandler = () => {
         axios.defaults.headers.delete['authorization'] = "Bearer " + localStorage.getItem('authToken');
         axios.delete('/workouts/' + this.props.workout._id)
         .then(res => {
             this.deleteWorkoutModalClosedHandler();
             this.setState({
-                deleted: true
+                deleted: true,
+                deletedMessage: true
             });
         })
         .catch(err => {
@@ -137,12 +144,29 @@ class DeleteCard extends React.Component {
 
 
         if (this.state.deleted) {
-            return <div style={{animation: 'PhaseOut 0.3s ease forwards'}} className={classes.DeleteCard}>
-                <div className={classes.DeleteCardHeader}></div>
-                <div className={classes.DeleteCardFooter}></div>
-            </div>
+            return <Snackbar
+                    anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                    }}
+                    open={this.state.deletedMessage}
+                    autoHideDuration={3000}
+                    onClose={this.deletedMessageClosedHandler}
+                    message={<span id="message-id">Workout deleted</span>}
+                    action={[
+                        <IconButton
+                            key="close"
+                            aria-label="close"
+                            color="inherit"
+                            className={classes.close}
+                            onClick={this.deletedMessageClosedHandler}
+                        >
+                            <CloseIcon />
+                        </IconButton>,
+                    ]}
+                />
         }
-        
+
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
