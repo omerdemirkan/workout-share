@@ -112,9 +112,9 @@
   margin-bottom: 8px;
   margin-top: 30px;
   width: 80%;
-  max-width: 400px;
   display: flex;
   justify-content: space-evenly;
+  max-width: 300px;
 }
 
 .DeleteModalOptionButton {

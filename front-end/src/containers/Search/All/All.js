@@ -23,6 +23,7 @@ class All extends React.Component {
         search: this.props.location.search,
         searchID: null,
 
+
         // In order to enforce a re-render of the cards (without deleting them from our redux state) to complete the phase-in animation regardless
         // of the previous path. This is strictly for changing the path from / or all to other browse paths.
     }
@@ -89,7 +90,6 @@ class All extends React.Component {
     }
 
     render() {
-        console.log(this.state.display)
         
         const type = routeToType(this.props.history.location.pathname);
         const workouts = this.props[type];

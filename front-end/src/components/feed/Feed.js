@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './Feed.module.css';
 import Card from '../UI/Card/Card';
+import DeleteCard from '../UI/DeleteCard/DeleteCard';
 
 class Feed extends React.Component {
     
@@ -17,6 +18,13 @@ class Feed extends React.Component {
                 }
             })}
         </div>
+        } else if (this.props.myWorkouts) {
+            return <div className={classes.Cards}>
+                {this.props.workouts.map(workout => {
+                    delay += 0.10;
+                    return <DeleteCard delay={delay} key={workout._id} disableLike={false} history={this.props.history} darkTitle={this.props.darkTitles} workout={workout}/>
+                })}
+            </div>
         } else if (this.props.workouts) {
 
 

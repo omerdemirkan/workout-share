@@ -22,7 +22,7 @@ class MyWorkouts extends React.Component {
             <div className={classes.MyWorkouts}>
                 <h1 className={classes.Header}>My Workouts</h1>
                 {this.props.myWorkouts.length || this.props.loading > 0 ?
-                    <Feed history={this.props.history} darkTitles workouts={this.props.myWorkouts}/>
+                    <Feed myWorkouts history={this.props.history} darkTitles workouts={this.props.myWorkouts}/>
                 : 
                     <React.Fragment>
                         <h2 className={classes.EmptyText}>Hmm, looks like you haven't posted.</h2>

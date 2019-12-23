@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Card.module.css';
+import classes from './DeleteCard.module.css';
 import axios from '../../../axios';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../../store/actions/actionTypes';
@@ -10,16 +10,20 @@ import { colorsByDisplay } from '../../../helper/colors-by-path'
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import ErrorModal from '../ErrorModal/ErrorModal';
 
 // disableLike: disables like button
 
-class Card extends React.Component {
+class DeleteCard extends React.Component {
 
     state = {
         liked: false,
         previouslyLiked: 'unknown',
         numLikedIDs: null,
-        likes: null
+        likes: null,
+        deleteWorkoutModal: false
     }
 
     componentDidMount() {
@@ -28,7 +32,6 @@ class Card extends React.Component {
 
     componentDidUpdate() {
         const wasLiked = this.props.likedIDs.includes(this.props.workout._id);
-        console.log(wasLiked);
 
         //Just in case, doesn't cause infinite loop:
         this.checkPreviouslyLiked();
@@ -104,7 +107,24 @@ class Card extends React.Component {
         }
     }
 
+    deleteWorkoutModalOpenHandler = () => {
+        this.setState({
+            deleteWorkoutModal: true
+        });
+    }
+
+    deleteWorkoutModalClosedHandler = () => {
+        this.setState({
+            deleteWorkoutModal: false
+        });
+    }
+
+    deleteWorkoutHandler = () => {
+
+    }
+
     render() {
+        console.log(this.state.deleteWorkoutModal);
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
@@ -146,14 +166,20 @@ class Card extends React.Component {
             const extraSpace = ((this.props.workout.exercises.length - 6) * 50) + 340
             inspectStyleModifer = {minHeight: extraSpace + 'px'}
         }
+
+
         
-        return <div className={classes.Card} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's', ...inspectStyleModifer}: inspectStyleModifer}>
-            <div className={classes.CardHeader}>
+        return <div className={classes.DeleteCard} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's', ...inspectStyleModifer}: inspectStyleModifer}>
+            <div className={classes.DeleteCardHeader}>
                 <h2 
-                className={classes.CardTitle} 
+                className={classes.DeleteCardTitle} 
                 style={this.props.darkTitle ? {} : {color: colorsByDisplay(displayType).darkColor}}
                 onClick={this.titleClickHandler}
                 >{this.props.workout.title}</h2>
+
+                <button onClick={this.deleteWorkoutModalOpenHandler} className={classes.DeleteWorkoutButton}>
+                    <DeleteIcon/>
+                </button>
             </div>
             <div className={classes.ListBox}>
                 <table className={classes.ListTable}>
@@ -165,7 +191,7 @@ class Card extends React.Component {
 
             {!this.props.inspect && this.props.workout.exercises.length > 6  ? <div className={classes.FadeOut}></div> : null}
     
-            <div className={classes.CardFooter}>
+            <div className={classes.DeleteCardFooter}>
             {this.props.darkTitle ? <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p> : null}
             
             
@@ -181,6 +207,25 @@ class Card extends React.Component {
             </button>
             
             </div>
+            {this.state.deleteWorkoutModal ?
+                <ErrorModal
+                open={this.state.deleteWorkoutModal}
+                header={'Are you sure you want to delete this workout?'}
+                >
+                    <div className={classes.DeleteModalOptionBox}>
+                        <button 
+                        className={classes.DeleteModalOptionButton} 
+                        onClick={this.deleteWorkoutHandler}
+                        style={{color: 'rgb(130, 0, 0)', borderColor: 'rgb(130, 0, 0)'}}
+                        >Yes</button>
+                        <button 
+                        className={classes.DeleteModalOptionButton} 
+                        onClick={this.deleteWorkoutModalClosedHandler}
+                        style={{color: 'rgb(71, 71, 71)', borderColor: 'rgb(71, 71, 71)'}}
+                        >No</button>
+                    </div>
+                </ErrorModal>
+            : null}
         </div>
     }
 }
@@ -198,4 +243,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Card);
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteCard);
