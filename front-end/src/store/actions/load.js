@@ -12,7 +12,12 @@ export const loadPostsAsync = (route, currentNumPosts) => {
             }
         })
         .then(res => {
-            dispatch(loadPostsSuccess(routeToType(route), res.data));
+            if (currentNumPosts) {
+                dispatch(loadPostsSuccess(routeToType(route), res.data, false));
+            } else {
+                dispatch(loadPostsSuccess(routeToType(route), res.data, true));
+            }
+            
         })
         .catch(err => {
             console.log(err)
@@ -25,8 +30,8 @@ const loadPostsStart = route => {
     return {type: actionTypes.LOAD_POSTS_START, route: route}
 }
 
-const loadPostsSuccess = (list, posts) => {
-    return {type: actionTypes.LOAD_POSTS_SUCCESS, posts: posts, list: list}
+const loadPostsSuccess = (list, posts, replace) => {
+    return {type: actionTypes.LOAD_POSTS_SUCCESS, posts: posts, list: list, replace: replace}
 }
 
 const loadPostsFailure = error => {

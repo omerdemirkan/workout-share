@@ -6,13 +6,52 @@ import Feed from '../../components/feed/Feed';
 import {Route} from 'react-router-dom';
 import Inspect from '../Inspect/Inspect'
 import empty2 from '../../images/empty2.svg';
+import axios from '../../axios';
+import routeToType from '../../helper/route-to-type';
+import * as actionTypes from '../../store/actions/actionTypes';
 
 
 class MyWorkouts extends React.Component {
 
+    state = {
+        search: null,
+        searchID: null
+    }
+
     componentDidMount() {
-        if (this.props.myWorkouts.length === 0) {
-            this.props.onLoadPosts('/my-workouts');
+        this.props.onLoadPosts('/my-workouts');
+        if (this.props.history.location.search.length > 0) {
+            this.checkSearchHandler();
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.state.search !== this.props.history.location.search) {
+            console.log('rechecking search');
+            this.checkSearchHandler();
+        }
+    }
+
+    checkSearchHandler = () => {
+        const query = new URLSearchParams(this.props.location.search);
+        let searchID = null
+        for (let param of query.entries()) {
+            searchID = param[1];
+        }
+        this.setState({
+            searchID: searchID,
+            search: this.props.history.location.search
+        });
+        if (searchID && searchID.length > 0) {
+            axios.get('/workouts/' + searchID)
+            .then(res => {
+                console.log(res)
+                this.props.onSetInspect(res.data, routeToType(this.props.history.location.pathname));
+                this.setState({currentPath: this.props.history.location.pathname});
+            })
+            .catch(err => {
+                console.log(err)
+            });
         }
     }
 
@@ -45,7 +84,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLoadPosts: route => dispatch(loadPostsAsync(route))
+        onLoadPosts: route => dispatch(loadPostsAsync(route)),
+        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
     }
 }
 

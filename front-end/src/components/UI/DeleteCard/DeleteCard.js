@@ -23,7 +23,8 @@ class DeleteCard extends React.Component {
         previouslyLiked: 'unknown',
         numLikedIDs: null,
         likes: null,
-        deleteWorkoutModal: false
+        deleteWorkoutModal: false,
+        deleted: false
     }
 
     componentDidMount() {
@@ -120,11 +121,28 @@ class DeleteCard extends React.Component {
     }
 
     deleteWorkoutHandler = () => {
-
+        axios.defaults.headers.delete['authorization'] = "Bearer " + localStorage.getItem('authToken');
+        axios.delete('/workouts/' + this.props.workout._id)
+        .then(res => {
+            this.deleteWorkoutModalClosedHandler();
+            this.setState({
+                deleted: true
+            });
+        })
+        .catch(err => {
+        });
     }
 
     render() {
-        console.log(this.state.deleteWorkoutModal);
+
+
+        if (this.state.deleted) {
+            return <div style={{animation: 'PhaseOut 0.3s ease forwards'}} className={classes.DeleteCard}>
+                <div className={classes.DeleteCardHeader}></div>
+                <div className={classes.DeleteCardFooter}></div>
+            </div>
+        }
+        
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
@@ -167,8 +185,6 @@ class DeleteCard extends React.Component {
             inspectStyleModifer = {minHeight: extraSpace + 'px'}
         }
 
-
-        
         return <div className={classes.DeleteCard} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's', ...inspectStyleModifer}: inspectStyleModifer}>
             <div className={classes.DeleteCardHeader}>
                 <h2 

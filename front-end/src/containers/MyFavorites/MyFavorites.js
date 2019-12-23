@@ -18,9 +18,8 @@ class MyFavorites extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.myFavorites.length === 0) {
-            this.props.onLoadPosts('/my-favorites');
-        }
+        this.props.onLoadPosts('/my-favorites');
+        
         if (this.props.history.location.search.length > 0) {
             this.checkSearchHandler();
         }

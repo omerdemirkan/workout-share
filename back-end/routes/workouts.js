@@ -106,7 +106,7 @@ const verify = (req, res, next) => {
 }
 
 router.get('/my-favorites', verify, (req, res) => {
-    User.findById(req.user._id, 'liked', (error, user) => {
+    User.findById(req.user._id, 'liked').sort({createdAt: -1}).exec( (error, user) => {
         if (error) return res.json(error)
 
         Workout.find({_id: {$in: user.liked}}, (err, workouts) => {
@@ -117,7 +117,7 @@ router.get('/my-favorites', verify, (req, res) => {
 });
 
 router.get('/my-workouts', verify, (req, res) => {
-    User.findById(req.user._id, 'posted', (error, user) => {
+    User.findById(req.user._id, 'posted').sort({createdAt: -1}).exec( (error, user) => {
         if (error) return res.json(error)
 
         Workout.find({_id: {$in: user.posted}}, (err, workouts) => {
@@ -138,7 +138,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', verify, (req, res) => {
     const workoutId = req.params.id; 
     Workout.deleteOne({_id: workoutId}, err => {
         if (!err) {

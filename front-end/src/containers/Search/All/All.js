@@ -36,9 +36,10 @@ class All extends React.Component {
             this.updateSearchHandler();
         }
         const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)];
-        if (loadedWorkouts && loadedWorkouts.length === 0) {
+        if (loadedWorkouts) {
             this.loadPostsHandler();
         }
+        
     }
 
     componentDidUpdate() {
