@@ -14,7 +14,7 @@
 }
 
 .CardTitle {
-margin: 4px 0;
+margin: 0;
 color: white;
 text-align: center;
 user-select: none;
@@ -27,6 +27,9 @@ width: 100%;
 min-height: 45px;
 box-shadow: 0 0 5px 0.5px rgb(235, 235, 235);
 border-bottom: 1px solid rgb(235, 235, 235);
+display: flex;
+align-items: center;
+justify-content: center;
 }
 
 .ListBox {
@@ -70,6 +73,11 @@ color: rgb(75, 75, 75);
 
 .LikeButton:active {
 animation: shake 0.05s;
+}
+
+td {
+  max-width: 300px;
+  overflow: hidden;
 }
 
 .FadeOut {

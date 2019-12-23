@@ -48,7 +48,7 @@ const theme = createMuiTheme({
 });
 
 const exerciseErrorMessages = {
-    title: 'Exercise titles must be between 4 and 25 characters',
+    title: 'Exercise titles must be between 4 and 20 characters',
     sets: 'Sets must be between 1 and 10',
     reps: 'Reps must be between 1 and 30',
     minutes: 'Minutes must be between 0 and 120',
@@ -60,7 +60,7 @@ const exerciseErrorMessages = {
 
 // Number value and string length limites in [min, max] format
 const valueLimits = {
-    title: [4, 30],
+    title: [4, 20],
     sets: [1, 10],
     reps: [1, 30],
     minutes: [0, 120],
@@ -433,7 +433,7 @@ class Create extends React.Component {
 
                     {inputsBasedOnFormat}
 
-                    <button disabled={this.props.exercises.length > 10} onClick={this.addExerciseHandler} className={classes.AddExerciseButton}><AddIcon fontSize='large'/></button>
+                    <button disabled={this.props.exercises.length >= 10} onClick={this.addExerciseHandler} className={classes.AddExerciseButton}><AddIcon fontSize='large'/></button>
 
                     
                 </div>

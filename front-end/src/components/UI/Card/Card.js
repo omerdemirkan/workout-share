@@ -4,12 +4,16 @@ import axios from '../../../axios';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../../store/actions/actionTypes';
 
+import TimeAgo from 'timeago-react';
+
 import { colorsByDisplay } from '../../../helper/colors-by-path'
 
 // -- Material UI --
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+
+import {titleFontSize, exerciseFontSize} from '../../../helper/lengthToFontSize'
 
 // disableLike: disables like button
 
@@ -104,7 +108,7 @@ class Card extends React.Component {
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
                 return <tr key={exercise.title + ' row'}>
-                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/reps'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p></td>
                 </tr>
             } else {
@@ -122,9 +126,11 @@ class Card extends React.Component {
                 } else {
                     duration = exercise.seconds + ' seconds'
                 }
+
+                console.log(exerciseFontSize(exercise.title) + 'rem')
                 
                 return <tr key={exercise.title + ' row'}>
-                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/min/sec'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {duration}</p></td>
                 </tr>
             }
@@ -146,7 +152,7 @@ class Card extends React.Component {
             <div className={classes.CardHeader}>
                 <h2 
                 className={classes.CardTitle} 
-                style={this.props.darkTitle ? {} : {color: colorsByDisplay(displayType).darkColor}}
+                style={{fontSize: titleFontSize(this.props.workout.title) + 'rem'}}
                 onClick={this.titleClickHandler}
                 >{this.props.workout.title}</h2>
             </div>
@@ -163,6 +169,13 @@ class Card extends React.Component {
             <div className={classes.CardFooter}>
             {this.props.darkTitle ? <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p> : null}
             
+            <div className={classes.TimeAgo}>
+                <TimeAgo
+                datetime={this.props.workout.createdAt} 
+                style={{textTransform: 'capitalize'}}
+                live={false}
+                />
+            </div>
             
             {likes}
                 

@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import * as actionTypes from '../../../store/actions/actionTypes';
 
 import { colorsByDisplay } from '../../../helper/colors-by-path'
+import TimeAgo from 'timeago-react';
 
 // -- Material UI --
 
@@ -17,6 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
 import ErrorModal from '../ErrorModal/ErrorModal';
+import {titleFontSize, exerciseFontSize} from '../../../helper/lengthToFontSize'
 
 // disableLike: disables like button
 
@@ -171,7 +173,7 @@ class DeleteCard extends React.Component {
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
                 return <tr key={exercise.title + ' row'}>
-                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/reps'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p></td>
                 </tr>
             } else {
@@ -191,7 +193,7 @@ class DeleteCard extends React.Component {
                 }
                 
                 return <tr key={exercise.title + ' row'}>
-                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/min/sec'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {duration}</p></td>
                 </tr>
             }
@@ -213,7 +215,7 @@ class DeleteCard extends React.Component {
             <div className={classes.DeleteCardHeader}>
                 <h2 
                 className={classes.DeleteCardTitle} 
-                style={this.props.darkTitle ? {} : {color: colorsByDisplay(displayType).darkColor}}
+                style={this.props.darkTitle ? {fontSize: titleFontSize(this.props.workout.title) + 'rem'} : {color: colorsByDisplay(displayType).darkColor, fontSize: titleFontSize(this.props.workout.title) + 'rem'}}
                 onClick={this.titleClickHandler}
                 >{this.props.workout.title}</h2>
 
@@ -234,6 +236,13 @@ class DeleteCard extends React.Component {
             <div className={classes.DeleteCardFooter}>
             {this.props.darkTitle ? <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p> : null}
             
+            <div className={classes.TimeAgo}>
+                <TimeAgo
+                datetime={this.props.workout.createdAt} 
+                style={{textTransform: 'capitalize'}}
+                live={false}
+                />
+            </div>
             
             {likes}
                 

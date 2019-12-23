@@ -27,7 +27,7 @@
 }
 
 .CardTitle {
-  margin: 4px 0;
+  margin: 0;
   color: rgb(71, 71, 71);
   text-align: center;
   user-select: none;
@@ -44,6 +44,9 @@
   min-height: 45px;
   box-shadow: 0 0 5px 0.5px rgb(235, 235, 235);
   border-bottom: 1px solid rgb(235, 235, 235);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ListBox {
@@ -64,6 +67,11 @@
   margin: 7px;
   font-size: 1.1rem;
   text-align: left;
+}
+
+td {
+  max-width: 250px;
+  overflow: hidden;
 }
 
 .CardFooter {
@@ -107,6 +115,37 @@
   bottom: 0;
   box-shadow: 0 0 50px 20px white;
   z-index: 1;
+}
+
+.TimeAgo {
+  display: inline;
+  position: absolute;
+  left: 10px;
+  top: 11px;
+  color: rgb(73, 73, 73);
+  font-weight: 500;
+  font-size: .9rem;
+}
+
+@media (max-width: 500px) {
+  .TimeAgo {
+    top: 12px;
+    font-size: .8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .TimeAgo {
+    top: 13px;
+    font-size: .7rem;
+  }
+}
+
+@media (max-width: 300px) {
+  .TimeAgo {
+    top: 14px;
+    font-size: .6rem;
+  }
 }
 
 /* @keyframes shake {

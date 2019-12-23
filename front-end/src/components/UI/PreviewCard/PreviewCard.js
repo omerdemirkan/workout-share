@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 import * as actionTypes from '../../../store/actions/actionTypes'
 
 import { colorsByDisplay } from '../../../helper/colors-by-path'
+import {titleFontSize, exerciseFontSize} from '../../../helper/lengthToFontSize'
 
 // -- Material UI --
 
@@ -38,7 +39,7 @@ class Card extends React.Component {
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.type === 'sets-reps') {
                 return <tr key={exercise.title + ' row'}>
-                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/reps'} style={{position: 'relative'}}>
                         <p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p>
                         <button className={classes.DeleteExerciseButton}><ClearRoundedIcon onClick={() => this.props.onDeleteExercise(exercise.title)}/></button>
@@ -61,14 +62,14 @@ class Card extends React.Component {
                 }
                 
                 return <tr key={exercise.title + ' row'}>
-                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/min/sec'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {duration}</p></td>
                 </tr>
             }
         });
         return <div className={classes.PreviewCard} style={this.props.cardStyle !== null ? this.props.cardStyle : null}> 
             <div className={classes.CardHeader}>
-                <h2 className={classes.CardTitle} style={this.props.darkTitle ? {color: 'rgb(73, 73, 73)'} : {color: colorsByDisplay(displayType).darkColor}}>{this.props.workout.title}</h2>
+                <h2 className={classes.CardTitle} style={{color: 'rgb(73, 73, 73)', fontSize: titleFontSize(this.props.workout.title) + 'rem'}}>{this.props.workout.title}</h2>
                 <button onClick={this.props.deleteWorkout} className={classes.DeleteWorkoutButton}>
                     <DeleteIcon/>
                 </button>
