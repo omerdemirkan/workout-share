@@ -25,3 +25,15 @@ export const exerciseFontSize = string => {
         return .7;
     }
 }
+
+export const formatFontSize = string => {
+    if (string.length < 18) {
+        return 1.2;
+    } else if (string.length < 19) {
+        return 1.1;
+    } else if (string.length < 20) {
+        return 1;
+    } else {
+        return 1;
+    }
+}

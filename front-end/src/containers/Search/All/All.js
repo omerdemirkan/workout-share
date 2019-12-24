@@ -37,7 +37,7 @@ class All extends React.Component {
         }
         const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)];
         if (loadedWorkouts) {
-            this.loadPostsHandler();
+            this.props.onLoadPosts(this.props.history.location.pathname)
         }
         
     }

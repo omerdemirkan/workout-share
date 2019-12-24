@@ -13,7 +13,7 @@ import { colorsByDisplay } from '../../../helper/colors-by-path'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 
-import {titleFontSize, exerciseFontSize} from '../../../helper/lengthToFontSize'
+import {titleFontSize, exerciseFontSize, formatFontSize} from '../../../helper/lengthToFontSize'
 
 // disableLike: disables like button
 
@@ -107,31 +107,42 @@ class Card extends React.Component {
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
+                let format = null
+                if (exercise.sets > 1) {
+                    format = exercise.sets + ' sets: ' + exercise.reps + ' reps';
+                } else {
+                    format = exercise.sets + ' set: ' + exercise.reps + ' reps';
+                }
                 return <tr key={exercise.title + ' row'}>
                     <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td key={exercise.title + ' sets/reps'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p></td>
+                    <td key={exercise.title + ' sets/reps'}><p style={{fontSize: formatFontSize(format) + 'rem'}} className={classes.ExerciseListItem}>{format}</p></td>
                 </tr>
             } else {
                 let duration = '';
                 if (exercise.minutes > 0) {
                     if (exercise.seconds > 0) {
                         if (exercise.seconds < 10) {
-                            duration = exercise.minutes + ':0' + exercise.seconds + ' minutes';
+                            duration = exercise.minutes + ':0' + exercise.seconds + ' min';
                         } else {
-                            duration = exercise.minutes + ':' + exercise.seconds + ' minutes';
+                            duration = exercise.minutes + ':' + exercise.seconds + ' min';
                         }
                     } else {
-                        duration = exercise.minutes + ' minutes'
+                        duration = exercise.minutes + ' min'
                     }
                 } else {
-                    duration = exercise.seconds + ' seconds'
+                    duration = exercise.seconds + ' sec'
                 }
 
-                console.log(exerciseFontSize(exercise.title) + 'rem')
+                let format = '';
+                if (exercise.sets > 1) {
+                    format = exercise.sets + ' sets: ' + duration
+                } else {
+                    format = exercise.sets + ' set: ' + duration
+                }
                 
                 return <tr key={exercise.title + ' row'}>
                     <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td key={exercise.title + ' sets/min/sec'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {duration}</p></td>
+                    <td key={exercise.title + ' sets/min/sec'}><p style={{fontSize: formatFontSize(format) + 'rem'}} className={classes.ExerciseListItem}>{format}</p></td>
                 </tr>
             }
         });

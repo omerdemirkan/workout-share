@@ -47,8 +47,10 @@ color: rgb(73, 73, 73);
 }
 
 .ExerciseListItem {
-margin: 7px;
-font-size: 1.1rem;
+  margin: 7px;
+  font-size: 1.1rem;
+  text-align: left;
+  letter-spacing: -1px;
 }
 
 .CardFooter {

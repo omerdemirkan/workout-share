@@ -54,7 +54,6 @@
   min-height: calc(100% - 90px);
   display: flex;
   align-items: center;
-
 }
 
 .ListTable {
@@ -67,6 +66,7 @@
   margin: 7px;
   font-size: 1.1rem;
   text-align: left;
+  letter-spacing: -1px;
 }
 
 td {
@@ -131,6 +131,9 @@ td {
   .TimeAgo {
     top: 12px;
     font-size: .8rem;
+  }
+  .Card {
+    font-size: -.1rem;
   }
 }
 

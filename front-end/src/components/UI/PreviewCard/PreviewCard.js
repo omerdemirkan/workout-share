@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import * as actionTypes from '../../../store/actions/actionTypes'
 
 import { colorsByDisplay } from '../../../helper/colors-by-path'
-import {titleFontSize, exerciseFontSize} from '../../../helper/lengthToFontSize'
+import {titleFontSize, exerciseFontSize, formatFontSize} from '../../../helper/lengthToFontSize'
 
 // -- Material UI --
 
@@ -38,10 +38,16 @@ class Card extends React.Component {
         const displayType = this.props.workout.type.charAt(0).toUpperCase() + this.props.workout.type.substring(1);
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.type === 'sets-reps') {
+                let format = null
+                if (exercise.sets > 1) {
+                    format = exercise.sets + ' sets: ' + exercise.reps + ' reps';
+                } else {
+                    format = exercise.sets + ' set: ' + exercise.reps + ' reps';
+                }
                 return <tr key={exercise.title + ' row'}>
                     <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/reps'} style={{position: 'relative'}}>
-                        <p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {exercise.reps} reps</p>
+                        <p style={{fontSize: formatFontSize(format) + 'rem'}} className={classes.ExerciseListItem}>{format}</p>
                         <button className={classes.DeleteExerciseButton}><ClearRoundedIcon onClick={() => this.props.onDeleteExercise(exercise.title)}/></button>
                     </td>
                 </tr>
@@ -50,20 +56,27 @@ class Card extends React.Component {
                 if (exercise.minutes > 0) {
                     if (exercise.seconds > 0) {
                         if (exercise.seconds < 10) {
-                            duration = exercise.minutes + ':0' + exercise.seconds + ' minutes';
+                            duration = exercise.minutes + ':0' + exercise.seconds + ' min';
                         } else {
-                            duration = exercise.minutes + ':' + exercise.seconds + ' minutes';
+                            duration = exercise.minutes + ':' + exercise.seconds + ' min';
                         }
                     } else {
-                        duration = exercise.minutes + ' minutes'
+                        duration = exercise.minutes + ' min'
                     }
                 } else {
-                    duration = exercise.seconds + ' seconds'
+                    duration = exercise.seconds + ' sec'
+                }
+
+                let format = '';
+                if (exercise.sets > 1) {
+                    format = exercise.sets + ' sets: ' + duration
+                } else {
+                    format = exercise.sets + ' set: ' + duration
                 }
                 
                 return <tr key={exercise.title + ' row'}>
                     <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td key={exercise.title + ' sets/min/sec'}><p className={classes.ExerciseListItem}>{exercise.sets} set{exercise.sets > 1 ? 's' : null} of {duration}</p></td>
+                    <td key={exercise.title + ' sets/min/sec'}><p style={{fontSize: formatFontSize(format) + 'rem'}} className={classes.ExerciseListItem}>{format}</p></td>
                 </tr>
             }
         });

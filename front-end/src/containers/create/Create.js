@@ -201,7 +201,6 @@ class Create extends React.Component {
     resetCurrentExercise = () => {
         const newExercise = {...this.state.currentExercise}
         newExercise.title = '';
-        newExercise.type = 'sets-reps';
         // Sets, reps, minutes and seconds left as is.
         this.setState({
             currentExercise: newExercise,
