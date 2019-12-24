@@ -221,14 +221,7 @@ class DeleteCard extends React.Component {
             likes = <h2 style={this.state.liked ? {color: colorsByDisplay(displayType).darkColor} : {}} className={classes.LikesNumber}>{this.state.likes}</h2>
         }
 
-        let inspectStyleModifer = {};
-
-        if (this.props.inspect && this.props.workout.exercises.length > 6) {
-            const extraSpace = ((this.props.workout.exercises.length - 6) * 50) + 340
-            inspectStyleModifer = {minHeight: extraSpace + 'px'}
-        }
-
-        return <div className={classes.DeleteCard} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's', ...inspectStyleModifer}: inspectStyleModifer}>
+        return <div className={classes.DeleteCard} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's'}: {}}>
             <div className={classes.DeleteCardHeader}>
                 <h2 
                 className={classes.DeleteCardTitle} 

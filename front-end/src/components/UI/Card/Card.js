@@ -159,11 +159,12 @@ class Card extends React.Component {
         let inspectStyleModifer = {};
 
         if (this.props.inspect && this.props.workout.exercises.length > 6) {
-            const extraSpace = ((this.props.workout.exercises.length - 6) * 50) + 340
-            inspectStyleModifer = {minHeight: extraSpace + 'px'}
+            // const extraSpace = ((this.props.workout.exercises.length - 6) * 50) + 340
+            // inspectStyleModifer = {minHeight: extraSpace + 'px'}
+            inspectStyleModifer = {minHeight: '340px'}
         }
         
-        return <div className={classes.Card} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's', ...inspectStyleModifer}: inspectStyleModifer}>
+        return <div className={this.props.inspect ? classes.InspectCard :  classes.Card} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's', ...inspectStyleModifer}: inspectStyleModifer}>
             <div className={classes.CardHeader}>
                 <h2 
                 className={classes.CardTitle} 
@@ -171,7 +172,7 @@ class Card extends React.Component {
                 onClick={this.titleClickHandler}
                 >{this.props.workout.title}</h2>
             </div>
-            <div className={classes.ListBox}>
+            <div style={this.props.inspect ? {overflow: 'auto'} : {}} className={classes.ListBox}>
                 <table className={classes.ListTable}>
                     <tbody>
                         {exerciseList}
