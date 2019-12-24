@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(24)
+    .limit(6)
     .exec((err, workouts) => {
         if (!err) {
             res.json(workouts).status(200);

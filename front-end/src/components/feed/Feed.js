@@ -4,6 +4,14 @@ import Card from '../UI/Card/Card';
 import DeleteCard from '../UI/DeleteCard/DeleteCard';
 
 class Feed extends React.Component {
+
+    state = {
+        numWorkouts: this.props.workouts.length
+    }
+
+    componentDidMount() {
+        console.log(this.state.numWorkouts);
+    }
     
     render() {
         let delay = 0;

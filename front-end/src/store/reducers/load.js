@@ -25,7 +25,7 @@ const load = (state = initialState, action) => {
             if (action.replace) {
                 newState[action.list] = action.posts;
             } else {
-                newState[action.list] = [...newState[action.list], ...action.posts];
+                newState[action.list].push(...action.posts);
             }
             newState.loading = false;
             return newState;

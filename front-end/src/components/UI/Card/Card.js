@@ -30,6 +30,10 @@ class Card extends React.Component {
         this.checkPreviouslyLiked();
     }
 
+    componentWillUnmount() {
+        console.log('Finna unmount')
+    }
+
     componentDidUpdate() {
         const wasLiked = this.props.likedIDs.includes(this.props.workout._id);
         console.log(wasLiked);

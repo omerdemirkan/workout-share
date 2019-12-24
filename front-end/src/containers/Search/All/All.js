@@ -7,6 +7,7 @@ import {loadPostsAsync} from '../../../store/actions/index'
 import routeToType from '../../../helper/route-to-type';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LoadMore from '../../../components/LoadMore/LoadMore';
 
 import axios from '../../../axios';
 import * as actionTypes from '../../../store/actions/actionTypes';
@@ -38,7 +39,6 @@ class All extends React.Component {
             this.props.onLoadPosts(this.props.history.location.pathname)
         }
         this.props.onResetCreateHandler();
-        
     }
 
     componentDidUpdate() {
@@ -97,9 +97,15 @@ class All extends React.Component {
             
             return <div style={{textAlign: 'center'}}>
                 <Route path={this.props.history.location.pathname} exact component={Inspect}/>
-                {workouts && !this.props.loading ?
-                    <Feed history={this.props.history} darkTitles workouts={workouts}/>
-                    
+                {workouts && workouts.length > 0 && !this.props.loading ?
+                    <React.Fragment>
+                        <Feed history={this.props.history} darkTitles workouts={workouts}/>
+                        <LoadMore 
+                        loadPosts={this.loadPostsHandler} 
+                        // display={workouts.length % 24 === 0} 
+                        display={workouts.length % 6 === 0}
+                        loading={this.props.loading}/>
+                    </React.Fragment>
                 : <CircularProgress style={{marginTop: '60px'}}/>}
                 {this.props.error ? <p>{this.props.error}</p>: null}
             </div>
@@ -119,7 +125,7 @@ const mapStateToProps = state => {
         weightlifting: state.load.weightlifting,
         endurance: state.load.endurance,
         crossfit: state.load.crossfit,
-        allInspect: state.inspect.all
+        loading: state.load.loading
     }
 }
 
