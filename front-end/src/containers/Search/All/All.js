@@ -30,8 +30,6 @@ class All extends React.Component {
 
     componentDidMount() {
         //Checking if this page has already been loaded and saved in redux
-        
-        
         if (this.props.history.location.search) {
             this.updateSearchHandler();
         }
@@ -39,6 +37,7 @@ class All extends React.Component {
         if (loadedWorkouts) {
             this.props.onLoadPosts(this.props.history.location.pathname)
         }
+        this.props.onResetCreateHandler();
         
     }
 
@@ -127,7 +126,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onLoadPosts: (route, numPosts) => dispatch(loadPostsAsync(route, numPosts)),
-        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
+        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type}),
+        onResetCreateHandler: () => dispatch({type: actionTypes.DELETE_WORKOUT})
     }
 }
 

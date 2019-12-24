@@ -46,11 +46,6 @@ const createReducer = (state = initialState, action) => {
             }
         case actionTypes.DELETE_WORKOUT: 
             return initialState;
-        case actionTypes.SIGNUP_REDIRECT:
-            return {
-                ...state,
-                signupRedirect: true
-            }
         case actionTypes.POST_ANON_START:
             return {
                 ...state,

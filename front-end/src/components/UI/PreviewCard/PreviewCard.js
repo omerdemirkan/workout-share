@@ -45,9 +45,14 @@ class Card extends React.Component {
                     format = exercise.sets + ' set: ' + exercise.reps + ' reps';
                 }
                 return <tr key={exercise.title + ' row'}>
-                    <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    {/* <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/reps'} style={{position: 'relative'}}>
                         <p style={{fontSize: formatFontSize(format) + 'rem'}} className={classes.ExerciseListItem}>{format}</p>
+                        <button className={classes.DeleteExerciseButton}><ClearRoundedIcon onClick={() => this.props.onDeleteExercise(exercise.title)}/></button>
+                    </td> */}
+                    <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
+                    <td key={exercise.title + ' sets/reps'} style={{position: 'relative'}}>
+                        <p className={classes.ExerciseListItem}>{format}</p>
                         <button className={classes.DeleteExerciseButton}><ClearRoundedIcon onClick={() => this.props.onDeleteExercise(exercise.title)}/></button>
                     </td>
                 </tr>

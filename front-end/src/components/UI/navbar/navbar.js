@@ -75,7 +75,7 @@ class Navbar extends React.Component {
                 <div className={classes.DropdownBox}>
                     <button className={classes.MoreButton}>More</button>
                     <ul className={classes.MoreDropdown}>
-                        <li key={"/create"}><NavLink to="/create" className={classes.DesktopLink } activeStyle={{color: 'rgb(132, 132, 255)'}}>Create</NavLink></li>
+                        <li key={"/create"}><NavLink to={"/create"} className={classes.DesktopLink } activeStyle={{color: 'rgb(132, 132, 255)'}}>Create</NavLink></li>
                         <li key={"/my-workouts"}><NavLink to="/my-workouts" className={classes.DesktopLink} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Workouts</NavLink></li> 
                         <li key={"/my-favorites"}><NavLink to="/my-favorites" className={classes.DesktopLink} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Favorites</NavLink></li>
                     </ul>

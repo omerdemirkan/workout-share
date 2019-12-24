@@ -64,9 +64,10 @@
 
 .ExerciseListItem {
   margin: 7px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   text-align: left;
-  letter-spacing: -1px;
+  min-width: 80px;
+  letter-spacing: -.5px;
 }
 
 td {
@@ -175,8 +176,37 @@ td {
     }
 }
   
-@media (min-width: 1365px) {
+@media (min-width: 1400px) {
     .Card {
       width: 31%;
     }
+}
+
+
+
+@media (max-width: 1500px) and (min-width: 1400px) {
+  .ExerciseListItem {
+    font-size: calc(1rem + .2vw);
+    letter-spacing: calc(-1.1px + .05vw);
+  }
+}
+
+@media (max-width: 1399px) and (min-width: 900px) {
+  .ExerciseListItem {
+    font-size: calc(.9rem + .3vw);
+    letter-spacing: calc(-1.4px + .1vw);
+  }
+}
+
+@media (max-width: 899px) and (min-width: 641px) {
+  .ExerciseListItem {
+    font-size: 1.2;
+    letter-spacing: -.5px;
+  }
+}
+
+@media (max-width: 641px) {
+  .ExerciseListItem {
+    font-size: calc(.55rem + 1.5vw);
+  }
 }
