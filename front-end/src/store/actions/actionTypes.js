@@ -4,6 +4,7 @@ export const SET_SELECT = 'SET_SELECT';
 export const ADD_EXERCISE = 'ADD_EXERCISE';
 export const DELETE_EXERCISE = 'DELETE_EXERCISE';
 export const DELETE_WORKOUT = 'DELETE_WORKOUT';
+export const RESET_WORKOUT = 'RESET_WORKOUT';
 
 
 // ___ POST ___

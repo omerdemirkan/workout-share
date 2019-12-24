@@ -46,6 +46,12 @@ const createReducer = (state = initialState, action) => {
             }
         case actionTypes.DELETE_WORKOUT: 
             return initialState;
+        case actionTypes.RESET_WORKOUT:
+            if (state.postedWorkout) {
+                return initialState;
+            } else {
+                return state;
+            }
         case actionTypes.POST_ANON_START:
             return {
                 ...state,
