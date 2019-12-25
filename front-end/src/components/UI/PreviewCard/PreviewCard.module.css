@@ -113,6 +113,10 @@ td {
   }
 }
 
+td {
+  overflow: visible;
+}
+
 .DeleteWorkoutButton {
   position: absolute;
   left: 5px;
@@ -153,8 +157,6 @@ td {
   color: red;
 }
 
-
-
 @media (max-width: 1500px) and (min-width: 1400px) {
   .ExerciseListItem {
     font-size: calc(1rem + .2vw);
@@ -178,6 +180,12 @@ td {
 
 @media (max-width: 641px) {
   .ExerciseListItem {
-    font-size: calc(.7rem + 1.4vw);
+    font-size: calc(.8rem + 1.4vw);
+  }
+}
+
+@media (min-width: 900px) {
+  .ExerciseListItem {
+    max-width: 200px;
   }
 }

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const exerciseSchema = require('./exercise.schema');
-const likeSchema = require('./like.schema');
 
 const workoutSchema = new mongoose.Schema({
     type: String,

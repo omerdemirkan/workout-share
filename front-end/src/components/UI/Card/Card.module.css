@@ -77,6 +77,7 @@
 .ListTable {
   margin: auto;
   font-weight: 500;
+  max-width: 90%;
   color: rgb(73, 73, 73);
 }
 
@@ -86,10 +87,6 @@
   text-align: left;
   max-width: 40vw;
   letter-spacing: -.5px;
-}
-
-td {
-  max-width: 250px;
   overflow: hidden;
 }
 
@@ -170,15 +167,6 @@ td {
   }
 }
 
-/* @keyframes shake {
-  0% { transform: translate(.7px, .7px) rotate(5deg); }
-  20% { transform: translate(-1px, 0px) rotate(0deg); }
-  40% { transform: translate(.7px, -.7px) rotate(-5deg); }
-  60% { transform: translate(-1.5px, 1px) rotate(0deg); }
-  80% { transform: translate(-.7px, -.7px) rotate(5deg); }
-  100% { transform: translate(.7px, -1.4px) rotate(0deg); }
-} */
-
 @keyframes shake {
   0% { transform: rotate(10deg); }
   20% { transform: rotate(-10deg); }
@@ -224,13 +212,19 @@ td {
 
 @media (max-width: 899px) and (min-width: 641px) {
   .ExerciseListItem {
-    font-size: 1.2;
+    font-size: 1.4;
     letter-spacing: -.5px;
   }
 }
 
-@media (max-width: 641px) {
+@media (max-width: 640px) {
   .ExerciseListItem {
-    font-size: calc(.7rem + 1.4vw);
+    font-size: calc(.8rem + 1.4vw);
+  }
+}
+
+@media (min-width: 900px) {
+  .ExerciseListItem {
+    max-width: 200px;
   }
 }

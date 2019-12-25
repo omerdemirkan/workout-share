@@ -1,6 +1,6 @@
 
 
-// The same as a Card, but with delete functionality for each exercise as well as the whole workout.
+// The same as a Card, but with local delete functionality for each exercise as well as the whole workout.
 
 import React from 'react';
 import classes from './PreviewCard.module.css'
@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import * as actionTypes from '../../../store/actions/actionTypes'
 
 import { colorsByDisplay } from '../../../helper/colors-by-path'
-import {titleFontSize, exerciseFontSize, formatFontSize} from '../../../helper/lengthToFontSize'
+import {titleFontSize} from '../../../helper/lengthToFontSize'
 
 // -- Material UI --
 
@@ -76,7 +76,10 @@ class Card extends React.Component {
                 
                 return <tr key={exercise.title + ' row'}>
                     <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td key={exercise.title + ' sets/min/sec'}><p className={classes.ExerciseListItem}>{format}</p></td>
+                    <td key={exercise.title + ' sets/min/sec'}>
+                        <p className={classes.ExerciseListItem}>{format}</p>
+                        <button className={classes.DeleteExerciseButton}><ClearRoundedIcon onClick={() => this.props.onDeleteExercise(exercise.title)}/></button>
+                    </td>
                 </tr>
             }
         });

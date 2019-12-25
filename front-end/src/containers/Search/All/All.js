@@ -62,6 +62,7 @@ class All extends React.Component {
         this.setState({
             currentPath: this.props.history.location.pathname
         });
+        window.scrollTo(0, 0)
     }
 
     loadPostsHandler = () => {

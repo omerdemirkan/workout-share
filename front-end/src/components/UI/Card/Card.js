@@ -13,16 +13,20 @@ import { colorsByDisplay } from '../../../helper/colors-by-path'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
 
-import {titleFontSize, exerciseFontSize, formatFontSize} from '../../../helper/lengthToFontSize'
-
-// disableLike: disables like button
+import {titleFontSize} from '../../../helper/lengthToFontSize';
 
 class Card extends React.Component {
 
     state = {
         liked: false,
+        // previouslyLiked is used to determine whether or not the workout 
+        // should be displayed as already liked or not and to determine what 
+        // to do on click (increment or decrement)
         previouslyLiked: 'unknown',
+        // numLikedIDs is used to check if the likedIDs list has been changed,
+        // upon which the card will check if it has been liked
         numLikedIDs: null,
+        // Number of likes (workouts hold a list of user ids that have liked it)
         likes: null
     }
 
@@ -32,7 +36,7 @@ class Card extends React.Component {
 
     componentDidUpdate() {
 
-        //Just in case, doesn't cause infinite loop:
+        //Just in case (for inspected cards), doesn't cause infinite loop:
         this.checkPreviouslyLiked();
 
         if (this.props.likedIDs) {
@@ -53,7 +57,6 @@ class Card extends React.Component {
                 });
             }
         }
-        
     }
 
     checkPreviouslyLiked = () => {
@@ -70,16 +73,17 @@ class Card extends React.Component {
 
     likeButtonClickHandler = () => {
 
+        //Modifier determines increment or decrement
         let modifier = null;
         if (this.state.liked) {
-            //Like
+            // Removing workout id from likedIDs.
             this.props.onSetLikedID(this.props.likedIDs.filter(id => {
                 return id !== this.props.workout._id
             }));
 
             modifier = '/dec/' + this.props.workout._id;
         } else {
-            //Unlike
+            // Adding workout id to likedIDs
             this.props.onSetLikedID([...this.props.likedIDs, this.props.workout._id]);
 
             modifier = '/inc/' + this.props.workout._id;
@@ -88,7 +92,6 @@ class Card extends React.Component {
         axios.defaults.headers.post['authorization'] = "Bearer " + localStorage.getItem('authToken')
         axios.post('/like' + modifier)
         .then(res => {
-            console.log(res.data)
             this.setState({
                 likes: res.data.likes,
                 liked: res.data.liked
@@ -100,25 +103,24 @@ class Card extends React.Component {
     }
 
     titleClickHandler = () => {
-        if (this.props.workout._id !== null) {
-            this.props.history.push(this.props.history.location.pathname + '?id=' + this.props.workout._id);
-            window.scrollTo(0, 0);
-        }
+        this.props.history.push(this.props.history.location.pathname + '?id=' + this.props.workout._id);
+        window.scrollTo(0, 0);
     }
 
     render() {
+        // displayType: Bodybuilding, General, etc.
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
+
                 let format = null
                 if (exercise.sets > 1) {
                     format = exercise.sets + ' sets: ' + exercise.reps + ' reps';
                 } else {
                     format = exercise.sets + ' set: ' + exercise.reps + ' reps';
                 }
+
                 return <tr key={exercise.title + ' row'}>
-                    {/* <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td key={exercise.title + ' sets/reps'}><p style={{fontSize: formatFontSize(format) + 'rem'}} className={classes.ExerciseListItem}>{format}</p></td> */}
                     <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/reps'}><p className={classes.ExerciseListItem}>{format}</p></td>
                 </tr>
@@ -146,8 +148,6 @@ class Card extends React.Component {
                 }
                 
                 return <tr key={exercise.title + ' row'}>
-                    {/* <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td key={exercise.title + ' sets/min/sec'}><p style={{fontSize: formatFontSize(format) + 'rem'}} className={classes.ExerciseListItem}>{format}</p></td> */}
                     <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/min/sec'}><p className={classes.ExerciseListItem}>{format}</p></td>
                 </tr>
@@ -162,8 +162,6 @@ class Card extends React.Component {
         let inspectStyleModifer = {};
 
         if (this.props.inspect && this.props.workout.exercises.length > 6) {
-            // const extraSpace = ((this.props.workout.exercises.length - 6) * 50) + 340
-            // inspectStyleModifer = {minHeight: extraSpace + 'px'}
             inspectStyleModifer = {minHeight: '340px'}
         }
         
@@ -205,6 +203,7 @@ class Card extends React.Component {
                 :
                     <FavoriteIcon fontSize="large" style={{color: colorsByDisplay(displayType).darkColor}}/>
                 }
+
             </button>
             
             </div>

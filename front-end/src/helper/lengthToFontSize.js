@@ -13,27 +13,3 @@ export const titleFontSize = string => {
         return 1.1;
     }
 }
-
-export const exerciseFontSize = string => {
-    if (string.length < 18) {
-        return 1.2;
-    } else if (string.length < 20) {
-        return .9;
-    } else if (string.length < 22) {
-        return .8;
-    } else {
-        return .7;
-    }
-}
-
-export const formatFontSize = string => {
-    if (string.length < 18) {
-        return 1.2;
-    } else if (string.length < 19) {
-        return 1.1;
-    } else if (string.length < 20) {
-        return 1;
-    } else {
-        return 1;
-    }
-}

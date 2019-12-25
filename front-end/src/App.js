@@ -23,7 +23,7 @@ class App extends React.Component {
   componentDidMount() {
 
     //Authorization on mount (NO REDUX!, we don't need to set a loading state, this is meant to be in the background after mount)
-
+    
     if (localStorage.getItem('authToken')) {
       this.props.onSetAuthToken(localStorage.getItem('authToken'));
 

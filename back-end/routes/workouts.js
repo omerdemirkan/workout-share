@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 
 // -- Load Routes --
 
+// These routes are not protected as responses are not personalised.
+
 router.get('/', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({}).sort({likes: -1, createdAt: -1})
@@ -148,6 +150,8 @@ router.get('/crossfit', (req, res) => {
 
 // -- Protected Routes --
 
+// Checks that the user has a valid authToken
+
 const verify = (req, res, next) => {
     const authToken = req.headers["authorization"].split(' ')[1]
     if (authToken == null) return res.json('authToken is null').sendStatus(401);
@@ -158,6 +162,8 @@ const verify = (req, res, next) => {
         next();
     })
 }
+
+// Returns workouts that were liked by the user. (For the /my-favorites page)
 
 router.get('/my-favorites', verify, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
@@ -186,6 +192,8 @@ router.get('/my-favorites', verify, (req, res) => {
     });
 });
 
+// Returns workouts that were posted by the user. (For the /my-workouts page)
+
 router.get('/my-workouts', verify, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     User.findById(req.user._id, 'posted', (error, user) => {
@@ -213,6 +221,8 @@ router.get('/my-workouts', verify, (req, res) => {
     });
 });
 
+// For inspecting a particular workout
+
 router.get('/:id', (req, res) => {
     Workout.findById(req.params.id, (err, workout) => {
         if(!err) {
@@ -224,6 +234,8 @@ router.get('/:id', (req, res) => {
     });
 });
 
+// For deleting a workout in the /my-workouts page
+
 router.delete('/:id', verify, (req, res) => {
     const workoutId = req.params.id; 
     Workout.deleteOne({_id: workoutId}, err => {
@@ -234,6 +246,8 @@ router.delete('/:id', verify, (req, res) => {
         }
     });
 });
+
+// For posting a new workout
 
 router.post('/', verify, (req, res) => {
     const newWorkout = new Workout({

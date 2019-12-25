@@ -77,6 +77,9 @@ class MyWorkouts extends React.Component {
             <div className={classes.MyWorkouts}>
                 <h1 className={classes.Header}>My Workouts</h1>
 
+                    
+                
+                {this.props.myWorkouts.posts.length && !this.props.loading > 0 ?
                     <InfiniteScroll
                     loadMore={this.loadPostsHandler}
                     hasMore={this.props.myWorkouts.hasMore}
@@ -84,10 +87,7 @@ class MyWorkouts extends React.Component {
                     >
                         <Feed myWorkouts history={this.props.history} darkTitles workouts={this.props.myWorkouts.posts}/>
                     </InfiniteScroll>
-                
-                {/* {this.props.myWorkouts.posts.length > 0 ?
-                    <Feed myWorkouts history={this.props.history} workouts={this.props.myWorkouts.posts}/>
-                : null} */}
+                : null}
 
                 {this.props.myWorkouts.posts.length === 0 && !this.props.loading ?
                     <React.Fragment>

@@ -18,7 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
 import ErrorModal from '../ErrorModal/ErrorModal';
-import {titleFontSize, exerciseFontSize, formatFontSize} from '../../../helper/lengthToFontSize'
+import {titleFontSize} from '../../../helper/lengthToFontSize'
 
 // disableLike: disables like button
 
@@ -26,11 +26,20 @@ class DeleteCard extends React.Component {
 
     state = {
         liked: false,
+        // previouslyLiked is used to determine whether or not the workout 
+        // should be displayed as already liked or not and to determine what 
+        // to do on click (increment or decrement)
         previouslyLiked: 'unknown',
+        // numLikedIDs is used to check if the likedIDs list has been changed,
+        // upon which the card will check if it has been liked
         numLikedIDs: null,
+        // Number of likes (workouts hold a list of user ids that have liked it)
         likes: null,
+        // Controls whether or not the 'are you sure ...' modal shows up
         deleteWorkoutModal: false,
+        // Deleted displays null rather than sending a new request.
         deleted: false,
+        // Controls 'workouts deleted' snackbar.
         deletedMessage: false
     }
 
@@ -74,16 +83,17 @@ class DeleteCard extends React.Component {
 
     likeButtonClickHandler = () => {
 
+        //Modifier determines increment or decrement
         let modifier = null;
         if (this.state.liked) {
-            //Like
+            // Removing workout id from likedIDs.
             this.props.onSetLikedID(this.props.likedIDs.filter(id => {
                 return id !== this.props.workout._id
             }));
 
             modifier = '/dec/' + this.props.workout._id;
         } else {
-            //Unlike
+            // Adding workout id to likedIDs
             this.props.onSetLikedID([...this.props.likedIDs, this.props.workout._id]);
 
             modifier = '/inc/' + this.props.workout._id;
@@ -92,7 +102,6 @@ class DeleteCard extends React.Component {
         axios.defaults.headers.post['authorization'] = "Bearer " + localStorage.getItem('authToken')
         axios.post('/like' + modifier)
         .then(res => {
-            console.log(res.data)
             this.setState({
                 likes: res.data.likes,
                 liked: res.data.liked
@@ -104,10 +113,8 @@ class DeleteCard extends React.Component {
     }
 
     titleClickHandler = () => {
-        if (this.props.workout._id !== null) {
-            this.props.history.push(this.props.history.location.pathname + '?id=' + this.props.workout._id);
-            window.scrollTo(0, 0);
-        }
+        this.props.history.push(this.props.history.location.pathname + '?id=' + this.props.workout._id);
+        window.scrollTo(0, 0);
     }
 
     deleteWorkoutModalOpenHandler = () => {
@@ -139,12 +146,11 @@ class DeleteCard extends React.Component {
             });
         })
         .catch(err => {
+            console.log(err);
         });
     }
 
     render() {
-
-
         if (this.state.deleted) {
             return <Snackbar
                     anchorOrigin={{
@@ -172,19 +178,20 @@ class DeleteCard extends React.Component {
         const displayType = this.props.workout.type;
         const exerciseList = this.props.workout.exercises.map(exercise => {
             if (exercise.reps) {
+
                 let format = null
                 if (exercise.sets > 1) {
                     format = exercise.sets + ' sets: ' + exercise.reps + ' reps';
                 } else {
                     format = exercise.sets + ' set: ' + exercise.reps + ' reps';
                 }
+
                 return <tr key={exercise.title + ' row'}>
-                    {/* <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td key={exercise.title + ' sets/reps'}><p style={{fontSize: formatFontSize(format) + 'rem'}} className={classes.ExerciseListItem}>{format}</p></td> */}
                     <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/reps'}><p className={classes.ExerciseListItem}>{format}</p></td>
                 </tr>
             } else {
+
                 let duration = '';
                 if (exercise.minutes > 0) {
                     if (exercise.seconds > 0) {
@@ -208,8 +215,6 @@ class DeleteCard extends React.Component {
                 }
                 
                 return <tr key={exercise.title + ' row'}>
-                    {/* <td key={exercise.title}><p style={{fontSize: exerciseFontSize(exercise.title) + 'rem'}} className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td key={exercise.title + ' sets/min/sec'}><p style={{fontSize: formatFontSize(format) + 'rem'}} className={classes.ExerciseListItem}>{format}</p></td> */}
                     <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
                     <td key={exercise.title + ' sets/reps'}><p className={classes.ExerciseListItem}>{format}</p></td>
                 </tr>
