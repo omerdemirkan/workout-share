@@ -9,12 +9,21 @@ router.get('/', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(6)
+    .limit(7)
     .exec((err, workouts) => {
-        if (!err) {
-            res.json(workouts).status(200);
+        if (err) return res.json('eRROR in workouts route \n' + err);
+
+        if (workouts.length < 7) {
+            res.json({
+                posts: workouts,
+                hasMore: false
+            }).status(200);
         } else {
-            res.json('eRROR in workouts route \n' + err);
+            workouts.pop()
+            res.json({
+                posts: workouts,
+                hasMore: true
+            }).status(200);
         }
     });
 });
@@ -23,12 +32,21 @@ router.get('/powerlifting', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Powerlifting'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(24)
+    .limit(7)
     .exec( (err, workouts) => {
-        if (!err) {
-            res.json(workouts).status(200);
+        if (err) return res.json('eRROR in workouts route \n' + err);
+        
+        if (workouts.length < 7) {
+            res.json({
+                posts: workouts,
+                hasMore: false
+            }).status(200);
         } else {
-            res.json('eRROR in workouts route \n' + err);
+            workouts.pop()
+            res.json({
+                posts: workouts,
+                hasMore: true
+            }).status(200);
         }
     });
 });
@@ -37,12 +55,21 @@ router.get('/bodybuilding', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Bodybuilding'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(24)
+    .limit(7)
     .exec( (err, workouts) => {
-        if (!err) {
-            res.json(workouts).status(200);
+        if (err) return res.json('eRROR in workouts route \n' + err);
+        
+        if (workouts.length < 7) {
+            res.json({
+                posts: workouts,
+                hasMore: false
+            }).status(200);
         } else {
-            res.json('eRROR in workouts route \n' + err);
+            workouts.pop()
+            res.json({
+                posts: workouts,
+                hasMore: true
+            }).status(200);
         }
     });
 });
@@ -51,12 +78,21 @@ router.get('/weightlifting', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Weightlifting'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(24)
+    .limit(7)
     .exec( (err, workouts) => {
-        if (!err) {
-            res.json(workouts).status(200);
+        if (err) return res.json('eRROR in workouts route \n' + err);
+        
+        if (workouts.length < 7) {
+            res.json({
+                posts: workouts,
+                hasMore: false
+            }).status(200);
         } else {
-            res.json('eRROR in workouts route \n' + err);
+            workouts.pop()
+            res.json({
+                posts: workouts,
+                hasMore: true
+            }).status(200);
         }
     });
 });
@@ -65,12 +101,21 @@ router.get('/endurance', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Endurance'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(24)
+    .limit(7)
     .exec( (err, workouts) => {
-        if (!err) {
-            res.json(workouts).status(200);
+        if (err) return res.json('eRROR in workouts route \n' + err);
+        
+        if (workouts.length < 7) {
+            res.json({
+                posts: workouts,
+                hasMore: false
+            }).status(200);
         } else {
-            res.json('eRROR in workouts route \n' + err);
+            workouts.pop()
+            res.json({
+                posts: workouts,
+                hasMore: true
+            }).status(200);
         }
     });
 });
@@ -79,12 +124,21 @@ router.get('/crossfit', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Crossfit'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(24)
+    .limit(7)
     .exec( (err, workouts) => {
-        if (!err) {
-            res.json(workouts).status(200);
+        if (err) return res.json('eRROR in workouts route \n' + err);
+        
+        if (workouts.length < 7) {
+            res.json({
+                posts: workouts,
+                hasMore: false
+            }).status(200);
         } else {
-            res.json('eRROR in workouts route \n' + err);
+            workouts.pop()
+            res.json({
+                posts: workouts,
+                hasMore: true
+            }).status(200);
         }
     });
 });
@@ -106,23 +160,55 @@ const verify = (req, res, next) => {
 }
 
 router.get('/my-favorites', verify, (req, res) => {
-    User.findById(req.user._id, 'liked').sort({createdAt: -1}).exec( (error, user) => {
+    const numPosts = Number(req.headers['currentposts']);
+    User.findById(req.user._id, 'liked', (error, user) => {
         if (error) return res.json(error)
 
-        Workout.find({_id: {$in: user.liked}}, (err, workouts) => {
-            if (err) return res.json(err)
-            res.json(workouts);
+        Workout.find({_id: {$in: user.liked}})
+        .skip(numPosts)
+        .limit(7)
+        .exec((err, workouts) => {
+            if (err) return res.json('eRROR in workouts route \n' + err);
+        
+            if (workouts.length < 7) {
+                res.json({
+                    posts: workouts,
+                    hasMore: false
+                }).status(200);
+            } else {
+                workouts.pop()
+                res.json({
+                    posts: workouts,
+                    hasMore: true
+                }).status(200);
+            }
         });
     });
 });
 
 router.get('/my-workouts', verify, (req, res) => {
-    User.findById(req.user._id, 'posted').sort({createdAt: -1}).exec( (error, user) => {
+    const numPosts = Number(req.headers['currentposts']);
+    User.findById(req.user._id, 'posted', (error, user) => {
         if (error) return res.json(error)
 
-        Workout.find({_id: {$in: user.posted}}, (err, workouts) => {
-            if (err) return res.json(err)
-            res.json(workouts);
+        Workout.find({_id: {$in: user.posted}})
+        .skip(numPosts)
+        .limit(7)
+        .exec((err, workouts) => {
+            if (err) return res.json('eRROR in workouts route \n' + err);
+        
+            if (workouts.length < 7) {
+                res.json({
+                    posts: workouts,
+                    hasMore: false
+                }).status(200);
+            } else {
+                workouts.pop()
+                res.json({
+                    posts: workouts,
+                    hasMore: true
+                }).status(200);
+            }
         });
     });
 });

@@ -32,7 +32,7 @@ class MyWorkouts extends React.Component {
             this.checkSearchHandler();
         }
 
-        // if (this.props.myWorkouts && this.state.numWorkouts !== this.props.myWorkouts.length) {
+        // if (this.props.myWorkouts.posts && this.state.numWorkouts !== this.props.myWorkouts.posts.length) {
         //     this.setState({
 
         //     });
@@ -67,8 +67,8 @@ class MyWorkouts extends React.Component {
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>  
             <div className={classes.MyWorkouts}>
                 <h1 className={classes.Header}>My Workouts</h1>
-                {this.props.myWorkouts.length > 0 ?
-                    <Feed myWorkouts history={this.props.history} darkTitles workouts={this.props.myWorkouts}/>
+                {this.props.myWorkouts.posts.length > 0 ?
+                    <Feed myWorkouts history={this.props.history} darkTitles workouts={this.props.myWorkouts.posts}/>
                 : 
                     <React.Fragment>
                         <h2 className={classes.EmptyText}>Hmm, looks like you haven't posted yet.</h2>

@@ -1,14 +1,38 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    all: [],
-    powerlifting: [],
-    bodybuilding: [],
-    weightlifting: [],
-    endurance: [],
-    crossfit: [],
-    myFavorites: [],
-    myWorkouts: [],
+    all: {
+        posts: [],
+        hasMore: true
+    },
+    powerlifting: {
+        posts: [],
+        hasMore: true
+    },
+    bodybuilding: {
+        posts: [],
+        hasMore: true
+    },
+    weightlifting: {
+        posts: [],
+        hasMore: true
+    },
+    endurance: {
+        posts: [],
+        hasMore: true
+    },
+    crossfit: {
+        posts: [],
+        hasMore: true
+    },
+    myFavorites: {
+        posts: [],
+        hasMore: true
+    },
+    myWorkouts: {
+        posts: [],
+        hasMore: true
+    },
     loading: false,
 }
 
@@ -23,9 +47,12 @@ const load = (state = initialState, action) => {
         case actionTypes.LOAD_POSTS_SUCCESS:
             let newState = {...state};
             if (action.replace) {
-                newState[action.list] = action.posts;
+                newState[action.list].posts = action.posts;
+                newState[action.list].hasMore = action.hasMore;
+
             } else {
-                newState[action.list].push(...action.posts);
+                newState[action.list].posts.push(...action.posts);
+                newState[action.list].hasMore = action.hasMore;
             }
             newState.loading = false;
             return newState;

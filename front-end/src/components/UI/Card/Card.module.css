@@ -10,9 +10,9 @@
     margin: 10px 0;
     max-width: 600px;
     position: relative;
-    /* top: 30px;
+    top: 30px;
     opacity: 0;
-    animation: PhaseIn 0.6s forwards; */
+    animation: PhaseIn 0.6s forwards;
 }
 
 .InspectCard {

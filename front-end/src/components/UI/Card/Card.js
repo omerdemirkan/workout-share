@@ -30,31 +30,30 @@ class Card extends React.Component {
         this.checkPreviouslyLiked();
     }
 
-    componentWillUnmount() {
-        console.log('Finna unmount')
-    }
-
     componentDidUpdate() {
-        const wasLiked = this.props.likedIDs.includes(this.props.workout._id);
-        console.log(wasLiked);
 
         //Just in case, doesn't cause infinite loop:
         this.checkPreviouslyLiked();
 
-        if (this.state.previouslyLiked !== 'unknown' && this.state.numLikedIDs !== this.props.likedIDs.length && this.state.liked !== wasLiked) {
-            // Checking 
-            let newLikes = this.state.likes;
-            if (wasLiked) {
-                newLikes += 1;
-            } else {
-                newLikes -= 1;
+        if (this.props.likedIDs) {
+            const wasLiked = this.props.likedIDs.includes(this.props.workout._id);
+
+            if (this.state.previouslyLiked !== 'unknown' && this.state.numLikedIDs !== this.props.likedIDs.length && this.state.liked !== wasLiked) {
+                // Checking 
+                let newLikes = this.state.likes;
+                if (wasLiked) {
+                    newLikes += 1;
+                } else {
+                    newLikes -= 1;
+                }
+                this.setState({
+                    liked: wasLiked,
+                    numLikedIDs: this.props.likedIDs.length,
+                    likes: newLikes
+                });
             }
-            this.setState({
-                liked: wasLiked,
-                numLikedIDs: this.props.likedIDs.length,
-                likes: newLikes
-            });
         }
+        
     }
 
     checkPreviouslyLiked = () => {
@@ -168,7 +167,7 @@ class Card extends React.Component {
             inspectStyleModifer = {minHeight: '340px'}
         }
         
-        return <div className={this.props.inspect ? classes.InspectCard :  classes.Card} style={this.props.delay ? {animationDelay: this.props.delay.toFixed(2) + 's', ...inspectStyleModifer}: inspectStyleModifer}>
+        return <div className={this.props.inspect ? classes.InspectCard :  classes.Card} style={this.props.delay ? { animationDelay: this.props.delay.toFixed(2) + 's', ...inspectStyleModifer}: inspectStyleModifer}>
             <div className={classes.CardHeader}>
                 <h2 
                 className={classes.CardTitle} 

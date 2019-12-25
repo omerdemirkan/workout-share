@@ -5,6 +5,9 @@ import routeToType from '../../helper/route-to-type';
 export const loadPostsAsync = (route, currentNumPosts) => {
     return dispatch => {
         dispatch(loadPostsStart(route));
+        if (!currentNumPosts) {
+            currentNumPosts = 0;
+        }
         axios.get('/workouts' + route, {
             headers: {
               authorization: 'Bearer ' + localStorage.getItem('authToken'),
@@ -12,10 +15,11 @@ export const loadPostsAsync = (route, currentNumPosts) => {
             }
         })
         .then(res => {
-            if (currentNumPosts) {
-                dispatch(loadPostsSuccess(routeToType(route), res.data, false));
-            } else {
+            if (currentNumPosts === 0) {
+                console.log(res.data);
                 dispatch(loadPostsSuccess(routeToType(route), res.data, true));
+            } else {
+                dispatch(loadPostsSuccess(routeToType(route), res.data, false));
             }
             
         })
@@ -30,8 +34,9 @@ const loadPostsStart = route => {
     return {type: actionTypes.LOAD_POSTS_START, route: route}
 }
 
-const loadPostsSuccess = (list, posts, replace) => {
-    return {type: actionTypes.LOAD_POSTS_SUCCESS, posts: posts, list: list, replace: replace}
+const loadPostsSuccess = (list, res, replace) => {
+    console.log(res);
+    return {type: actionTypes.LOAD_POSTS_SUCCESS, posts: res.posts, hasMore: res.hasMore, list: list, replace: replace}
 }
 
 const loadPostsFailure = error => {

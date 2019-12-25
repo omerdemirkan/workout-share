@@ -62,7 +62,7 @@ class MyFavorites extends React.Component {
             <div className={classes.MyFavorites}>
                 <h1 className={classes.Header}>My Favorites</h1>
                 {this.props.likedIDs && this.props.likedIDs.length > 0 ?
-                    <Feed favorites={this.props.likedIDs} history={this.props.history} darkTitles workouts={this.props.myFavorites}/>
+                    <Feed favorites={this.props.likedIDs} history={this.props.history} darkTitles workouts={this.props.myFavorites.posts}/>
                 : null}
 
                 {this.props.likedIDs && this.props.likedIDs.length === 0 ?

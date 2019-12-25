@@ -6,8 +6,8 @@ import {connect} from 'react-redux';
 import {loadPostsAsync} from '../../../store/actions/index'
 import routeToType from '../../../helper/route-to-type';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
 import LoadMore from '../../../components/LoadMore/LoadMore';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import axios from '../../../axios';
 import * as actionTypes from '../../../store/actions/actionTypes';
@@ -23,7 +23,7 @@ class All extends React.Component {
         currentPath: this.props.history.location.pathname,
         search: this.props.location.search,
         searchID: null,
-
+        hasMore: true
 
         // In order to enforce a re-render of the cards (without deleting them from our redux state) to complete the phase-in animation regardless
         // of the previous path. This is strictly for changing the path from / or all to other browse paths.
@@ -34,7 +34,7 @@ class All extends React.Component {
         if (this.props.history.location.search) {
             this.updateSearchHandler();
         }
-        const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)];
+        const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)].posts;
         if (loadedWorkouts) {
             this.props.onLoadPosts(this.props.history.location.pathname)
         }
@@ -43,11 +43,10 @@ class All extends React.Component {
 
     componentDidUpdate() {
 
-        const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)];
+        const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)].posts;
 
         if (loadedWorkouts.length === 0 && this.state.currentPath !== this.props.history.location.pathname) {
             this.loadPostsHandler();
-            
         }
         
 
@@ -63,7 +62,8 @@ class All extends React.Component {
     }
 
     loadPostsHandler = () => {
-        this.props.onLoadPosts(this.props.history.location.pathname, this.props[routeToType(this.props.history.location.pathname)].length);
+        console.log(this.props.history.location.pathname, this.props[routeToType(this.props.history.location.pathname)].posts.length);
+        this.props.onLoadPosts(this.props.history.location.pathname, this.props[routeToType(this.props.history.location.pathname)].posts.length);
     }
 
     updateSearchHandler = () => {
@@ -92,21 +92,26 @@ class All extends React.Component {
     render() {
         
         const type = routeToType(this.props.history.location.pathname);
-        const workouts = this.props[type];
+        const workouts = this.props[type].posts;
+        const hasMore = this.props[type].hasMore;
         if (this.state.currentPath === this.props.history.location.pathname) {
             
             return <div style={{textAlign: 'center'}}>
                 <Route path={this.props.history.location.pathname} exact component={Inspect}/>
-                {workouts && workouts.length > 0 && !this.props.loading ?
-                    <React.Fragment>
-                        <Feed history={this.props.history} darkTitles workouts={workouts}/>
-                        <LoadMore 
-                        loadPosts={this.loadPostsHandler} 
-                        // display={workouts.length % 24 === 0} 
-                        display={workouts.length % 6 === 0}
-                        loading={this.props.loading}/>
-                    </React.Fragment>
-                : <CircularProgress style={{marginTop: '60px'}}/>}
+                <Feed history={this.props.history} darkTitles workouts={workouts}/>
+                <LoadMore 
+                loadPosts={this.loadPostsHandler} 
+                // display={workouts.length % 24 === 0} 
+                display={hasMore}
+                loading={this.props.loading}/>
+                {/* <InfiniteScroll
+                    loadMore={this.loadPostsHandler}
+                    hasMore={hasMore}
+                    loader={<div className="loader" key={0}>Loading ...</div>}
+                >
+                    <Feed history={this.props.history} darkTitles workouts={workouts}/>
+                </InfiniteScroll> */}
+
                 {this.props.error ? <p>{this.props.error}</p>: null}
             </div>
         } else {
