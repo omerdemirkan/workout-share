@@ -5,6 +5,7 @@ import routeToType from '../../helper/route-to-type';
 export const loadPostsAsync = (route, currentNumPosts) => {
     return dispatch => {
         dispatch(loadPostsStart(route));
+        console.log(currentNumPosts);
         if (!currentNumPosts) {
             currentNumPosts = 0;
         }
@@ -16,7 +17,6 @@ export const loadPostsAsync = (route, currentNumPosts) => {
         })
         .then(res => {
             if (currentNumPosts === 0) {
-                console.log(res.data);
                 dispatch(loadPostsSuccess(routeToType(route), res.data, true));
             } else {
                 dispatch(loadPostsSuccess(routeToType(route), res.data, false));

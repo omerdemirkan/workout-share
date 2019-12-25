@@ -9,6 +9,8 @@ import empty from '../../images/empty.svg';
 import axios from '../../axios';
 import routeToType from '../../helper/route-to-type';
 import * as actionTypes from '../../store/actions/actionTypes';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import InfiniteScroll from 'react-infinite-scroller';
 
 class MyFavorites extends React.Component {
 
@@ -18,7 +20,7 @@ class MyFavorites extends React.Component {
     }
 
     componentDidMount() {
-        this.loadPostsHandler();
+        // this.loadPostsHandler();
         
         if (this.props.history.location.search.length > 0) {
             this.checkSearchHandler();
@@ -33,7 +35,7 @@ class MyFavorites extends React.Component {
     }
 
     loadPostsHandler = () => {
-        const load = this.props[routeToType(this.props.history.location.pathname)]
+        const load = this.props.myFavorites
         if (load.hasMore && !this.props.loading) {
             this.props.onLoadPosts(this.props.history.location.pathname, load.posts.length);
         }
@@ -69,8 +71,17 @@ class MyFavorites extends React.Component {
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>  
             <div className={classes.MyFavorites}>
                 <h1 className={classes.Header}>My Favorites</h1>
+
                 {this.props.likedIDs && this.props.likedIDs.length > 0 ?
-                    <Feed favorites={this.props.likedIDs} history={this.props.history} darkTitles workouts={this.props.myFavorites.posts}/>
+
+                    <InfiniteScroll
+                        loadMore={this.loadPostsHandler}
+                        hasMore={this.props.myFavorites.hasMore}
+                        loader={<CircularProgress/>}
+                    >
+                        <Feed favorites={this.props.likedIDs} history={this.props.history} darkTitles workouts={this.props.myFavorites.posts}/>
+                    </InfiniteScroll>
+                    
                 : null}
 
                 {this.props.likedIDs && this.props.likedIDs.length === 0 ?
@@ -96,7 +107,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLoadPosts: route => dispatch(loadPostsAsync(route)),
+        onLoadPosts: (route, numPosts) => dispatch(loadPostsAsync(route, numPosts)),
         onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
     }
 }
