@@ -9,11 +9,11 @@ router.get('/', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(7)
+    .limit(13)
     .exec((err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
 
-        if (workouts.length < 7) {
+        if (workouts.length < 13) {
             res.json({
                 posts: workouts,
                 hasMore: false
@@ -32,11 +32,11 @@ router.get('/powerlifting', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Powerlifting'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(7)
+    .limit(13)
     .exec( (err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
         
-        if (workouts.length < 7) {
+        if (workouts.length < 13) {
             res.json({
                 posts: workouts,
                 hasMore: false
@@ -55,11 +55,11 @@ router.get('/bodybuilding', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Bodybuilding'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(7)
+    .limit(13)
     .exec( (err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
         
-        if (workouts.length < 7) {
+        if (workouts.length < 13) {
             res.json({
                 posts: workouts,
                 hasMore: false
@@ -78,11 +78,11 @@ router.get('/weightlifting', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Weightlifting'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(7)
+    .limit(13)
     .exec( (err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
         
-        if (workouts.length < 7) {
+        if (workouts.length < 13) {
             res.json({
                 posts: workouts,
                 hasMore: false
@@ -101,11 +101,11 @@ router.get('/endurance', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Endurance'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(7)
+    .limit(13)
     .exec( (err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
         
-        if (workouts.length < 7) {
+        if (workouts.length < 13) {
             res.json({
                 posts: workouts,
                 hasMore: false
@@ -124,11 +124,11 @@ router.get('/crossfit', (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Crossfit'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
-    .limit(7)
+    .limit(13)
     .exec( (err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
         
-        if (workouts.length < 7) {
+        if (workouts.length < 13) {
             res.json({
                 posts: workouts,
                 hasMore: false
@@ -166,11 +166,11 @@ router.get('/my-favorites', verify, (req, res) => {
 
         Workout.find({_id: {$in: user.liked}})
         .skip(numPosts)
-        .limit(7)
+        .limit(13)
         .exec((err, workouts) => {
             if (err) return res.json('eRROR in workouts route \n' + err);
         
-            if (workouts.length < 7) {
+            if (workouts.length < 13) {
                 res.json({
                     posts: workouts,
                     hasMore: false
@@ -193,11 +193,11 @@ router.get('/my-workouts', verify, (req, res) => {
 
         Workout.find({_id: {$in: user.posted}})
         .skip(numPosts)
-        .limit(7)
+        .limit(13)
         .exec((err, workouts) => {
             if (err) return res.json('eRROR in workouts route \n' + err);
         
-            if (workouts.length < 7) {
+            if (workouts.length < 13) {
                 res.json({
                     posts: workouts,
                     hasMore: false

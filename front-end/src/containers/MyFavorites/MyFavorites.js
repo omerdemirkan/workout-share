@@ -18,7 +18,7 @@ class MyFavorites extends React.Component {
     }
 
     componentDidMount() {
-        this.props.onLoadPosts('/my-favorites');
+        this.loadPostsHandler();
         
         if (this.props.history.location.search.length > 0) {
             this.checkSearchHandler();
@@ -32,9 +32,17 @@ class MyFavorites extends React.Component {
         }
     }
 
+    loadPostsHandler = () => {
+        const load = this.props[routeToType(this.props.history.location.pathname)]
+        if (load.hasMore && !this.props.loading) {
+            this.props.onLoadPosts(this.props.history.location.pathname, load.posts.length);
+        }
+    }
+
     checkSearchHandler = () => {
         const query = new URLSearchParams(this.props.location.search);
         let searchID = null
+        console.log(query.entries())
         for (let param of query.entries()) {
             searchID = param[1];
         }

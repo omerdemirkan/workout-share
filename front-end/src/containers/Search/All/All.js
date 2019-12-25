@@ -7,6 +7,7 @@ import {loadPostsAsync} from '../../../store/actions/index'
 import routeToType from '../../../helper/route-to-type';
 
 import LoadMore from '../../../components/LoadMore/LoadMore';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import axios from '../../../axios';
@@ -34,10 +35,10 @@ class All extends React.Component {
         if (this.props.history.location.search) {
             this.updateSearchHandler();
         }
-        const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)].posts;
-        if (loadedWorkouts) {
-            this.props.onLoadPosts(this.props.history.location.pathname)
-        }
+        // const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)].posts;
+        // if (loadedWorkouts) {
+        //     this.props.onLoadPosts(this.props.history.location.pathname)
+        // }
         this.props.onResetCreateHandler();
     }
 
@@ -45,9 +46,9 @@ class All extends React.Component {
 
         const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)].posts;
 
-        if (loadedWorkouts.length === 0 && this.state.currentPath !== this.props.history.location.pathname) {
-            this.loadPostsHandler();
-        }
+        // if (loadedWorkouts.length === 0 && this.state.currentPath !== this.props.history.location.pathname) {
+        //     this.loadPostsHandler();
+        // }
         
 
         if (this.state.search !== this.props.location.search) {
@@ -62,8 +63,10 @@ class All extends React.Component {
     }
 
     loadPostsHandler = () => {
-        console.log(this.props.history.location.pathname, this.props[routeToType(this.props.history.location.pathname)].posts.length);
-        this.props.onLoadPosts(this.props.history.location.pathname, this.props[routeToType(this.props.history.location.pathname)].posts.length);
+        const load = this.props[routeToType(this.props.history.location.pathname)]
+        if (load.hasMore && !this.props.loading) {
+            this.props.onLoadPosts(this.props.history.location.pathname, load.posts.length);
+        }
     }
 
     updateSearchHandler = () => {
@@ -98,19 +101,18 @@ class All extends React.Component {
             
             return <div style={{textAlign: 'center'}}>
                 <Route path={this.props.history.location.pathname} exact component={Inspect}/>
-                <Feed history={this.props.history} darkTitles workouts={workouts}/>
+                {/* <Feed history={this.props.history} darkTitles workouts={workouts}/>
                 <LoadMore 
                 loadPosts={this.loadPostsHandler} 
-                // display={workouts.length % 24 === 0} 
                 display={hasMore}
-                loading={this.props.loading}/>
-                {/* <InfiniteScroll
+                loading={this.props.loading}/> */}
+                <InfiniteScroll
                     loadMore={this.loadPostsHandler}
                     hasMore={hasMore}
-                    loader={<div className="loader" key={0}>Loading ...</div>}
+                    loader={<CircularProgress/>}
                 >
                     <Feed history={this.props.history} darkTitles workouts={workouts}/>
-                </InfiniteScroll> */}
+                </InfiniteScroll>
 
                 {this.props.error ? <p>{this.props.error}</p>: null}
             </div>

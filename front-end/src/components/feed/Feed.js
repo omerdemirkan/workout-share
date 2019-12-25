@@ -2,7 +2,6 @@ import React from 'react';
 import classes from './Feed.module.css';
 import Card from '../UI/Card/Card';
 import DeleteCard from '../UI/DeleteCard/DeleteCard';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 class Feed extends React.Component {
 
@@ -22,9 +21,6 @@ class Feed extends React.Component {
     }
     
     render() {
-        if (this.state.numWorkouts === 0) {
-            return <CircularProgress/>
-        }
 
         let delay = 0;
         if (this.props.favorites && this.props.workouts && this.props.workouts.length > 0) {
