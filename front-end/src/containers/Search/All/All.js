@@ -1,30 +1,30 @@
 import React from 'react';
-import Feed from '../../../components/feed/Feed';
 import {Route} from 'react-router-dom';
-import Inspect from '../../../containers/Inspect/Inspect';
-import {connect} from 'react-redux';
-import {loadPostsAsync} from '../../../store/actions/index'
 import routeToType from '../../../helper/route-to-type';
 
-import LoadMore from '../../../components/LoadMore/LoadMore';
+// Style
+import classes from './All.module.css'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import InfiniteScroll from 'react-infinite-scroller';
+import Empty from '../../../images/empty.svg';
 
+// import LoadMore from '../../../components/LoadMore/LoadMore';
+import InfiniteScroll from 'react-infinite-scroller';
+import Feed from '../../../components/feed/Feed';
+import Inspect from '../../../containers/Inspect/Inspect';
+
+// Redux and axios
 import axios from '../../../axios';
 import * as actionTypes from '../../../store/actions/actionTypes';
+import {connect} from 'react-redux';
+import {loadPostsAsync} from '../../../store/actions/index'
 
 
 class All extends React.Component {
-    constructor(props) {
-        super(props);
-        window.scrollTo(0, 0)
-    }
 
     state = {
         currentPath: this.props.history.location.pathname,
         search: this.props.location.search,
-        searchID: null,
-        hasMore: true
+        searchID: null
 
         // In order to enforce a re-render of the cards (without deleting them from our redux state) to complete the phase-in animation regardless
         // of the previous path. This is strictly for changing the path from / or all to other browse paths.
@@ -35,6 +35,7 @@ class All extends React.Component {
         if (this.props.history.location.search) {
             this.updateSearchHandler();
         }
+        window.scrollTo(0, 0)
         // const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)].posts;
         // if (loadedWorkouts) {
         //     this.props.onLoadPosts(this.props.history.location.pathname)
@@ -67,6 +68,10 @@ class All extends React.Component {
         if (load.hasMore && !this.props.loading) {
             this.props.onLoadPosts(this.props.history.location.pathname, load.posts.length);
         }
+    }
+
+    redirectToCreateHandler = () => {
+        this.props.history.push('/create');
     }
 
     updateSearchHandler = () => {
@@ -113,6 +118,16 @@ class All extends React.Component {
                 >
                     <Feed history={this.props.history} darkTitles workouts={workouts}/>
                 </InfiniteScroll>
+                
+                {!hasMore ? 
+                    <div className={classes.EndBox}>
+                        <h2 className={classes.CtaHeader}>Looked a bit empty?</h2>
+                        <p className={classes.CtaText}>Feel free to create your own workouts to keep track of your routine or to share with friends.</p>
+                        <p className={classes.CtaText}>No account needed!</p>
+                        <button onClick={this.redirectToCreateHandler} className={classes.CtaButton}>Take me there!</button>
+                        <img className={classes.EmptyImage} src={Empty}/>
+                    </div>
+                : null}
 
                 {this.props.error ? <p>{this.props.error}</p>: null}
             </div>

@@ -87,6 +87,10 @@ class Create extends React.Component {
         twoMoreAlert: false
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0)
+    }
+
     updateExerciseHandler = (event, field) => {
         let newExercise = {...this.state.currentExercise};
         if (field === 'title') {

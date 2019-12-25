@@ -26,6 +26,7 @@ class MyWorkouts extends React.Component {
         if (this.props.history.location.search.length > 0) {
             this.checkSearchHandler();
         }
+        window.scrollTo(0, 0)
     }
 
     componentDidUpdate() {
@@ -81,7 +82,7 @@ class MyWorkouts extends React.Component {
                     hasMore={this.props.myWorkouts.hasMore}
                     loader={<CircularProgress/>}
                     >
-                        <Feed myWorkouts history={this.props.history} workouts={this.props.myWorkouts.posts}/>
+                        <Feed myWorkouts history={this.props.history} darkTitles workouts={this.props.myWorkouts.posts}/>
                     </InfiniteScroll>
                 
                 {/* {this.props.myWorkouts.posts.length > 0 ?

@@ -178,6 +178,6 @@ td {
 
 @media (max-width: 641px) {
   .ExerciseListItem {
-    font-size: calc(.55rem + 1.5vw);
+    font-size: calc(.7rem + 1.4vw);
   }
 }

@@ -154,8 +154,7 @@
   margin-top: 40px;
   margin-bottom: 40px;
   background-color: transparent;
-  border: 2px solid;
-  border-radius: .5rem;
+  border: 1px solid;
   font-size: 1.3rem;
   color: rgb(71, 71, 71);
   background-color: transparent;
@@ -165,6 +164,12 @@
   bottom: 0;
   opacity: 1;
   transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.PostWorkoutButton:hover {
+  color: black;
+  border-color: black;
 }
 
 .WorkoutTitleErrorModalBox {

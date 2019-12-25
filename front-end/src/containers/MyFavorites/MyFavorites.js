@@ -5,7 +5,7 @@ import classes from './MyFavorites.module.css';
 import Feed from '../../components/feed/Feed';
 import {Route} from 'react-router-dom';
 import Inspect from '../Inspect/Inspect'
-import empty from '../../images/empty.svg';
+import empty from '../../images/empty3.svg';
 import axios from '../../axios';
 import routeToType from '../../helper/route-to-type';
 import * as actionTypes from '../../store/actions/actionTypes';
@@ -21,6 +21,7 @@ class MyFavorites extends React.Component {
 
     componentDidMount() {
         // this.loadPostsHandler();
+        window.scrollTo(0, 0)
         
         if (this.props.history.location.search.length > 0) {
             this.checkSearchHandler();
