@@ -18,6 +18,7 @@ import * as actionTypes from '../../../store/actions/actionTypes';
 import {connect} from 'react-redux';
 import {loadPostsAsync} from '../../../store/actions/index'
 
+import NotFound from '../../../components/UI/404/NotFound';
 
 class All extends React.Component {
 
@@ -98,10 +99,12 @@ class All extends React.Component {
     }
 
     render() {
-        
-        const type = routeToType(this.props.history.location.pathname);
-        const workouts = this.props[type].posts;
-        const hasMore = this.props[type].hasMore;
+        const load = this.props[routeToType(this.props.history.location.pathname)];
+        if (!load) {
+            return <NotFound/>
+        }
+        const workouts = load.posts;
+        const hasMore = load.hasMore;
         if (this.state.currentPath === this.props.history.location.pathname) {
             
             return <div style={{textAlign: 'center'}}>

@@ -1,0 +1,46 @@
+.NotFound {
+    text-align: center;
+}
+
+.MainHeader {
+    font-size: 6rem;
+    margin-bottom: 0;
+    position: relative;
+    animation: SlideLeft 2s ease forwards;
+    animation-delay: -.5s;
+    color: rgb(73, 73, 73);
+}
+
+@keyframes SlideLeft {
+    from {
+        right: -50px
+    }
+    to {
+        right: 50px
+    }
+}
+
+.SecondaryHeader {
+    font-size: 2rem;
+    position: relative;
+    left: 30px;
+    animation: SlideRight 2s ease forwards;
+    animation-delay: -.5s;
+    margin-top: 0;
+    color: rgb(73, 73, 73);
+}
+
+@keyframes SlideRight {
+    from {
+        left: -50px
+    }
+    to {
+        left: 30px
+    }
+}
+
+.Image {
+    width: 80%;
+    max-width: 800px;
+    z-index: -1;
+}
