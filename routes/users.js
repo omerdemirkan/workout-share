@@ -41,6 +41,7 @@ const verify = (req, res, next) => {
 router.get('/likedID', verify, (req, res) => {
     User.findById(req.user._id, (err, foundUser) => {
         if (err) return res.json(err)
+        if (!foundUser) return res.json('User not found')
 
         res.json(foundUser.liked);
     });
@@ -52,6 +53,7 @@ router.get('/likedID', verify, (req, res) => {
 router.get('/postedID', verify, (req, res) => {
     User.findById(req.user._id, (err, foundUser) => {
         if (err) return res.json(err)
+        if (!foundUser) return res.json('User not found')
 
         res.json(foundUser.posted);
     });
