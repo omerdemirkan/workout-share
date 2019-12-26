@@ -161,7 +161,7 @@
   outline: none;
   user-select: none;
   position: relative;
-  bottom: 0;
+  top: 0;
   opacity: 1;
   transition: 0.2s ease;
   cursor: pointer;

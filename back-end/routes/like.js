@@ -23,30 +23,31 @@ router.post('/inc/:workoutID', verify, (req, res) => {
 
     Workout.findById(req.params.workoutID, (error, workout) => {
         if (error) return res.json(error)
-        
-        if (!workout.likes.includes(req.user._id)) {
+        if (!workout) return res.json('workout not found')
 
-            workout.likes.push(req.user._id)
-        
-            workout.save((saveError, newWorkout) => {
-                if (saveError) return res.json(saveError)
+            if (!workout.likes.includes(req.user._id)) {
 
-                User.updateOne({_id: req.user._id}, {$push: {liked: newWorkout._id}}, err => {
-                    if (err) return res.json(err)
-
-                    res.json({
-                        likes: newWorkout.likes.length,
-                        liked: true
-                    });
-                }); 
-            });
-        } else {
-
-            res.json({
-                likes: workout.likes.length,
-                liked: true
-            });
-        }
+                workout.likes.push(req.user._id)
+            
+                workout.save((saveError, newWorkout) => {
+                    if (saveError) return res.json(saveError)
+    
+                    User.updateOne({_id: req.user._id}, {$push: {liked: newWorkout._id}}, err => {
+                        if (err) return res.json(err)
+    
+                        res.json({
+                            likes: newWorkout.likes.length,
+                            liked: true
+                        });
+                    }); 
+                });
+            } else {
+    
+                res.json({
+                    likes: workout.likes.length,
+                    liked: true
+                });
+            }
     });
 });
 
@@ -56,6 +57,7 @@ router.post('/inc/:workoutID', verify, (req, res) => {
 router.post('/dec/:workoutID', verify, async (req, res) => {
     Workout.findById(req.params.workoutID, (error, workout) => {
         if (error) return res.json(error)
+        if (!workout) return res.json('workout not found')
         
         if (workout.likes.includes(req.user._id)) {
             workout.likes = workout.likes.filter(like => {

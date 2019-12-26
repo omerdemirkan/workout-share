@@ -22,7 +22,7 @@ class MyWorkouts extends React.Component {
     }
 
     componentDidMount() {
-        // this.props.onLoadPosts('/my-workouts');
+        this.props.onLoadPosts('/my-workouts');
         if (this.props.history.location.search.length > 0) {
             this.checkSearchHandler();
         }
@@ -34,17 +34,16 @@ class MyWorkouts extends React.Component {
             this.checkSearchHandler();
         }
 
-        // if (this.props.myWorkouts.posts && this.state.numWorkouts !== this.props.myWorkouts.posts.length) {
-        //     this.setState({
-
-        //     });
-        // }
+        if (this.props.myWorkouts && this.state.numWorkouts !== this.props.myWorkouts.length) {
+            this.setState({
+                numWorkouts: this.props.myWorkouts.length
+            });
+        }
     }
 
     loadPostsHandler = () => {
-        const load = this.props.myWorkouts
-        if (load.hasMore && !this.props.loading) {
-            this.props.onLoadPosts(this.props.history.location.pathname, load.posts.length);
+        if (this.props.hasMore && !this.props.loading) {
+            this.props.onLoadPosts(this.props.history.location.pathname, this.props.myWorkouts.length);
         }
     }
 
@@ -72,38 +71,37 @@ class MyWorkouts extends React.Component {
     }
 
     render() {
-        return <React.Fragment>
+        console.log(this.props.myWorkouts.length)
+        return <>
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>  
             <div className={classes.MyWorkouts}>
                 <h1 className={classes.Header}>My Workouts</h1>
 
-                    
-                
-                {this.props.myWorkouts.posts.length && !this.props.loading > 0 ?
+                {this.props.myWorkouts.length > 0 ?
                     <InfiniteScroll
                     loadMore={this.loadPostsHandler}
-                    hasMore={this.props.myWorkouts.hasMore}
+                    hasMore={this.props.hasMore}
                     loader={<CircularProgress/>}
+                    style={!this.props.hasMore && this.props.myWorkouts.length === 0 ? {display: 'none'}: {}}
                     >
-                        <Feed myWorkouts history={this.props.history} darkTitles workouts={this.props.myWorkouts.posts}/>
+                        <Feed myWorkouts history={this.props.history} darkTitles workouts={this.props.myWorkouts}/>
                     </InfiniteScroll>
-                : null}
-
-                {this.props.myWorkouts.posts.length === 0 && !this.props.loading ?
-                    <React.Fragment>
+                : 
+                    <>
                         <h2 className={classes.EmptyText}>Hmm, looks like you haven't posted yet.</h2>
                         <p className={classes.EmptySubext}>Remember: Workout Hub is personalized out of the box, so <strong>no account needed.   Ever.</strong></p>
                         <img className={classes.EmptyImage} src={empty2}/>
-                    </React.Fragment>
-                : null}
+                    </>
+                }
             </div>
-        </React.Fragment>
+        </>
     }
 }
 
 const mapStateToProps = state => {
     return {
-        myWorkouts: state.load.myWorkouts,
+        myWorkouts: state.load.myWorkouts.posts,
+        hasMore: state.load.myWorkouts.hasMore,
         likedIDs: state.auth.likedIDs,
         loading: state.load.loading
     }

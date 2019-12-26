@@ -141,9 +141,17 @@ class DeleteCard extends React.Component {
         .then(res => {
             this.deleteWorkoutModalClosedHandler();
             this.setState({
-                deleted: true,
                 deletedMessage: true
             });
+
+            const newWorkouts = this.props.myWorkouts.posts.filter(workout => {
+                return workout._id !== this.props.workout._id
+            })
+
+            this.props.onSetMyWorkouts({
+                posts: newWorkouts,
+                hasMore: newWorkouts.length > 0
+            })
         })
         .catch(err => {
             console.log(err);
@@ -296,6 +304,7 @@ class DeleteCard extends React.Component {
 
 const mapStateToProps = state => {
     return {
+        myWorkouts: state.load.myWorkouts,
         likedIDs: state.auth.likedIDs
     }
 }
@@ -303,7 +312,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
       onSetLikedID: likedIDs => dispatch({type: actionTypes.SET_LIKED_ID, likedIDs: likedIDs}),
-      onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
+      onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type}),
+      onSetMyWorkouts: (workouts) => dispatch({type: actionTypes.LOAD_POSTS_SUCCESS, posts: workouts, list: 'myWorkouts', replace: true})
     }
 }
 

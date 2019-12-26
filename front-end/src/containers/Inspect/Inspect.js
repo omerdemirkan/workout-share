@@ -35,7 +35,7 @@ class Inspect extends React.Component {
     }
 
     render() {
-        const workout = this.props[routeToType(this.props.history.location.pathname)]
+        const workout = this.props[routeToType(this.props.history.location.pathname)];
         
         if (workout) {
             let shareURL = window.location.href;
@@ -85,7 +85,6 @@ class Inspect extends React.Component {
         } else {
             return null
         }
-        
     }
 }
 

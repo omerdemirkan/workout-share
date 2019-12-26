@@ -225,12 +225,10 @@ router.get('/my-workouts', verify, (req, res) => {
 
 router.get('/:id', (req, res) => {
     Workout.findById(req.params.id, (err, workout) => {
-        if(!err) {
-            res.json(workout).status(200);
-        } else {
-            console.log(err);
-            res.json('eRROR in workouts route: \n' + err).status(400);
-        }
+        if (err) return res.json('eRROR in workouts route: \n' + err).status(400);
+        if (!workout) return res.json('Not found');
+
+        res.json(workout).status(200);
     });
 });
 
@@ -239,11 +237,9 @@ router.get('/:id', (req, res) => {
 router.delete('/:id', verify, (req, res) => {
     const workoutId = req.params.id; 
     Workout.deleteOne({_id: workoutId}, err => {
-        if (!err) {
-            res.json('Workout successfully deleted').status(200);
-        } else {
-            res.json('eRROR in workouts route: \n' + err).status(400);
-        }
+        if (err) return res.json('eRROR in workouts route: \n' + err).status(400);
+
+        res.json('Workout successfully deleted').status(200);
     });
 });
 

@@ -91,6 +91,11 @@ class Create extends React.Component {
         window.scrollTo(0, 0)
     }
 
+    componentWillUnmount() {
+        this.props.onResetCreateHandler();
+
+    }
+
     updateExerciseHandler = (event, field) => {
         let newExercise = {...this.state.currentExercise};
         if (field === 'title') {
@@ -363,7 +368,7 @@ class Create extends React.Component {
         return <React.Fragment>
             {this.props.postedWorkout ?
             <Redirect to={{
-                pathname: '/',
+                pathname: '/my-workouts',
                 search: '?id=' + this.props.postedWorkout._id
             }}/>
             : null}
@@ -454,7 +459,7 @@ class Create extends React.Component {
         </div>
         
         <button 
-        style={this.props.exercises.length < 3 ? {position: 'relative', opacity: '0', bottom: '60px'} : null} 
+        style={this.props.exercises.length < 3 ? {position: 'relative', opacity: '0', top: '20px'} : null} 
         className={classes.PostWorkoutButton}
         onClick={this.postWorkoutHandler}
         >Post Workout</button>
@@ -543,7 +548,8 @@ const mapDispatchToProps = dispatch => {
         onDeleteExercise: title => dispatch({type: actionTypes.DELETE_EXERCISE, title: title}),
         onDeleteWorkout: () => dispatch({type: actionTypes.DELETE_WORKOUT}),
         onPostAnonHandler: (workout, authToken) => dispatch(postAnonAsync(workout, authToken)),
-        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
+        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type}),
+        onResetCreateHandler: () => dispatch({type: actionTypes.RESET_WORKOUT})
     }
 }
 

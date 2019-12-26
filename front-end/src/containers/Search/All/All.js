@@ -41,7 +41,6 @@ class All extends React.Component {
         // if (loadedWorkouts) {
         //     this.props.onLoadPosts(this.props.history.location.pathname)
         // }
-        this.props.onResetCreateHandler();
     }
 
     componentDidUpdate() {
@@ -158,8 +157,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onLoadPosts: (route, numPosts) => dispatch(loadPostsAsync(route, numPosts)),
-        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type}),
-        onResetCreateHandler: () => dispatch({type: actionTypes.RESET_WORKOUT})
+        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
     }
 }
 
