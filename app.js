@@ -14,6 +14,11 @@ mongoose.connect(process.env.ATLAS_URI, {useNewUrlParser: true, useUnifiedTopolo
 .then(() => console.log('Connected to Atlas'))
 .catch(() => console.log('eRROR in mongoDB connection'));
 
+// mongoose.connect(process.env.LOCAL_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+// .then(() => console.log('Connected to mongodb shell'))
+// .catch(() => console.log('eRROR in mongoDB connection'));
+
+
 const workoutsRouter = require('./routes/workouts');  
 const usersRouter = require('./routes/users');
 const likeRouter = require('./routes/like');
@@ -23,9 +28,9 @@ app.use('/api/users', usersRouter);
 app.use('/api/like', likeRouter);
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('front-end/build'));
+    app.use(express.static( path.join(__dirname, 'front-end', 'build') ));
 
-    app.get('*', (req, res) => {
+    app.get('/*', (req, res) => {
         res.sendFile(path.join(__dirname, 'front-end', 'build', 'index.html'));
     });
 }

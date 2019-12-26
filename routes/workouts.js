@@ -14,6 +14,7 @@ router.get('/', (req, res) => {
     .limit(13)
     .exec((err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
+        if (!workouts) return res.json([])
 
         if (workouts.length < 13) {
             res.json({
@@ -37,6 +38,7 @@ router.get('/powerlifting', (req, res) => {
     .limit(13)
     .exec( (err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
+        if (!workouts) return res.json([])
         
         if (workouts.length < 13) {
             res.json({
@@ -60,6 +62,7 @@ router.get('/bodybuilding', (req, res) => {
     .limit(13)
     .exec( (err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
+        if (!workouts) return res.json([])
         
         if (workouts.length < 13) {
             res.json({
@@ -83,6 +86,7 @@ router.get('/weightlifting', (req, res) => {
     .limit(13)
     .exec( (err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
+        if (!workouts) return res.json([])
         
         if (workouts.length < 13) {
             res.json({
@@ -106,6 +110,7 @@ router.get('/endurance', (req, res) => {
     .limit(13)
     .exec( (err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
+        if (!workouts) return res.json([])
         
         if (workouts.length < 13) {
             res.json({
@@ -129,6 +134,7 @@ router.get('/crossfit', (req, res) => {
     .limit(13)
     .exec( (err, workouts) => {
         if (err) return res.json('eRROR in workouts route \n' + err);
+        if (!workouts) return res.json([])
         
         if (workouts.length < 13) {
             res.json({
@@ -169,12 +175,14 @@ router.get('/my-favorites', verify, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     User.findById(req.user._id, 'liked', (error, user) => {
         if (error) return res.json(error)
+        if (!user) return res.json('user not found')
 
         Workout.find({_id: {$in: user.liked}})
         .skip(numPosts)
         .limit(13)
         .exec((err, workouts) => {
             if (err) return res.json('eRROR in workouts route \n' + err);
+            if (!workouts) return res.json([])
         
             if (workouts.length < 13) {
                 res.json({
@@ -198,12 +206,14 @@ router.get('/my-workouts', verify, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     User.findById(req.user._id, 'posted', (error, user) => {
         if (error) return res.json(error)
+        if (!user) return res.json('user not found')
 
         Workout.find({_id: {$in: user.posted}})
         .skip(numPosts)
         .limit(13)
         .exec((err, workouts) => {
             if (err) return res.json('eRROR in workouts route \n' + err);
+            if (!workouts) return res.json([])
         
             if (workouts.length < 13) {
                 res.json({
@@ -254,6 +264,7 @@ router.post('/', verify, (req, res) => {
     });
     newWorkout.save((error, workout) => {
         if (error) return res.json(error);
+        if (!workout) return res.json('couldnt save workout')
 
         User.updateOne({_id: req.user._id}, {$push: {posted: workout._id}}, err => {
             if (err) {
