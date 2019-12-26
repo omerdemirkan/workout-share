@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 require('dotenv').config();
 
@@ -23,6 +24,10 @@ app.use('/api/like', likeRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('front-end/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'front-end', 'build', 'index.html'));
+    });
 }
  
 app.listen(process.env.PORT || 5000, () => {
