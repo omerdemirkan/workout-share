@@ -161,7 +161,7 @@ class Card extends React.Component {
 
         let inspectStyleModifer = {};
 
-        if (this.props.inspect && this.props.workout.exercises.length > 6) {
+        if (this.props.inspect) {
             inspectStyleModifer = {minHeight: '340px'}
         }
         
