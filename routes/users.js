@@ -6,9 +6,7 @@ const User = require('../models/user.model');
 // to allow for protected routes with the 'verify' middleware
 
 router.get('/create', (req, res) => {
-    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     const newUser = new User({
-        ip: ip,
         epoch: Date.now(),
         liked: [],
         posted: []
