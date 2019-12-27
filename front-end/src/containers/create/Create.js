@@ -368,7 +368,7 @@ class Create extends React.Component {
         return <React.Fragment>
             {this.props.postedWorkout ?
             <Redirect to={{
-                pathname: '/my-workouts',
+                pathname: '/',
                 search: '?id=' + this.props.postedWorkout._id
             }}/>
             : null}

@@ -11,6 +11,7 @@ import Empty from '../../../images/empty.svg';
 import InfiniteScroll from 'react-infinite-scroller';
 import Feed from '../../../components/feed/Feed';
 import Inspect from '../../../containers/Inspect/Inspect';
+import ReLoad from '../../../components/ReLoad/ReLoad';
 
 // Redux and axios
 import axios from '../../../axios';
@@ -25,7 +26,8 @@ class All extends React.Component {
     state = {
         currentPath: this.props.history.location.pathname,
         search: this.props.location.search,
-        searchID: null
+        searchID: null,
+        refresh: false
 
         // In order to enforce a re-render of the cards (without deleting them from our redux state) to complete the phase-in animation regardless
         // of the previous path. This is strictly for changing the path from / or all to other browse paths.
@@ -45,8 +47,6 @@ class All extends React.Component {
 
     componentDidUpdate() {
 
-        const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)].posts;
-
         // if (loadedWorkouts.length === 0 && this.state.currentPath !== this.props.history.location.pathname) {
         //     this.loadPostsHandler();
         // }
@@ -58,8 +58,15 @@ class All extends React.Component {
     }
 
     updatePathHandler = () => {
+
+        const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)].posts;
+        let refresh = false;
+        if (loadedWorkouts && loadedWorkouts.length > 0) {
+            refresh = true;
+        }
         this.setState({
-            currentPath: this.props.history.location.pathname
+            currentPath: this.props.history.location.pathname,
+            refresh: refresh
         });
         window.scrollTo(0, 0)
     }
@@ -98,6 +105,13 @@ class All extends React.Component {
         }
     }
 
+    refreshHandler = () => {
+        this.props.onRefreshPosts(this.props.history.location.pathname);
+        this.setState({
+            refresh: false
+        });
+    }
+
     render() {
         const load = this.props[routeToType(this.props.history.location.pathname)];
         if (!load) {
@@ -109,11 +123,10 @@ class All extends React.Component {
             
             return <div style={{textAlign: 'center'}}>
                 <Route path={this.props.history.location.pathname} exact component={Inspect}/>
-                {/* <Feed history={this.props.history} darkTitles workouts={workouts}/>
-                <LoadMore 
-                loadPosts={this.loadPostsHandler} 
-                display={hasMore}
-                loading={this.props.loading}/> */}
+                
+                {this.state.refresh ? 
+                    <ReLoad refresh={this.refreshHandler}/>
+                : null}
                 <InfiniteScroll
                     loadMore={this.loadPostsHandler}
                     hasMore={hasMore}
@@ -157,7 +170,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onLoadPosts: (route, numPosts) => dispatch(loadPostsAsync(route, numPosts)),
-        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type})
+        onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type}),
+        onRefreshPosts: route => dispatch({type: actionTypes.REFRESH_LOAD, list: routeToType(route)})
     }
 }
 

@@ -62,6 +62,14 @@ const load = (state = initialState, action) => {
                 loading: false,
                 error: action.error
             }
+        case actionTypes.REFRESH_LOAD:
+            return {
+                ...state,
+                [action.list]: {
+                    posts: [],
+                    hasMore: true
+                }
+            }
         default:
             return state
     }

@@ -12,11 +12,11 @@ app.use(cors());
 
 // MongoDB shell connection 
 
-mongoose.connect(process.env.MLAB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+mongoose.connect(process.env.ATLAS_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 .then(() => console.log('Connected to Atlas'))
 .catch(() => console.log('eRROR in mongoDB connection'));
 
-// MongoDB Atlas connection
+// MongoDB Atlas connection 
 
 // mongoose.connect(process.env.LOCAL_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 // .then(() => console.log('Connected to mongodb shell'))

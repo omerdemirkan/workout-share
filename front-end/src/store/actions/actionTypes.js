@@ -20,6 +20,7 @@ export const LOAD_POSTS_START = 'LOAD_POSTS_START';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
 export const SET_LIKED_ID = 'SET_LIKED_ID';
+export const REFRESH_LOAD = 'REFRESH_LOAD';
 
 //___ INSPECT ___
 export const SET_INSPECT = 'SET_INSPECT';
