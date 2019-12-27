@@ -13,7 +13,7 @@
     border-radius: 5rem;
     color: rgb(71, 71, 71);
     position: relative;
-    top: 18px;
+    top: 21px;
     padding: 0;
 }
 
@@ -26,5 +26,8 @@
     font-weight: 500;
     color: rgb(71, 71, 71);
     position: relative;
-    top: 8px;
+    top: 15px;
+    user-select: none;
+    cursor: pointer;
+    margin-left: 5px;
 }

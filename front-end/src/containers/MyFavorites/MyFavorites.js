@@ -21,6 +21,7 @@ class MyFavorites extends React.Component {
 
     componentDidMount() {
         // this.loadPostsHandler();
+        this.props.onLoadPosts(this.props.history.location.pathname, 0);
         window.scrollTo(0, 0)
         
         if (this.props.history.location.search.length > 0) {
