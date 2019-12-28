@@ -87,11 +87,11 @@ class MyWorkouts extends React.Component {
                         <Feed myWorkouts history={this.props.history} darkTitles workouts={this.props.myWorkouts}/>
                     </InfiniteScroll>
                 : 
-                    <>
+                    <div style={{width: '80%', maxWidth: '600px', margin: 'auto'}}>
                         <h2 className={classes.EmptyText}>Hmm, looks like you haven't posted yet.</h2>
                         <p className={classes.EmptySubext}>Remember: Workout Share is personalized out of the box, so <strong>no account needed.   Ever.</strong></p>
                         <img className={classes.EmptyImage} src={empty2}/>
-                    </>
+                    </div>
                 }
             </div>
         </>
