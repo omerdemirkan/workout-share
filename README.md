@@ -1,1 +1,3 @@
-The two main functionalities of Workout Hub is a platform to write out your workout or workout routine and to share it with friends. A workout routine is a weekly schedule of workouts for each day of the week, and a workout is a collection of exercises set either in a set/rep format or in a set/duration format.
+The two main functionalities of Workout Share is a platform to browse through popular workouts, write out your workouts and to share them with friends.
+
+Users have immediate access to favorite and post workouts. 
