@@ -27,7 +27,8 @@ class Card extends React.Component {
         // upon which the card will check if it has been liked
         numLikedIDs: null,
         // Number of likes (workouts hold a list of user ids that have liked it)
-        likes: null
+        likes: null,
+        _id: null
     }
 
     componentDidMount() {
@@ -60,13 +61,14 @@ class Card extends React.Component {
     }
 
     checkPreviouslyLiked = () => {
-        if (this.props.likedIDs && this.state.previouslyLiked === 'unknown') {
+        if ( this.props.likedIDs && ((this.state.previouslyLiked === 'unknown') || (this.props.inspect && this.state._id !== this.props.workout._id)) ) {
             const wasLiked = this.props.likedIDs.includes(this.props.workout._id);
             this.setState({
                 previouslyLiked: wasLiked,
                 liked: wasLiked,
                 numLikedIDs: this.props.likedIDs.length,
-                likes: this.props.workout.likes.length
+                likes: this.props.workout.likes.length,
+                _id: this.props.workout._id
             });
         }
     }
@@ -174,14 +176,14 @@ class Card extends React.Component {
                 >{this.props.workout.title}</h2>
             </div>
             <div style={this.props.inspect ? {overflow: 'auto'} : {}} className={classes.ListBox}>
-                <table className={classes.ListTable}>
+                <table className={classes.ListTable} style={this.props.inspect ? {marginBottom: '60px'} : null}>
                     <tbody>
                         {exerciseList}
                     </tbody>
                 </table>
             </div>
 
-            {!this.props.inspect && this.props.workout.exercises.length > 6  ? <div className={classes.FadeOut}></div> : null}
+            {!this.props.inspect && this.props.workout.exercises.length > 5  ? <div className={classes.FadeOut}></div> : null}
     
             <div className={classes.CardFooter}>
             {this.props.darkTitle ? <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p> : null}

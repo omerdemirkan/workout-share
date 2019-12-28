@@ -2,10 +2,10 @@
   background-color: white;
   border-radius: 0.5rem;
   box-shadow: 0 5px 10px -4px rgba(0, 0, 0, 0.25);
+  min-height: 340px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  min-height: 340px;
   width: 95%;
   margin: 10px 0;
   max-width: 600px;
@@ -37,7 +37,7 @@ max-width: 100%;
 min-height: calc(100% - 90px);
 display: flex;
 align-items: center;
-
+margin-bottom: 60px;
 }
 
 .ListTable {
@@ -151,6 +151,7 @@ td {
   border-radius: 5rem;
 
   cursor: pointer;
+  outline: none;
 }
 
 .DeleteExerciseButton:hover {

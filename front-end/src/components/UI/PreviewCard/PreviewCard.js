@@ -98,7 +98,7 @@ class Card extends React.Component {
                 </table>
             </div>
             
-            {this.props.workout.exercises.length > 6 ? <div className={classes.FadeOut}></div> : null}
+            {/* {this.props.workout.exercises.length > 6 ? <div className={classes.FadeOut}></div> : null} */}
     
             <div className={classes.CardFooter}>
             {this.props.darkTitle ? <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p> : null}

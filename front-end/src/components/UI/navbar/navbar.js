@@ -66,7 +66,7 @@ class Navbar extends React.Component {
 
         return <React.Fragment>
             <nav className={classes.Navbar}>
-                <Link to="/"><h2 className={classes.Logo} style={this.state.sideDrawerOpen ? {left: '35%', transition: '0.3s ease'}: {}}>Workout Hub</h2></Link>
+                <Link to="/"><h2 className={classes.Logo} style={this.state.sideDrawerOpen ? {left: '35%', transition: '0.3s ease'}: {}}>Workout Share</h2></Link>
                 <div className={classes.Options} style={this.state.sideDrawerOpen ? {transform: 'translate(-100%)'} : null}>
                  
                     {navList}
