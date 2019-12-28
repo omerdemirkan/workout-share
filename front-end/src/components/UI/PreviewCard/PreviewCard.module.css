@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  width: 95%;
+  width: 100%;
   margin: 10px 0;
   max-width: 600px;
   position: relative;
@@ -34,7 +34,7 @@ justify-content: center;
 
 .ListBox {
 max-width: 100%;
-min-height: calc(100% - 90px);
+min-height: 250px;
 display: flex;
 align-items: center;
 margin-bottom: 60px;
@@ -52,6 +52,7 @@ color: rgb(73, 73, 73);
   text-align: left;
   letter-spacing: -1px;
   min-width: 80px;
+  overflow-x: visible;
 }
 
 .CardFooter {
@@ -80,7 +81,7 @@ animation: shake 0.05s;
 
 td {
   max-width: 300px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .FadeOut {
@@ -114,6 +115,7 @@ td {
 }
 
 td {
+  position: relative;
   overflow: visible;
 }
 

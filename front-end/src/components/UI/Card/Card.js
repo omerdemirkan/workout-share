@@ -175,7 +175,7 @@ class Card extends React.Component {
                 onClick={this.titleClickHandler}
                 >{this.props.workout.title}</h2>
             </div>
-            <div style={this.props.inspect ? {overflow: 'auto'} : {}} className={classes.ListBox}>
+            <div className={classes.ListBox}>
                 <table className={classes.ListTable} style={this.props.inspect && this.props.workout.exercises.length > 5 ? {marginBottom: '50px'} : null}>
                     <tbody>
                         {exerciseList}

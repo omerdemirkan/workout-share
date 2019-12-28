@@ -46,7 +46,7 @@ class Card extends React.Component {
                 }
                 return <tr key={exercise.title + ' row'}>
                     <td key={exercise.title}><p className={classes.ExerciseListItem}>{exercise.title}</p></td>
-                    <td key={exercise.title + ' sets/reps'} style={{position: 'relative'}}>
+                    <td key={exercise.title + ' sets/reps'}>
                         <p className={classes.ExerciseListItem}>{format}</p>
                         <button className={classes.DeleteExerciseButton}><ClearRoundedIcon onClick={() => this.props.onDeleteExercise(exercise.title)}/></button>
                     </td>
@@ -83,7 +83,7 @@ class Card extends React.Component {
                 </tr>
             }
         });
-        return <div className={classes.PreviewCard} style={this.props.cardStyle !== null ? this.props.cardStyle : null}> 
+        return <div className={classes.PreviewCard}> 
             <div className={classes.CardHeader}>
                 <h2 className={classes.CardTitle} style={{color: 'rgb(73, 73, 73)', fontSize: titleFontSize(this.props.workout.title) + 'rem'}}>{this.props.workout.title}</h2>
                 <button onClick={this.props.deleteWorkout} className={classes.DeleteWorkoutButton}>
@@ -91,7 +91,7 @@ class Card extends React.Component {
                 </button>
             </div>
             <div className={classes.ListBox}>
-                <table className={classes.ListTable}>
+                <table className={classes.ListTable} style={this.props.inspect && this.props.workout.exercises.length > 5 ? {marginBottom: '50px'} : null}>
                     <tbody>
                         {exerciseList}
                     </tbody>
@@ -101,7 +101,7 @@ class Card extends React.Component {
             {/* {this.props.workout.exercises.length > 6 ? <div className={classes.FadeOut}></div> : null} */}
     
             <div className={classes.CardFooter}>
-            {this.props.darkTitle ? <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p> : null}
+            <p style={{color: colorsByDisplay(displayType).darkColor, position: 'absolute', margin: '0px', left: '50%', transform: 'translate(-50%)', bottom: '14px', fontWeight: '500'}}>{displayType}</p>
             <button disabled={this.props.disableLike} onClick={this.likeToggleHandler} className={classes.LikeButton}>
                 { !this.state.liked ?
                     <FavoriteBorderOutlinedIcon fontSize="large"/>

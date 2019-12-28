@@ -2,6 +2,14 @@ const router = require('express').Router();
 const Workout = require('../models/workout.model');
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
+const rateLimit = require("express-rate-limit");
+
+// Rate limit middleware to avoid api spamming
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+});
 
 // -- Load Routes --
 
@@ -255,7 +263,7 @@ router.delete('/:id', verify, (req, res) => {
 
 // For posting a new workout
 
-router.post('/', verify, (req, res) => {
+router.post('/', verify, limiter, (req, res) => {
     const newWorkout = new Workout({
         title: req.body.title,
         type: req.body.type,

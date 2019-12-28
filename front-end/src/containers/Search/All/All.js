@@ -38,6 +38,7 @@ class All extends React.Component {
         if (this.props.history.location.search) {
             this.updateSearchHandler();
         }
+        this.refreshHandler();
         window.scrollTo(0, 0)
         // const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)].posts;
         // if (loadedWorkouts) {
