@@ -313,7 +313,7 @@ const mapDispatchToProps = dispatch => {
     return {
       onSetLikedID: likedIDs => dispatch({type: actionTypes.SET_LIKED_ID, likedIDs: likedIDs}),
       onSetInspect: (workout, type) => dispatch({type: actionTypes.SET_INSPECT, workout: workout, select: type}),
-      onSetMyWorkouts: (workouts) => dispatch({type: actionTypes.LOAD_POSTS_SUCCESS, posts: workouts, list: 'myWorkouts', replace: true})
+      onSetMyWorkouts: (workouts) => dispatch({type: actionTypes.LOAD_POSTS_SUCCESS, posts: workouts.posts, list: 'myWorkouts', replace: true, hasMore: workouts.hasMore})
     }
 }
 

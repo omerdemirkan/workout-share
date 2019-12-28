@@ -71,13 +71,13 @@ class MyWorkouts extends React.Component {
     }
 
     render() {
-        console.log(this.props.myWorkouts.length)
+
         return <>
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>  
             <div className={classes.MyWorkouts}>
                 <h1 className={classes.Header}>My Workouts</h1>
 
-                {this.props.myWorkouts.length > 0 ?
+                {this.props.myWorkouts.length > 0 || this.props.loading ?
                     <InfiniteScroll
                     loadMore={this.loadPostsHandler}
                     hasMore={this.props.hasMore}
