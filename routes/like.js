@@ -16,10 +16,17 @@ const verify = (req, res, next) => {
     })
 }
 
+// Rate limit middleware to avoid api spamming
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+});
+
 // Increments likes conditionally: if the user is already found 
 // in likes (which only stores user id's) nothing is changed.
 
-router.post('/inc/:workoutID', verify, (req, res) => {
+router.post('/inc/:workoutID', verify, limiter, (req, res) => {
 
     Workout.findById(req.params.workoutID, (error, workout) => {
         if (error) return res.json(error)
@@ -54,7 +61,7 @@ router.post('/inc/:workoutID', verify, (req, res) => {
 // Decrements likes conditionally: if the user id is not found 
 // in likes (which only stores user id's) nothing is changed.
 
-router.post('/dec/:workoutID', verify, async (req, res) => {
+router.post('/dec/:workoutID', verify, limiter, (req, res) => {
     Workout.findById(req.params.workoutID, (error, workout) => {
         if (error) return res.json(error)
         if (!workout) return res.json('workout not found')

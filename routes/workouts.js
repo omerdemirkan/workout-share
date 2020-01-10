@@ -8,14 +8,14 @@ const rateLimit = require("express-rate-limit");
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 30 // limit each IP to 100 requests per windowMs
+    max: 30 // limit each IP to 30 requests per windowMs
 });
 
 // -- Load Routes --
 
 // These routes are not protected as responses are not personalised.
 
-router.get('/', (req, res) => {
+router.get('/', limiter, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
@@ -39,7 +39,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/powerlifting', (req, res) => {
+router.get('/powerlifting', limiter, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Powerlifting'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
@@ -63,7 +63,7 @@ router.get('/powerlifting', (req, res) => {
     });
 });
 
-router.get('/bodybuilding', (req, res) => {
+router.get('/bodybuilding', limiter, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Bodybuilding'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
@@ -87,7 +87,7 @@ router.get('/bodybuilding', (req, res) => {
     });
 });
 
-router.get('/weightlifting', (req, res) => {
+router.get('/weightlifting', limiter, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Weightlifting'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
@@ -111,7 +111,7 @@ router.get('/weightlifting', (req, res) => {
     });
 });
 
-router.get('/endurance', (req, res) => {
+router.get('/endurance', limiter, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Endurance'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
@@ -135,7 +135,7 @@ router.get('/endurance', (req, res) => {
     });
 });
 
-router.get('/crossfit', (req, res) => {
+router.get('/crossfit', limiter, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     Workout.find({type: 'Crossfit'}).sort({likes: -1, createdAt: -1})
     .skip(numPosts)
@@ -179,7 +179,7 @@ const verify = (req, res, next) => {
 
 // Returns workouts that were liked by the user. (For the /my-favorites page)
 
-router.get('/my-favorites', verify, (req, res) => {
+router.get('/my-favorites', limiter, verify, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     User.findById(req.user._id, 'liked', (error, user) => {
         if (error) return res.json(error)
@@ -210,7 +210,7 @@ router.get('/my-favorites', verify, (req, res) => {
 
 // Returns workouts that were posted by the user. (For the /my-workouts page)
 
-router.get('/my-workouts', verify, (req, res) => {
+router.get('/my-workouts', limiter, verify, (req, res) => {
     const numPosts = Number(req.headers['currentposts']);
     User.findById(req.user._id, 'posted', (error, user) => {
         if (error) return res.json(error)
@@ -252,7 +252,7 @@ router.get('/:id', (req, res) => {
 
 // For deleting a workout in the /my-workouts page
 
-router.delete('/:id', verify, (req, res) => {
+router.delete('/:id', limiter, verify, (req, res) => {
     const workoutId = req.params.id; 
     Workout.deleteOne({_id: workoutId}, err => {
         if (err) return res.json('eRROR in workouts route: \n' + err).status(400);
