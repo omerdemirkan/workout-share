@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
+const rateLimit = require("express-rate-limit");
 
 const Workout = require('../models/workout.model');
 const User = require('../models/user.model');
