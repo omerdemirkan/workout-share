@@ -31,7 +31,6 @@ class MyFavorites extends React.Component {
 
     componentDidUpdate() {
         if (this.state.search !== this.props.history.location.search) {
-            console.log('rechecking search');
             this.checkSearchHandler();
         }
     }
@@ -46,7 +45,6 @@ class MyFavorites extends React.Component {
     checkSearchHandler = () => {
         const query = new URLSearchParams(this.props.location.search);
         let searchID = null
-        console.log(query.entries())
         for (let param of query.entries()) {
             searchID = param[1];
         }
@@ -57,7 +55,6 @@ class MyFavorites extends React.Component {
         if (searchID && searchID.length > 0) {
             axios.get('/workouts/' + searchID)
             .then(res => {
-                console.log(res)
                 this.props.onSetInspect(res.data, routeToType(this.props.history.location.pathname));
                 this.setState({currentPath: this.props.history.location.pathname});
             })
@@ -68,7 +65,6 @@ class MyFavorites extends React.Component {
     }
 
     render() {
-        console.log('myFavorites rerendering');
         return <React.Fragment>
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>  
             <div className={classes.MyFavorites}>

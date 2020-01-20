@@ -40,19 +40,9 @@ class All extends React.Component {
         }
         this.refreshHandler();
         window.scrollTo(0, 0)
-        // const loadedWorkouts = this.props[routeToType(this.props.history.location.pathname)].posts;
-        // if (loadedWorkouts) {
-        //     this.props.onLoadPosts(this.props.history.location.pathname)
-        // }
     }
 
     componentDidUpdate() {
-
-        // if (loadedWorkouts.length === 0 && this.state.currentPath !== this.props.history.location.pathname) {
-        //     this.loadPostsHandler();
-        // }
-        
-
         if (this.state.search !== this.props.location.search) {
             this.updateSearchHandler();
         }
@@ -96,7 +86,6 @@ class All extends React.Component {
         if (searchID && searchID.length > 0) {
             axios.get('/workouts/' + searchID)
             .then(res => {
-                console.log(res)
                 this.props.onSetInspect(res.data, routeToType(this.props.history.location.pathname));
                 this.setState({currentPath: this.props.history.location.pathname});
             })

@@ -5,7 +5,6 @@ import routeToType from '../../helper/route-to-type';
 export const loadPostsAsync = (route, currentNumPosts) => {
     return dispatch => {
         dispatch(loadPostsStart(route));
-        console.log(currentNumPosts);
         if (!currentNumPosts) {
             currentNumPosts = 0;
         }
@@ -35,7 +34,6 @@ const loadPostsStart = route => {
 }
 
 const loadPostsSuccess = (list, res, replace) => {
-    console.log(res);
     return {type: actionTypes.LOAD_POSTS_SUCCESS, posts: res.posts, hasMore: res.hasMore, list: list, replace: replace}
 }
 

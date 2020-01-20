@@ -60,7 +60,6 @@ class MyWorkouts extends React.Component {
         if (searchID && searchID.length > 0) {
             axios.get('/workouts/' + searchID)
             .then(res => {
-                console.log(res)
                 this.props.onSetInspect(res.data, routeToType(this.props.history.location.pathname));
                 this.setState({currentPath: this.props.history.location.pathname});
             })
