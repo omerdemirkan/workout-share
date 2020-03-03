@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './navbar.module.css';
 import './nav-hover.css';
 import {NavLink, Link} from 'react-router-dom';
-import Backdrop from '../Backdrop/Backdrop';
+import Backdrop from '@material-ui/core/Backdrop';
 
 import colorsByPath from '../../../helper/colors-by-path';
 
@@ -56,7 +56,7 @@ class Navbar extends React.Component {
                     <div className={this.state.sideDrawerOpen ? classes.Line3 : null}></div>
                 </div>
             </nav>
-            {this.state.sideDrawerOpen ? <Backdrop clicked={this.toggleSideDrawerHandler}/> : null}
+            <Backdrop open={this.state.sideDrawerOpen} onClick={this.toggleSideDrawerHandler} style={{zIndex: '4'}}/>
         </React.Fragment>
     }
 }
