@@ -1,0 +1,27 @@
+.SideDrawer {
+    width: 80vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: white;
+    z-index: 4;
+    padding-top: 80px;
+
+}
+
+.NavList {
+    list-style: none;
+    padding-inline-start: 20%;
+}
+
+.NavList li {
+    margin: 3vh 0;
+    position: relative;
+}
+
+.SideDrawer hr {
+    width: 60%;
+    border: none;
+    border-top: 1px solid rgb(180, 180, 180);
+}

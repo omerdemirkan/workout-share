@@ -177,7 +177,7 @@ class Card extends React.Component {
         animate={{ y: 0, opacity: 1 }}
         transition={{
           type: "spring",
-          stiffness: 150,
+          stiffness: 145,
           damping: 15,
           delay: this.props.delay
         }}
