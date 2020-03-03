@@ -182,7 +182,6 @@ class Card extends React.Component {
           delay: this.props.delay
         }}
         whileHover={{
-            scale: 1.01,
             y: -2,
             transition: {delay: 0}
         }}
