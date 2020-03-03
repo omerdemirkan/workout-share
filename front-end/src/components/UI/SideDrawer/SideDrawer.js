@@ -32,27 +32,26 @@ export default function SideDrawer(props) {
 
         <ul className={classes.NavList}>
             {/* Because React Router doesn't allow CSS in JS styling for pseudoselectors, special hover classnames are given */}
-            <li>
+            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.1s'}: null}>
                 <NavLink exact to='/' activeStyle={{color: colorsByPath('/').idleColor}} onClick={props.close}>All</NavLink>
             </li>
-            <li>
-                <NavLink exact to='/powerlifting' activeStyle={{color: colorsByPath('/powerlifting').idleColor}} onClick={props.close}>Powerlifting</NavLink>
+            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.15s'}: null}>
+                <NavLink to='/powerlifting' activeStyle={{color: colorsByPath('/powerlifting').idleColor}} onClick={props.close}>Powerlifting</NavLink>
             </li>
-            <li>
-                <NavLink exact to='/bodybuilding' activeStyle={{color: colorsByPath('/bodybuilding').idleColor}} onClick={props.close}>Bodybuilding</NavLink>
+            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.2s'}: null}>
+                <NavLink to='/bodybuilding' activeStyle={{color: colorsByPath('/bodybuilding').idleColor}} onClick={props.close}>Bodybuilding</NavLink>
             </li>
-            <li>
-                <NavLink exact to='/weightlifting' activeStyle={{color: colorsByPath('/weightlifting').idleColor}} onClick={props.close}>Weightlifting</NavLink>
+            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.25s'}: null}>
+                <NavLink to='/weightlifting' activeStyle={{color: colorsByPath('/weightlifting').idleColor}} onClick={props.close}>Weightlifting</NavLink>
             </li>
-            <li>
-                <NavLink exact to='/endurance' activeStyle={{color: colorsByPath('/endurance').idleColor}} onClick={props.close}>Endurance</NavLink>
+            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.3s'}: null}>
+                <NavLink to='/endurance' activeStyle={{color: colorsByPath('/endurance').idleColor}} onClick={props.close}>Endurance</NavLink>
             </li>
-            <li>
-                <NavLink exact to='/crossfit' activeStyle={{color: colorsByPath('/crossfit').idleColor}} onClick={props.close}>Crossfit</NavLink>
+            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.35s'}: null}>
+                <NavLink to='/crossfit' activeStyle={{color: colorsByPath('/crossfit').idleColor}} onClick={props.close}>Crossfit</NavLink>
             </li>
         </ul>
-
-        <hr/>
+        <hr style={{width: '90%', marginLeft: '-10%', border: 'none', borderTop: '1px solid rgb(180, 180, 180)'}}/>
 
         <li key='/create'>
             <NavLink to="/create"
