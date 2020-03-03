@@ -11,6 +11,7 @@ class Feed extends React.Component {
         prevNumWorkouts: null
     }
 
+    // Checks for update to the number of workouts (to calculate delay)
     componentDidUpdate() {
         if (this.state.numWorkouts !== this.props.workouts.length) {
             const oldNumWorkouts = this.state.numWorkouts;
