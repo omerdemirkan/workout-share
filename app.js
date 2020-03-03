@@ -13,15 +13,15 @@ app.set('trust proxy', 1);
 
 // MongoDB shell connection 
 
-// mongoose.connect(process.env.ATLAS_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
-// .then(() => console.log('Connected to Atlas'))
-// .catch(() => console.log('eRROR in mongoDB connection'));
+mongoose.connect(process.env.ATLAS_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+.then(() => console.log('Connected to Atlas'))
+.catch(() => console.log('eRROR in mongoDB connection'));
 
 // MongoDB Atlas connection 
 
-mongoose.connect(process.env.LOCAL_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
-.then(() => console.log('Connected to mongodb shell'))
-.catch(() => console.log('eRROR in mongoDB connection'));
+// mongoose.connect(process.env.LOCAL_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+// .then(() => console.log('Connected to mongodb shell'))
+// .catch(() => console.log('eRROR in mongoDB connection'));
 
 const workoutsRouter = require('./routes/workouts');  
 const usersRouter = require('./routes/users');
