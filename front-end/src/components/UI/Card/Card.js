@@ -15,6 +15,8 @@ import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutline
 
 import {titleFontSize} from '../../../helper/lengthToFontSize';
 
+import {motion} from 'framer-motion';
+
 class Card extends React.Component {
 
     state = {
@@ -167,7 +169,24 @@ class Card extends React.Component {
             inspectStyleModifer = {minHeight: '340px'}
         }
         
-        return <div className={this.props.inspect ? classes.InspectCard :  classes.Card} style={this.props.delay ? { animationDelay: this.props.delay.toFixed(2) + 's', ...inspectStyleModifer}: inspectStyleModifer}>
+        return <motion.div 
+        className={this.props.inspect ? classes.InspectCard :  classes.Card} 
+        style={inspectStyleModifer}
+
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 150,
+          damping: 15,
+          delay: this.props.delay
+        }}
+        whileHover={{
+            scale: 1.01,
+            y: -2,
+            transition: {delay: 0}
+        }}
+        >
             <div className={classes.CardHeader}>
                 <h2 
                 className={classes.CardTitle} 
@@ -209,7 +228,7 @@ class Card extends React.Component {
             </button>
             
             </div>
-        </div>
+        </motion.div>
     }
 }
 

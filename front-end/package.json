@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.0",
     "bad-words": "^3.0.3",
+    "framer-motion": "^1.9.0",
     "js-tokens": "^5.0.0",
     "loose-envify": "^1.4.0",
     "object-assign": "^4.1.1",
