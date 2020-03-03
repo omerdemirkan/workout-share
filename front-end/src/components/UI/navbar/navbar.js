@@ -9,65 +9,34 @@ import colorsByPath from '../../../helper/colors-by-path';
 class Navbar extends React.Component {
     state = {
         sideDrawerOpen: false,
-        sideDrawerMoved: false,
-        links: [
-            {display: 'All', path: '/'},
-            {display: 'Powerlifting', path: '/powerlifting'},
-            {display: 'Bodybuilding', path: '/bodybuilding'},
-            {display: 'Weightlifting', path: '/weightlifting'},
-            {display: 'Endurance', path: '/endurance'},
-            {display: 'Crossfit', path: '/crossfit'}
-        ]
+        sideDrawerMoved: false
     }
 
     toggleSideDrawerHandler = () => {
         const newSideDrawerOpen = !this.state.sideDrawerOpen;
         this.setState({
-            sideDrawerOpen: newSideDrawerOpen,
-            sideDrawerMoved: true
+            sideDrawerOpen: newSideDrawerOpen
         });
     }
 
     render() {
-        let navList = <React.Fragment>
-            {/* To position the 'More' dropdown links below the navbar links in the mobile sidebar, because the dropdown doesn't exist on mobile */}
+        {/* To position the 'More' dropdown links below the navbar links in the mobile sidebar, because the dropdown doesn't exist on mobile */}
 
-            {this.state.sideDrawerMoved ? <ul style={{top: '295px'}} className="MoreNavButtonsBox">
-                <hr style={{width: '90%', marginLeft: '-10%', border: 'none', borderTop: '1px solid rgb(180, 180, 180)'}}/>
-
-                <li key='/create'><NavLink to="/create"
-                onClick={this.toggleSideDrawerHandler} 
-                className={classes.NavButton + ' createNavButton'} activeStyle={{color: 'rgb(132, 132, 255)'}}>Create</NavLink></li> 
-                <li key='/my-workouts'><NavLink to="/my-workouts"
-                onClick={this.toggleSideDrawerHandler} 
-                className={classes.NavButton + ' myWorkoutsNavButton'} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Workouts</NavLink></li> 
-                <li key='/my-favorites'><NavLink to="/my-favorites"
-                onClick={this.toggleSideDrawerHandler} 
-                className={classes.NavButton + ' myFavoritesNavButton'} activeStyle={{color: 'rgb(132, 132, 255)'}}>My Favorites</NavLink></li>
-            </ul>
-            : null}
-
-            <ul>
-            {this.state.links.map(link => {
-                return <li key={link.path}>
-
-                    <NavLink onClick={this.state.sideDrawerOpen ? this.toggleSideDrawerHandler : null} 
-                    exact={link.display === "All" ? true : false} 
-                    to={link.path} 
-                    activeStyle={{color: colorsByPath(link.path).idleColor}}
-                    className={classes.NavButton + ' ' + link.display}>
-                        {link.display}
-                    </NavLink>
-                </li>
-            })}
-            </ul>
-        </React.Fragment>
+        let navList = <ul>
+            {/* Because React Router doesn't allow CSS in JS styling for pseudoselectors, special hover classnames are given */}
+            <li><NavLink exact to='/' activeStyle={{color: colorsByPath('/').idleColor}} className={classes.NavButton + ' All'}>All</NavLink></li>
+            <li><NavLink exact to='/powerlifting' activeStyle={{color: colorsByPath('/powerlifting').idleColor}} className={classes.NavButton + ' All'}>Powerlifting</NavLink></li>
+            <li><NavLink exact to='/bodybuilding' activeStyle={{color: colorsByPath('/bodybuilding').idleColor}} className={classes.NavButton + ' All'}>Bodybuilding</NavLink></li>
+            <li><NavLink exact to='/weightlifting' activeStyle={{color: colorsByPath('/weightlifting').idleColor}} className={classes.NavButton + ' All'}>Weightlifting</NavLink></li>
+            <li><NavLink exact to='/endurance' activeStyle={{color: colorsByPath('/endurance').idleColor}} className={classes.NavButton + ' All'}>Endurance</NavLink></li>
+            <li><NavLink exact to='/crossfit' activeStyle={{color: colorsByPath('/crossfit').idleColor}} className={classes.NavButton + ' All'}>Crossfit</NavLink></li>
+        </ul>
         
 
         return <React.Fragment>
             <nav className={classes.Navbar}>
                 <Link to="/"><h2 className={classes.Logo} style={this.state.sideDrawerOpen ? {left: '35%', transition: '0.3s ease'}: {}}>Workout Share</h2></Link>
-                <div className={classes.Options} style={this.state.sideDrawerOpen ? {transform: 'translate(-100%)'} : null}>
+                <div className={classes.Options}>
                  
                     {navList}
                 </div>

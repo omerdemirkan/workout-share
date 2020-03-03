@@ -30,7 +30,7 @@ class Feed extends React.Component {
                 {this.props.workouts.map((workout, index) => {
                     if (this.props.favorites.includes(workout._id)) {
                         if (index + 1 > this.state.prevNumWorkouts) {
-                            delay += 0.1;
+                            delay += 0.08;
                         }
                         return <Card delay={delay} key={workout._id} disableLike={false} history={this.props.history} darkTitle={this.props.darkTitles} workout={workout}/>
                     }
@@ -41,7 +41,7 @@ class Feed extends React.Component {
             return <div className={classes.Cards}>
                 {this.props.workouts.map((workout, index) => {
                     if (index + 1 > this.state.prevNumWorkouts) {
-                        delay += 0.1;
+                        delay += 0.08;
                     }
                     return <DeleteCard delay={delay} key={workout._id} disableLike={false} history={this.props.history} darkTitle={this.props.darkTitles} workout={workout}/>
                 })}
@@ -51,7 +51,7 @@ class Feed extends React.Component {
             return <div className={classes.Cards}>
                 {this.props.workouts.map((workout, index) => {
                     if (index + 1 > this.state.prevNumWorkouts) {
-                        delay += 0.1;
+                        delay += 0.08;
                     }
                     return <Card delay={delay} key={workout._id} disableLike={false} history={this.props.history} darkTitle={this.props.darkTitles} workout={workout}/>
                 })}
