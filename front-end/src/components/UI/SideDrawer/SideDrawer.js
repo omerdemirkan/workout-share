@@ -25,8 +25,8 @@ export default function SideDrawer(props) {
     }}
     transition={{
         type: "spring",
-        stiffness: 400,
-        damping: 30
+        stiffness: 500,
+        damping: 32
     }}
     className={classes.SideDrawer}>
 
