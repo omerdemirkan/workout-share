@@ -20,7 +20,7 @@
     position: relative;
     opacity: 0;
     /* left: 10px; */
-    transition: .3s ease-in-out;
+    transition: .5s ease;
 }
 .NavList li a {
     text-decoration: none;

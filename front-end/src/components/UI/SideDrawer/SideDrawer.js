@@ -51,7 +51,7 @@ export default function SideDrawer(props) {
                 <NavLink to='/crossfit' activeStyle={{color: colorsByPath('/crossfit').idleColor}} onClick={props.close}>Crossfit</NavLink>
             </li>
         </ul>
-        <hr style={{width: '90%', marginLeft: '-10%', border: 'none', borderTop: '1px solid rgb(180, 180, 180)'}}/>
+        <hr/>
 
         <li key='/create'>
             <NavLink to="/create"
