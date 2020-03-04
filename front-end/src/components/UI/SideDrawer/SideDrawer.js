@@ -25,49 +25,53 @@ export default function SideDrawer(props) {
     }}
     transition={{
         type: "spring",
-        stiffness: 350,
-        damping: 25
+        stiffness: 400,
+        damping: 30
     }}
     className={classes.SideDrawer}>
 
         <ul className={classes.NavList}>
             {/* Because React Router doesn't allow CSS in JS styling for pseudoselectors, special hover classnames are given */}
-            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.1s'}: null}>
+            <li style={props.open ? {opacity: '1', top: '0px', transitionDelay: '.1s'}: null}>
                 <NavLink exact to='/' activeStyle={{color: colorsByPath('/').idleColor}} onClick={props.close}>All</NavLink>
             </li>
-            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.15s'}: null}>
+            <li style={props.open ? {opacity: '1', top: '0px', transitionDelay: '.125s'}: null}>
                 <NavLink to='/powerlifting' activeStyle={{color: colorsByPath('/powerlifting').idleColor}} onClick={props.close}>Powerlifting</NavLink>
             </li>
-            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.2s'}: null}>
+            <li style={props.open ? {opacity: '1', top: '0px', transitionDelay: '.15s'}: null}>
                 <NavLink to='/bodybuilding' activeStyle={{color: colorsByPath('/bodybuilding').idleColor}} onClick={props.close}>Bodybuilding</NavLink>
             </li>
-            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.25s'}: null}>
+            <li style={props.open ? {opacity: '1', top: '0px', transitionDelay: '.175s'}: null}>
                 <NavLink to='/weightlifting' activeStyle={{color: colorsByPath('/weightlifting').idleColor}} onClick={props.close}>Weightlifting</NavLink>
             </li>
-            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.3s'}: null}>
+            <li style={props.open ? {opacity: '1', top: '0px', transitionDelay: '.2s'}: null}>
                 <NavLink to='/endurance' activeStyle={{color: colorsByPath('/endurance').idleColor}} onClick={props.close}>Endurance</NavLink>
             </li>
-            <li style={props.open ? {opacity: '1', left: '0px', transitionDelay: '.35s'}: null}>
+            <li style={props.open ? {opacity: '1', top: '0px', transitionDelay: '.225s'}: null}>
                 <NavLink to='/crossfit' activeStyle={{color: colorsByPath('/crossfit').idleColor}} onClick={props.close}>Crossfit</NavLink>
             </li>
         </ul>
+
         <hr/>
 
-        <li key='/create'>
-            <NavLink to="/create"
-            onClick={props.close} 
-            activeStyle={{color: 'rgb(132, 132, 255)'}}>Create</NavLink>
-        </li> 
+        <ul className={classes.PersonalNavList}>
+            <li key='/create' style={props.open ? {opacity: '1', top: '0px', transitionDelay: '.25s'}: null}>
+                <NavLink to="/create"
+                onClick={props.close} 
+                activeStyle={{color: 'rgb(132, 132, 255)'}}>Create</NavLink>
+            </li> 
 
-        <li key='/my-workouts'>
-            <NavLink to="/my-workouts"
-            onClick={props.close} 
-            activeStyle={{color: 'rgb(132, 132, 255)'}}>My Workouts</NavLink>
-        </li> 
-        <li key='/my-favorites'>
-            <NavLink to="/my-favorites"
-            onClick={props.close} 
-            activeStyle={{color: 'rgb(132, 132, 255)'}}>My Favorites</NavLink>
-        </li>
+            <li key='/my-workouts' style={props.open ? {opacity: '1', top: '0px', transitionDelay: '.275s'}: null}>
+                <NavLink to="/my-workouts"
+                onClick={props.close} 
+                activeStyle={{color: 'rgb(132, 132, 255)'}}>My Workouts</NavLink>
+            </li> 
+            <li key='/my-favorites' style={props.open ? {opacity: '1', top: '0px', transitionDelay: '.3s'}: null}>
+                <NavLink to="/my-favorites"
+                onClick={props.close} 
+                activeStyle={{color: 'rgb(132, 132, 255)'}}>My Favorites</NavLink>
+            </li>
+        </ul>
+        
     </motion.div>
 }

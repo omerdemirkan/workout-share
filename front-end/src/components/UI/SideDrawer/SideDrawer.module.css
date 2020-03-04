@@ -7,6 +7,7 @@
     background-color: white;
     z-index: 4;
     padding-top: 80px;
+    color: rgb(71, 71, 71);
 
 }
 
@@ -19,9 +20,11 @@
     margin: 3vh 0;
     position: relative;
     opacity: 0;
-    /* left: 10px; */
-    transition: .5s ease;
+    transition: opacity .5s ease;
+    font-size: 1.1rem;
+    font-weight: 600;
 }
+
 .NavList li a {
     text-decoration: none;
     color: inherit;
@@ -31,6 +34,26 @@
     width: 60%;
     border: none;
     border-top: 1px solid rgb(180, 180, 180);
+}
+
+.PersonalNavList {
+    list-style: none;
+    padding-inline-start: 20%;
+
+}
+
+.PersonalNavList li {
+    margin: 3vh 0;
+    position: relative;
+    opacity: 0;
+    transition: opacity .5s ease;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.PersonalNavList li a {
+    text-decoration: none;
+    color: inherit;
 }
 
 @keyframes SlideIn {
