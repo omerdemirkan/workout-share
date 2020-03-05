@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {loadPostsAsync} from '../../store/actions/index'
 import classes from './MyFavorites.module.css';
-import Feed from '../../components/feed/Feed';
+import Feed from '../../components/Feed/Feed';
 import {Route} from 'react-router-dom';
 import Inspect from '../Inspect/Inspect'
 import empty from '../../images/empty3.svg';
@@ -65,7 +65,7 @@ class MyFavorites extends React.Component {
     }
 
     render() {
-        return <React.Fragment>
+        return <>
             <Route path={this.props.history.location.pathname} exact component={Inspect}/>  
             <div className={classes.MyFavorites}>
                 <h1 className={classes.Header}>My Favorites</h1>
@@ -90,7 +90,7 @@ class MyFavorites extends React.Component {
                     </div>
                 : null}
             </div>
-        </React.Fragment>
+        </>
     }
 }
 

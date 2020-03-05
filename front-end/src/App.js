@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
-import Navbar from './components/UI/navbar/navbar';
+import Navbar from './components/UI/Navbar/Navbar';
 import Footer from './components/UI/Footer/Footer'
 
 // Axios for potentially fetching a token
@@ -13,11 +13,11 @@ import {connect} from 'react-redux';
 import * as actionTypes from './store/actions/actionTypes';
 
 // Routes
-import All from './containers/Search/All/All';
+import All from './containers/Browse/Browse';
 import Main from './components/UI/Main/Main';
 import MyFavorites from './containers/MyFavorites/MyFavorites';
 import MyWorkouts from './containers/MyWorkouts/MyWorkouts';
-import Create from './containers/create/Create';
+import Create from './containers/Create/Create';
 
 class App extends React.Component {
   componentDidMount() {

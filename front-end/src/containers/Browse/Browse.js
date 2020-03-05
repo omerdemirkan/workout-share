@@ -1,27 +1,27 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
-import routeToType from '../../../helper/route-to-type';
+import routeToType from '../../helper/route-to-type';
 
 // Style
-import classes from './All.module.css'
+import classes from './Browse.module.css'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Empty from '../../../images/empty.svg';
+import Empty from '../../images/empty.svg';
 
-// import LoadMore from '../../../components/LoadMore/LoadMore';
+// import LoadMore from '../../components/LoadMore/LoadMore';
 import InfiniteScroll from 'react-infinite-scroller';
-import Feed from '../../../components/feed/Feed';
-import Inspect from '../../../containers/Inspect/Inspect';
-import ReLoad from '../../../components/ReLoad/ReLoad';
+import Feed from '../../components/Feed/Feed';
+import Inspect from '../Inspect/Inspect';
+import Refresh from '../../components/Refresh/Refresh';
 
 // Redux and axios
-import axios from '../../../axios';
-import * as actionTypes from '../../../store/actions/actionTypes';
+import axios from '../../axios';
+import * as actionTypes from '../../store/actions/actionTypes';
 import {connect} from 'react-redux';
-import {loadPostsAsync} from '../../../store/actions/index'
+import {loadPostsAsync} from '../../store/actions/index'
 
-import NotFound from '../../../components/UI/404/NotFound';
+import NotFound from '../../components/UI/404/NotFound';
 
-class All extends React.Component {
+class Browse extends React.Component {
 
     state = {
         currentPath: this.props.history.location.pathname,
@@ -115,7 +115,7 @@ class All extends React.Component {
                 <Route path={this.props.history.location.pathname} exact component={Inspect}/>
                 
                 {this.state.refresh ? 
-                    <ReLoad refresh={this.refreshHandler}/>
+                    <Refresh refresh={this.refreshHandler}/>
                 : null}
                 <InfiniteScroll
                     loadMore={this.loadPostsHandler}
@@ -165,4 +165,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(All);
+export default connect(mapStateToProps, mapDispatchToProps)(Browse);

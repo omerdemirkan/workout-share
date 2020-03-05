@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import classes from './navbar.module.css';
-import './nav-hover.css';
+import classes from './Navbar.module.css';
+import './Nav-hover.css';
 import {NavLink, Link} from 'react-router-dom';
 import Backdrop from '@material-ui/core/Backdrop';
 import SideDrawer from '../SideDrawer/SideDrawer';

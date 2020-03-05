@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './ReLoad.module.css';
+import classes from './Refresh.module.css';
 
 import RefreshRoundedIcon from '@material-ui/icons/RefreshRounded';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../../components/UI/Card/Card';
+import Card from '../../containers/Card/Card';
 import classes from './Inspect.module.css';
 import routeToType from '../../helper/route-to-type';
 import {connect} from 'react-redux';

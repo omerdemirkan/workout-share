@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {loadPostsAsync} from '../../store/actions/index'
 import classes from './MyWorkouts.module.css';
-import Feed from '../../components/feed/Feed';
+import Feed from '../../components/Feed/Feed';
 import {Route} from 'react-router-dom';
 import Inspect from '../Inspect/Inspect'
 import empty2 from '../../images/empty2.svg';
@@ -76,7 +76,7 @@ class MyWorkouts extends React.Component {
             <div className={classes.MyWorkouts}>
                 <h1 className={classes.Header}>My Workouts</h1>
 
-                {this.props.myWorkouts.length > 0 || this.props.loading ?
+                {(this.props.myWorkouts && this.props.myWorkouts.length > 0) || this.props.loading ?
                     <InfiniteScroll
                     loadMore={this.loadPostsHandler}
                     hasMore={this.props.hasMore}

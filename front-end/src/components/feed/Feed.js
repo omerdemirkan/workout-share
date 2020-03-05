@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import classes from './Feed.module.css';
-import Card from '../UI/Card/Card';
-import DeleteCard from '../UI/DeleteCard/DeleteCard';
+import Card from '../../containers/Card/Card';
+import DeleteCard from '../../containers/DeleteCard/DeleteCard';
 
 function Feed(props) {
     const [numWorkouts, setNumWorkouts] = useState({
@@ -9,7 +9,7 @@ function Feed(props) {
         previous: 0
     });
 
-    const currentNumWorkouts = props.workouts.length;
+    const currentNumWorkouts = props.workouts ? props.workouts.length : 0;
 
     useEffect(() => {
         setNumWorkouts({
@@ -32,7 +32,6 @@ function Feed(props) {
             })}
         </div>
     } else if (props.myWorkouts) {
-
         return <div className={classes.Cards}>
             {props.workouts.map((workout, index) => {
                 if (index + 1 > numWorkouts.current) {
