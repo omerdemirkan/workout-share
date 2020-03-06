@@ -14,7 +14,7 @@ import {connect} from 'react-redux';
 import * as actionTypes from './store/actions/actionTypes';
 
 // Routes
-import All from './containers/Browse/Browse';
+import Browse from './pages/Browse/Browse';
 import MyFavorites from './pages/MyFavorites/MyFavorites';
 import MyWorkouts from './pages/MyWorkouts/MyWorkouts';
 import Create from './pages/Create/Create';
@@ -67,7 +67,7 @@ class App extends React.Component {
           <Route path="/create" component={Create}/>
           <Route path='/my-favorites' component={MyFavorites}/>
           <Route path='/my-workouts' component={MyWorkouts}/>
-          <Route path="/" component={All}/>
+          <Route path="/" component={Browse}/>
         </Switch>
       </Main>
 

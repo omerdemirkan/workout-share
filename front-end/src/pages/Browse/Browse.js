@@ -9,8 +9,8 @@ import Empty from '../../images/empty.svg';
 
 // import LoadMore from '../../components/LoadMore/LoadMore';
 import InfiniteScroll from 'react-infinite-scroller';
-import Feed from '../Feed/Feed';
-import Inspect from '../Inspect/Inspect';
+import Feed from '../../containers/Feed/Feed';
+import Inspect from '../../containers/Inspect/Inspect';
 import Refresh from '../../components/Refresh/Refresh';
 
 // Redux and axios
