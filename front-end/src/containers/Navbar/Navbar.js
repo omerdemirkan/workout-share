@@ -3,10 +3,10 @@ import classes from './Navbar.module.css';
 import './Nav-hover.css';
 import {NavLink, Link} from 'react-router-dom';
 import Backdrop from '@material-ui/core/Backdrop';
-import SideDrawer from '../SideDrawer/SideDrawer';
+import SideDrawer from '../../components/SideDrawer/SideDrawer';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import colorsByPath from '../../../helper/colors-by-path';
+import colorsByPath from '../../helper/colors-by-path';
 
 // Change to functional component
 function Navbar() {

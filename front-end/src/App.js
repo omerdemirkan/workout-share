@@ -2,33 +2,33 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
-import Navbar from './components/UI/Navbar/Navbar';
-import Footer from './components/UI/Footer/Footer'
+import Navbar from './containers/Navbar/Navbar'
+import Footer from './components/Footer/Footer'
+import Main from './components/Main/Main'
 
 // Axios for potentially fetching a token
 import axios from './axios';
 
-//Redux for storing token in global state
+// Redux for storing token in global state
 import {connect} from 'react-redux';
 import * as actionTypes from './store/actions/actionTypes';
 
 // Routes
 import All from './containers/Browse/Browse';
-import Main from './components/UI/Main/Main';
-import MyFavorites from './containers/MyFavorites/MyFavorites';
-import MyWorkouts from './containers/MyWorkouts/MyWorkouts';
-import Create from './containers/Create/Create';
+import MyFavorites from './pages/MyFavorites/MyFavorites';
+import MyWorkouts from './pages/MyWorkouts/MyWorkouts';
+import Create from './pages/Create/Create';
 
 class App extends React.Component {
   componentDidMount() {
 
-    //Authorization on mount (NO REDUX!, we don't need to set a loading state, this is meant to be in the background after mount)
+    // Authorization on mount (NO REDUX!, we don't need to set a loading state, this is meant to be in the background after mount)
     
     if (localStorage.getItem('authToken')) {
       this.props.onSetAuthToken(localStorage.getItem('authToken'));
 
       // Setting id's for liked posts. This is to ensure a max of one like per post per person.
-      //These id's are used to determine the prior state of a card before load
+      // These id's are used to determine the prior state of a card before load
 
       axios.get('/users/likedID', {
         headers: {

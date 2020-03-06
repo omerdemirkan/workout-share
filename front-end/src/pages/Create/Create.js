@@ -1,7 +1,7 @@
 import React from 'react';
 import { colorsByDisplay } from '../../helper/colors-by-path';
-import PreviewCard from '../../components/UI/PreviewCard/PreviewCard';
-import ErrorModal from '../../components/UI/ErrorModal/ErrorModal';
+import PreviewCard from '../../components/PreviewCard/PreviewCard';
+import ErrorModal from '../../components/ErrorModal/ErrorModal';
 
 import {Redirect} from 'react-router-dom'
 

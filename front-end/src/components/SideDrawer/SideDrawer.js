@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import classes from './SideDrawer.module.css';
 
 import { NavLink } from 'react-router-dom';
-import colorsByPath from '../../../helper/colors-by-path';
+import colorsByPath from '../../helper/colors-by-path';
 
 import {motion} from 'framer-motion';
 

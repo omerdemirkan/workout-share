@@ -1,5 +1,3 @@
-
-
 // Props: 
 //     open: Boolean, should the error modal be open?
 //     header: ...

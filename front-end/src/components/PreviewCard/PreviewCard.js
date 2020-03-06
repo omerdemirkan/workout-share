@@ -7,10 +7,10 @@ import classes from './PreviewCard.module.css'
 
 // Redux
 import {connect} from 'react-redux';
-import * as actionTypes from '../../../store/actions/actionTypes'
+import * as actionTypes from '../../store/actions/actionTypes'
 
-import { colorsByDisplay } from '../../../helper/colors-by-path'
-import {titleFontSize} from '../../../helper/lengthToFontSize'
+import { colorsByDisplay } from '../../helper/colors-by-path'
+import {titleFontSize} from '../../helper/lengthToFontSize'
 
 // -- Material UI --
 

@@ -9,7 +9,7 @@ import Empty from '../../images/empty.svg';
 
 // import LoadMore from '../../components/LoadMore/LoadMore';
 import InfiniteScroll from 'react-infinite-scroller';
-import Feed from '../../components/Feed/Feed';
+import Feed from '../Feed/Feed';
 import Inspect from '../Inspect/Inspect';
 import Refresh from '../../components/Refresh/Refresh';
 
@@ -19,7 +19,7 @@ import * as actionTypes from '../../store/actions/actionTypes';
 import {connect} from 'react-redux';
 import {loadPostsAsync} from '../../store/actions/index'
 
-import NotFound from '../../components/UI/404/NotFound';
+import NotFound from '../../pages/404/NotFound';
 
 class Browse extends React.Component {
 

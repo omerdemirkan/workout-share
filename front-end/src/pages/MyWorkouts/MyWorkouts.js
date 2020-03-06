@@ -2,9 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {loadPostsAsync} from '../../store/actions/index'
 import classes from './MyWorkouts.module.css';
-import Feed from '../../components/Feed/Feed';
+import Feed from '../../containers/Feed/Feed';
 import {Route} from 'react-router-dom';
-import Inspect from '../Inspect/Inspect'
+import Inspect from '../../containers/Inspect/Inspect';
 import empty2 from '../../images/empty2.svg';
 import axios from '../../axios';
 import routeToType from '../../helper/route-to-type';

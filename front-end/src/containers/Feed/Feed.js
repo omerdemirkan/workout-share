@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import classes from './Feed.module.css';
-import Card from '../../containers/Card/Card';
-import DeleteCard from '../../containers/DeleteCard/DeleteCard';
+import Card from '../Card/Card';
+import DeleteCard from '../DeleteCard/DeleteCard';
 
 function Feed(props) {
     const [numWorkouts, setNumWorkouts] = useState({

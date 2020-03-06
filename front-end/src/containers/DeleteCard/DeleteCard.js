@@ -17,7 +17,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-import ErrorModal from '../../components/UI/ErrorModal/ErrorModal';
+import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import {titleFontSize} from '../../helper/lengthToFontSize'
 
 // disableLike: disables like button
