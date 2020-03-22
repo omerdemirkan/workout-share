@@ -4,6 +4,12 @@ A platform to create and share your workouts with friends.
 
 [See it Live!](https://workoutshare.herokuapp.com/)
 
+### Creating a Workout
+![gif 2](https://media.giphy.com/media/RfdegfFLD09woJgmiz/giphy.gif)
+
+### Personalization
+![gif 1](https://media.giphy.com/media/fWq2BORRkEkOq1kyiB/giphy.gif)
+
 ## Browse
 
 Browse popular workouts on the home page or browse one of five specific categories:
