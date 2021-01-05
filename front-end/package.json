@@ -9,7 +9,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bad-words": "^3.0.3",
     "framer-motion": "^1.9.0",
     "js-tokens": "^5.0.0",
